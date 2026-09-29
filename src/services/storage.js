@@ -1,6 +1,6 @@
 import { INITIAL_HOUSEHOLD } from '../constants/initialData';
 
-const STORAGE_KEY = 'afrihealth_household_v1';
+const STORAGE_KEY = 'seihealth_household_v1';
 
 export const storage = {
   load: () => {
@@ -41,7 +41,7 @@ export const storage = {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `afrihealth_backup_${household.head.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `seihealth_backup_${household.head.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.json`;
     a.click();
     URL.revokeObjectURL(url);
   },

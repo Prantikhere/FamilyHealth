@@ -22,7 +22,7 @@ export default function EmergencyICECard({ member, household, onClose }) {
     if (!member) return;
 
     const vitalPayload = {
-      proto: 'AFRIHEALTH_ICE_V1',
+      proto: 'SEI_ICE_V1',
       id: member.id,
       name: member.name,
       dob: member.dob,
@@ -246,7 +246,7 @@ export default function EmergencyICECard({ member, household, onClose }) {
             )}
             
             <div className="mt-2 text-[10px] font-mono text-slate-400">
-              Protocol: AFRIHEALTH_ICE_V1 • Standalone Zero Cloud Access
+              Protocol: SEI_ICE_V1 • Standalone Zero Cloud Access
             </div>
           </div>
 

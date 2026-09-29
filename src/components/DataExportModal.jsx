@@ -23,7 +23,7 @@ export default function DataExportModal({ household, onImportData, onClose }) {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AfriHealth Sovereign Health Record — ${household.head}</title>
+  <title>SeiHealth Sovereign Health Record — ${household.head}</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #F8FAFC; color: #0F172A; padding: 24px; max-width: 800px; margin: 0 auto; }
     .header { background: #047857; color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
@@ -37,7 +37,7 @@ export default function DataExportModal({ household, onImportData, onClose }) {
 </head>
 <body>
   <div class="header">
-    <h1 style="margin: 0; font-size: 24px;">AfriHealth Sovereign Household Health Pass</h1>
+    <h1 style="margin: 0; font-size: 24px;">SeiHealth Sovereign Household Health Pass</h1>
     <p style="margin: 4px 0 0 0; opacity: 0.9;">Caretaker: ${household.head} • Exported on: ${new Date().toLocaleDateString()}</p>
     <p style="margin: 2px 0 0 0; font-size: 11px; opacity: 0.8;">Zero Cloud Lock-in • NDPR Compliant Sovereign Document</p>
   </div>
@@ -102,7 +102,7 @@ export default function DataExportModal({ household, onImportData, onClose }) {
   </div>
 
   <footer style="text-align: center; margin-top: 24px; color: #64748B; font-size: 11px;">
-    Encrypted and signed on device. AfriHealth Progressive Web App.
+    Encrypted and signed on device. SeiHealth Progressive Web App.
   </footer>
 </body>
 </html>`;
@@ -111,7 +111,7 @@ export default function DataExportModal({ household, onImportData, onClose }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `afrihealth_medical_pass_${household.head.replace(/\s+/g, '_')}.html`;
+    a.download = `seihealth_medical_pass_${household.head.replace(/\s+/g, '_')}.html`;
     a.click();
     URL.revokeObjectURL(url);
   };

@@ -45,7 +45,7 @@ export default function Header({
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
               <h1 className="text-base font-bold text-slate-900 tracking-tight leading-none truncate">
-                AfriHealth
+                SeiHealth
               </h1>
               <span className="text-[10px] uppercase font-bold bg-emerald-light text-emerald-primary px-1.5 py-0.5 rounded-full border border-emerald-primary/20">
                 360° PWA
@@ -151,7 +151,7 @@ export default function Header({
                     {currentUser?.name || 'Amina Bello'}
                   </span>
                   <span className="text-[10px] text-slate-500 font-mono block truncate">
-                    {currentUser?.email || 'amina@afrihealth.ng'}
+                    {currentUser?.email || 'amina@seihealth.org'}
                   </span>
                   <span className="inline-block mt-1 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-primary">
                     {currentUser?.role || 'Household Caretaker'}

@@ -19,7 +19,7 @@ export const DUMMY_ACCOUNTS = [
   {
     role: 'Caretaker & Mother',
     name: 'Amina Bello',
-    email: 'amina@afrihealth.ng',
+    email: 'amina@seihealth.org',
     password: 'Pass@1234',
     badge: 'Household Admin',
     clinic: 'Iru Comprehensive Primary Health Post',
@@ -52,7 +52,7 @@ export const DUMMY_ACCOUNTS = [
 ];
 
 export default function LoginScreen({ onLoginSuccess }) {
-  const [email, setEmail] = useState('amina@afrihealth.ng');
+  const [email, setEmail] = useState('amina@seihealth.org');
   const [password, setPassword] = useState('Pass@1234');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
@@ -123,7 +123,7 @@ export default function LoginScreen({ onLoginSuccess }) {
           <HeartPulse className="w-10 h-10" />
         </div>
         <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-          AfriHealth Sovereign
+          SeiHealth Sovereign
         </h1>
         <p className="text-xs text-slate-500 font-medium mt-1">
           360° Household Health Companion & Emergency ICE Vault
@@ -161,7 +161,7 @@ export default function LoginScreen({ onLoginSuccess }) {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="e.g. amina@afrihealth.ng"
+                placeholder="e.g. amina@seihealth.org"
                 className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-primary/40 focus:border-emerald-primary bg-white text-slate-900"
               />
             </div>

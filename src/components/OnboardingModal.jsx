@@ -58,7 +58,7 @@ export default function OnboardingModal({ household, onComplete }) {
           <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center mx-auto mb-3 shadow-inner">
             <HeartHandshake className="w-8 h-8 text-white" />
           </div>
-          <h2 className="text-xl font-black tracking-tight">Welcome to AfriHealth</h2>
+          <h2 className="text-xl font-black tracking-tight">Welcome to SeiHealth</h2>
           <p className="text-xs text-emerald-100 mt-1 max-w-xs mx-auto">
             Data-sovereign household health companion with offline paper capture and emergency passes.
           </p>

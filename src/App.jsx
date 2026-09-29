@@ -14,7 +14,7 @@ import LoginScreen, { DUMMY_ACCOUNTS } from './components/LoginScreen';
 import BottomNav from './components/BottomNav';
 import { storage } from './services/storage';
 
-const USER_STORAGE_KEY = 'afrihealth_current_user_v1';
+const USER_STORAGE_KEY = 'seihealth_current_user_v1';
 
 export default function App() {
   const [household, setHousehold] = useState(() => storage.load());

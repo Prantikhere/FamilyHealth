@@ -1,8 +1,8 @@
-# AfriHealth Household — Data-Sovereign Family Health PWA
+# SeiHealth — 360° Sovereign Household Health PWA
 
 > Built according to specifications in [`BluePrint.md`](file:///home/prantik/Downloads/Sei/BluePrint.md).
 
-AfriHealth is a responsive, local-first web application engineered specifically for maternal, infant, and multi-generational household health management in resource-constrained environments. It runs 100% offline, features client-side optical character recognition (OCR) for physical paper prescriptions and clinic cards, and generates cryptographically verifiable offline Emergency ICE (In Case of Emergency) passes.
+**SeiHealth** (inspired by *Sei* [生] — Life, Living & Vitality) is a responsive, local-first web application engineered specifically for maternal, infant, and multi-generational household health management in resource-constrained environments. It runs 100% offline, features client-side optical character recognition (OCR) for physical paper prescriptions and clinic cards, and generates cryptographically verifiable offline Emergency ICE (In Case of Emergency) passes.
 
 ---
 
@@ -15,7 +15,7 @@ The application has been engineered from the ground up to be **fully responsive*
 3. **Turnkey Native Mobile Conversion via Capacitor**:
    ```bash
    npm i @capacitor/core @capacitor/cli @capacitor/android @capacitor/ios
-   npx cap init AfriHealth com.afrihealth.app
+   npx cap init SeiHealth com.seihealth.app
    npm run build
    npx cap add android
    npx cap add ios

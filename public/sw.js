@@ -1,5 +1,5 @@
-// AfriHealth Offline Service Worker
-const CACHE_NAME = 'afrihealth-v1';
+// SeiHealth Offline Service Worker
+const CACHE_NAME = 'seihealth-v1';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
