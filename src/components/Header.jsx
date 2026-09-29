@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Wifi, 
   WifiOff, 
@@ -7,18 +7,24 @@ import {
   RefreshCw, 
   Languages, 
   QrCode,
-  HeartPulse
+  HeartPulse,
+  LogOut,
+  User,
+  Check
 } from 'lucide-react';
 
 export default function Header({ 
   household, 
+  currentUser,
   isOffline, 
   onOpenExport, 
   onOpenTrust,
   onResetData,
-  onChangeLanguage 
+  onChangeLanguage,
+  onLogout
 }) {
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const languages = [
     { code: 'en', name: 'English' },
@@ -42,7 +48,7 @@ export default function Header({
                 AfriHealth
               </h1>
               <span className="text-[10px] uppercase font-bold bg-emerald-light text-emerald-primary px-1.5 py-0.5 rounded-full border border-emerald-primary/20">
-                PWA
+                360° PWA
               </span>
             </div>
             <p className="text-xs text-slate-500 font-medium truncate mt-0.5">
@@ -67,7 +73,7 @@ export default function Header({
               {isOffline ? 'Offline (Local Safe)' : 'Synced 4m ago'}
             </span>
             <span className="sm:hidden">
-              {isOffline ? 'Offline' : 'Local Safe'}
+              {isOffline ? 'Offline' : 'Local'}
             </span>
           </div>
 
@@ -95,7 +101,7 @@ export default function Header({
             {showLangMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-xs">
                 <div className="px-3 py-1 font-bold text-slate-400 uppercase tracking-wider text-[10px]">
-                  Audio Guidance Language
+                  Audio Speech Language
                 </div>
                 {languages.map((l) => (
                   <button
@@ -109,7 +115,7 @@ export default function Header({
                     }`}
                   >
                     <span>{l.name}</span>
-                    {household.language === l.code && <span className="text-emerald-primary">✓</span>}
+                    {household.language === l.code && <Check className="w-4 h-4 text-emerald-primary" />}
                   </button>
                 ))}
               </div>
@@ -125,6 +131,57 @@ export default function Header({
           >
             <Download className="w-5 h-5" />
           </button>
+
+          {/* User Account / Sign Out Menu */}
+          <div className="relative">
+            <button
+              onClick={() => setShowUserMenu(!showUserMenu)}
+              className="w-8 h-8 rounded-full border-2 border-emerald-primary/40 flex items-center justify-center text-white font-bold text-xs shadow-xs"
+              style={{ backgroundColor: currentUser?.avatarBg || '#047857' }}
+              title={`Logged in as ${currentUser?.name || 'Amina Bello'}`}
+              aria-label="User Account Menu"
+            >
+              {currentUser?.name ? currentUser.name.charAt(0) : 'A'}
+            </button>
+
+            {showUserMenu && (
+              <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 text-xs">
+                <div className="px-3 py-2 border-b border-slate-100">
+                  <span className="font-extrabold text-slate-900 block truncate">
+                    {currentUser?.name || 'Amina Bello'}
+                  </span>
+                  <span className="text-[10px] text-slate-500 font-mono block truncate">
+                    {currentUser?.email || 'amina@afrihealth.ng'}
+                  </span>
+                  <span className="inline-block mt-1 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-primary">
+                    {currentUser?.role || 'Household Caretaker'}
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setShowUserMenu(false);
+                    onResetData();
+                  }}
+                  className="w-full text-left px-3 py-2 hover:bg-slate-50 text-slate-700 flex items-center gap-2"
+                >
+                  <RefreshCw className="w-4 h-4 text-slate-400" />
+                  <span>Reset Demo Data</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setShowUserMenu(false);
+                    onLogout();
+                  }}
+                  className="w-full text-left px-3 py-2 hover:bg-rose-50 text-rose-600 font-bold flex items-center gap-2 border-t border-slate-100"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Switch Account / Sign Out</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

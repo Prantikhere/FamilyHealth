@@ -10,8 +10,11 @@ import EmergencyICECard from './components/EmergencyICECard';
 import AddMemberModal from './components/AddMemberModal';
 import DataExportModal from './components/DataExportModal';
 import OnboardingModal from './components/OnboardingModal';
+import LoginScreen, { DUMMY_ACCOUNTS } from './components/LoginScreen';
 import BottomNav from './components/BottomNav';
 import { storage } from './services/storage';
+
+const USER_STORAGE_KEY = 'afrihealth_current_user_v1';
 
 export default function App() {
   const [household, setHousehold] = useState(() => storage.load());
@@ -19,6 +22,20 @@ export default function App() {
   const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : false);
   const [activeTab, setActiveTab] = useState('DASHBOARD'); // 'DASHBOARD' | 'CAPTURE' | 'MCH' | 'TREE' | 'EXPENSES'
   
+  // Authentication & Current User State
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem(USER_STORAGE_KEY);
+      if (savedUser) return JSON.parse(savedUser);
+    } catch (e) {
+      console.warn('Could not read user from localStorage:', e);
+    }
+    // Default to Amina Bello for seamless initial view, or null if logged out
+    return DUMMY_ACCOUNTS[0];
+  });
+
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
   // Modals state
   const [iceModalMember, setIceModalMember] = useState(null);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
@@ -39,16 +56,36 @@ export default function App() {
     };
   }, []);
 
-  // Persist to local storage whenever household changes
+  // Persist household to local storage
   useEffect(() => {
     storage.save(household);
   }, [household]);
+
+  // Persist user to local storage
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem(USER_STORAGE_KEY);
+    }
+  }, [currentUser]);
 
   // Filtered records based on active profile tab
   const activeRecords = useMemo(() => {
     if (selectedMemberId === 'ALL') return household.records;
     return household.records.filter((r) => r.memberId === selectedMemberId);
   }, [household.records, selectedMemberId]);
+
+  // Auth Handlers
+  const handleLoginSuccess = (userObj) => {
+    setCurrentUser(userObj);
+    setIsAuthenticated(true);
+    setActiveTab('DASHBOARD');
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
 
   // Handler: Add OCR/Physical document record
   const handleAddRecord = (newRec) => {
@@ -114,7 +151,6 @@ export default function App() {
   // Handler: Dismiss / mark alert done
   const handleMarkAlertDone = (item) => {
     if (item.category === 'VACCINE' && item.memberId) {
-      // Find and mark completed
       const vac = household.members.find(m => m.id === item.memberId)?.vaccinesDue?.find(v => item.title.includes(v.name));
       if (vac) {
         handleUpdateVaccine(item.memberId, vac.id, true);
@@ -135,16 +171,23 @@ export default function App() {
     }
   };
 
+  // If user is not authenticated, display full Login Screen
+  if (!isAuthenticated) {
+    return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
+  }
+
   return (
     <div className="app-shell bg-canvas text-slate-900">
       {/* 1. TOP HEADER & STATUS BAR */}
       <Header
         household={household}
+        currentUser={currentUser}
         isOffline={isOffline}
         onOpenExport={() => setShowExportModal(true)}
         onOpenTrust={() => setShowExportModal(true)}
         onResetData={handleResetData}
         onChangeLanguage={(lang) => setHousehold(prev => ({ ...prev, language: lang }))}
+        onLogout={handleLogout}
       />
 
       {/* 2. HOUSEHOLD HORIZONTAL AVATAR RIBBON */}
@@ -162,9 +205,12 @@ export default function App() {
             household={household}
             records={activeRecords}
             selectedMemberId={selectedMemberId}
+            currentUser={currentUser}
             onOpenICE={(member) => setIceModalMember(member)}
             onNavigateCapture={() => setActiveTab('CAPTURE')}
             onNavigateMCH={() => setActiveTab('MCH')}
+            onNavigateTree={() => setActiveTab('TREE')}
+            onNavigateExpenses={() => setActiveTab('EXPENSES')}
             onMarkAlertDone={handleMarkAlertDone}
           />
         )}

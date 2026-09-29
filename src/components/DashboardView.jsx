@@ -13,7 +13,17 @@ import {
   Camera, 
   Filter,
   CreditCard,
-  ChevronRight
+  ChevronRight,
+  TrendingUp,
+  Heart,
+  Baby,
+  Dna,
+  ShieldCheck,
+  MapPin,
+  Clock,
+  Sparkles,
+  PhoneCall,
+  UserCheck
 } from 'lucide-react';
 import { ttsService } from '../services/tts';
 
@@ -21,16 +31,73 @@ export default function DashboardView({
   household, 
   records, 
   selectedMemberId, 
+  currentUser,
   onOpenICE, 
   onNavigateCapture,
   onNavigateMCH,
+  onNavigateTree,
+  onNavigateExpenses,
   onMarkAlertDone 
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [speakingId, setSpeakingId] = useState(null);
 
-  // Generate dynamic actionable alerts across household
+  // 1. Calculate 360° Household Health Metrics
+  const health360Metrics = useMemo(() => {
+    // Vaccine completion %
+    let totalVaccines = 0;
+    let completedVaccines = 0;
+    household.members.forEach(m => {
+      if (m.vaccinesDue) {
+        totalVaccines += m.vaccinesDue.length;
+        completedVaccines += m.vaccinesDue.filter(v => v.completed).length;
+      }
+    });
+    const vaccineScore = totalVaccines > 0 ? Math.round((completedVaccines / totalVaccines) * 100) : 100;
+
+    // Medication refill compliance
+    let lowSupplyCount = 0;
+    household.members.forEach(m => {
+      if (m.regimen) {
+        lowSupplyCount += m.regimen.filter(r => r.supplyRemainingDays <= 4).length;
+      }
+    });
+    const medicationScore = lowSupplyCount === 0 ? 98 : lowSupplyCount === 1 ? 82 : 65;
+
+    // Genetic & chronic risk monitoring
+    const sickleCarriers = household.members.filter(m => m.genotype === 'AS' || m.genotype === 'SS').length;
+    const htnCount = household.members.filter(m => m.chronicConditions?.some(c => c.toLowerCase().includes('hypertension'))).length;
+    const geneticScore = sickleCarriers > 1 ? 85 : 95;
+
+    // Financial health / budget usage
+    const totalSpend = records.reduce((acc, curr) => acc + (curr.cost || 0), 0);
+    const budgetCap = household.monthlyBudgetCap || 25000;
+    const budgetUsagePct = Math.min(Math.round((totalSpend / budgetCap) * 100), 100);
+    const budgetScore = budgetUsagePct <= 75 ? 95 : budgetUsagePct <= 90 ? 80 : 60;
+
+    // Overall Composite 360° Health Index
+    const overallScore = Math.round(
+      (vaccineScore * 0.3) + (medicationScore * 0.3) + (geneticScore * 0.2) + (budgetScore * 0.2)
+    );
+
+    return {
+      overallScore,
+      vaccineScore,
+      totalVaccines,
+      completedVaccines,
+      medicationScore,
+      lowSupplyCount,
+      sickleCarriers,
+      htnCount,
+      budgetScore,
+      totalSpend,
+      budgetCap,
+      budgetUsagePct,
+    };
+  }, [household, records]);
+
+  // 2. Generate Actionable Household Clinical Alerts
   const actionList = useMemo(() => {
     const alerts = [];
 
@@ -54,7 +121,7 @@ export default function DashboardView({
         });
       }
 
-      // Chronic condition & medication refill warnings
+      // Medication refill alerts
       if (m.regimen) {
         m.regimen.forEach((r) => {
           if (r.supplyRemainingDays <= 5) {
@@ -73,13 +140,14 @@ export default function DashboardView({
         });
       }
 
+      // Chronic hypertension clinic reminder
       if (m.chronicConditions && m.chronicConditions.includes('Hypertension')) {
         alerts.push({
           id: `htn_${m.id}`,
           memberId: m.id,
           memberName: m.name,
           title: `Monthly BP Clinic Check recommended for ${m.name}`,
-          subtitle: `Cardiovascular hypertension protocol • St. Nicholas or Chemist`,
+          subtitle: `Cardiovascular hypertension protocol • St. Nicholas or Health Post`,
           targetDate: 'This week',
           category: 'CLINICAL',
           urgency: 'MODERATE',
@@ -121,18 +189,308 @@ export default function DashboardView({
 
   return (
     <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5 pb-24">
-      {/* 1. URGENT HOUSEHOLD ACTIONS / HERO CALLOUT */}
+      
+      {/* 360° DASHBOARD HERO: HOUSEHOLD VITAL INDEX & PILLARS */}
+      <section className="glass-panel rounded-3xl p-5 border border-emerald-200/90 bg-gradient-to-br from-white/95 via-emerald-50/20 to-white/90 shadow-md">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-200/70">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              <h2 className="text-base font-black text-slate-900 tracking-tight">
+                Household 360° Health Command Center
+              </h2>
+            </div>
+            <p className="text-xs text-slate-500 font-medium mt-0.5">
+              Multi-generational clinical vitals, preventive care & emergency readiness
+            </p>
+          </div>
+
+          <span className="text-[10px] font-extrabold uppercase bg-emerald-light text-emerald-primary px-2.5 py-1 rounded-full border border-emerald-200 shadow-xs">
+            Live 360° Radar
+          </span>
+        </div>
+
+        {/* 360° CIRCULAR INDEX + 4 PILLARS GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-4 items-center">
+          
+          {/* Main 360 Composite Score Gauge */}
+          <div className="flex flex-col items-center justify-center p-3 bg-white/80 rounded-2xl border border-emerald-100 shadow-xs text-center">
+            <div className="relative w-24 h-24 flex items-center justify-center my-1">
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path
+                  className="text-slate-100"
+                  strokeWidth="3.5"
+                  stroke="currentColor"
+                  fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path
+                  className="text-emerald-primary transition-all duration-1000 ease-out"
+                  strokeDasharray={`${health360Metrics.overallScore}, 100`}
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  stroke="currentColor"
+                  fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+              </svg>
+              <div className="absolute flex flex-col items-center">
+                <span className="text-2xl font-black text-slate-900 tracking-tight leading-none">
+                  {health360Metrics.overallScore}%
+                </span>
+                <span className="text-[9px] font-bold text-slate-400 uppercase mt-0.5">360° Index</span>
+              </div>
+            </div>
+
+            <span className="text-xs font-bold text-emerald-primary mt-1">
+              Optimal Health Shield
+            </span>
+            <span className="text-[10px] text-slate-400">
+              4 members monitored
+            </span>
+          </div>
+
+          {/* 4 Pillars of 360° Health */}
+          <div className="sm:col-span-2 grid grid-cols-2 gap-2.5">
+            
+            {/* Pillar 1: Maternal & Child (EPI) */}
+            <button
+              onClick={onNavigateMCH}
+              className="p-3 rounded-2xl bg-white/80 hover:bg-pink-50/60 border border-slate-200/80 hover:border-pink-300 transition-all text-left group shadow-xs"
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="p-1.5 rounded-lg bg-pink-100 text-pink-700">
+                  <Baby className="w-4 h-4" />
+                </span>
+                <span className="text-xs font-extrabold text-pink-700">{health360Metrics.vaccineScore}%</span>
+              </div>
+              <h3 className="text-xs font-extrabold text-slate-900 group-hover:text-pink-700">MCH & Vaccines</h3>
+              <p className="text-[10px] text-slate-500 mt-0.5">
+                {health360Metrics.completedVaccines}/{health360Metrics.totalVaccines} doses completed
+              </p>
+            </button>
+
+            {/* Pillar 2: Active Regimens & Refills */}
+            <div className="p-3 rounded-2xl bg-white/80 border border-slate-200/80 text-left shadow-xs">
+              <div className="flex items-center justify-between mb-1">
+                <span className="p-1.5 rounded-lg bg-purple-100 text-purple-700">
+                  <Pill className="w-4 h-4" />
+                </span>
+                <span className={`text-xs font-extrabold ${health360Metrics.lowSupplyCount > 0 ? 'text-amber-alert' : 'text-emerald-primary'}`}>
+                  {health360Metrics.lowSupplyCount > 0 ? 'Refill Due' : 'Stocked'}
+                </span>
+              </div>
+              <h3 className="text-xs font-extrabold text-slate-900">Chronic Regimens</h3>
+              <p className="text-[10px] text-slate-500 mt-0.5">
+                {health360Metrics.lowSupplyCount > 0 ? `${health360Metrics.lowSupplyCount} medicine runs low` : 'All regimens active'}
+              </p>
+            </div>
+
+            {/* Pillar 3: Genetics & Pedigree Risk */}
+            <button
+              onClick={onNavigateTree}
+              className="p-3 rounded-2xl bg-white/80 hover:bg-indigo-50/60 border border-slate-200/80 hover:border-indigo-300 transition-all text-left group shadow-xs"
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="p-1.5 rounded-lg bg-indigo-100 text-indigo-accent">
+                  <Dna className="w-4 h-4" />
+                </span>
+                <span className="text-xs font-extrabold text-indigo-accent">2 AS Carriers</span>
+              </div>
+              <h3 className="text-xs font-extrabold text-slate-900 group-hover:text-indigo-accent">Genetic Pedigree</h3>
+              <p className="text-[10px] text-slate-500 mt-0.5">Sickle trait map & BP lineage</p>
+            </button>
+
+            {/* Pillar 4: Financial Safety / Cash Ledger */}
+            <button
+              onClick={onNavigateExpenses}
+              className="p-3 rounded-2xl bg-white/80 hover:bg-emerald-50/60 border border-slate-200/80 hover:border-emerald-300 transition-all text-left group shadow-xs"
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="p-1.5 rounded-lg bg-emerald-100 text-emerald-primary">
+                  <CreditCard className="w-4 h-4" />
+                </span>
+                <span className="text-xs font-extrabold text-emerald-primary">{health360Metrics.budgetUsagePct}%</span>
+              </div>
+              <h3 className="text-xs font-extrabold text-slate-900 group-hover:text-emerald-primary">Health Budget</h3>
+              <p className="text-[10px] text-slate-500 mt-0.5">
+                {household.currency}{health360Metrics.totalSpend.toLocaleString()} / {household.currency}{health360Metrics.budgetCap.toLocaleString()}
+              </p>
+            </button>
+          </div>
+        </div>
+
+        {/* Primary Health Clinic Liaison Info Bar */}
+        <div className="pt-2.5 border-t border-slate-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-600">
+          <div className="flex items-center gap-1.5 min-w-0">
+            <MapPin className="w-4 h-4 text-emerald-primary flex-shrink-0" />
+            <span className="truncate font-medium">{household.clinicAnchor || 'Iru Comprehensive Primary Health Post, Lagos'}</span>
+          </div>
+          <div className="flex items-center gap-3 text-[11px] font-semibold flex-shrink-0">
+            <span className="text-slate-500">Clinic: <strong className="text-slate-800">Mon & Thu</strong></span>
+            <span className="text-slate-500">•</span>
+            <a 
+              href={`tel:${household.emergencyPhone?.replace(/\s+/g, '') || '+2348035550192'}`}
+              className="text-emerald-primary hover:underline flex items-center gap-1 font-bold"
+            >
+              <PhoneCall className="w-3.5 h-3.5" />
+              <span>{household.emergencyPhone || '+234 803 555 0192'}</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* 360° HOUSEHOLD ROSTER MATRIX (ALL 4 FAMILY MEMBERS IN 1 VIEW) */}
+      <section>
+        <div className="flex items-center justify-between mb-2.5">
+          <h2 className="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+            <UserCheck className="w-4 h-4 text-emerald-primary" />
+            360° Household Roster & Next Clinical Milestones
+          </h2>
+          <span className="text-[10px] text-slate-400 font-semibold">{household.members.length} Members Monitored</span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {household.members.map((member) => {
+            const hasVaccinesPending = member.vaccinesDue?.some(v => !v.completed);
+            const nextVaccine = member.vaccinesDue?.find(v => !v.completed);
+            const isElderly = member.relation.includes('law') || member.relation.includes('Mother') && member.dob.startsWith('195');
+
+            return (
+              <div 
+                key={member.id}
+                className="glass-panel rounded-2xl p-3.5 border border-slate-200/90 hover:shadow-md transition-all bg-white/90"
+              >
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <div className="flex items-center gap-2.5">
+                    <div 
+                      className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-extrabold text-sm shadow-xs"
+                      style={{ backgroundColor: member.avatarBg }}
+                    >
+                      {member.name.charAt(0)}
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-extrabold text-slate-900 leading-tight">
+                        {member.name}
+                      </h3>
+                      <p className="text-[10px] text-slate-500 font-medium">
+                        {member.relation} • Born: {member.dob}
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => onOpenICE(member)}
+                    className="px-2 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-emergency border border-rose-200 text-[10px] font-extrabold flex items-center gap-1 shadow-xs transition-colors"
+                    title={`Open emergency ICE pass for ${member.name}`}
+                  >
+                    <ShieldAlert className="w-3 h-3" />
+                    <span>ICE PASS</span>
+                  </button>
+                </div>
+
+                {/* Vitals & Genetics Badges */}
+                <div className="flex items-center gap-2 text-[10px] font-bold">
+                  <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700">
+                    Blood: {member.bloodGroup}
+                  </span>
+                  <span className={`px-2 py-0.5 rounded ${
+                    member.genotype === 'AS' ? 'bg-amber-100 text-amber-800' : member.genotype === 'SS' ? 'bg-rose-100 text-rose-800' : 'bg-emerald-100 text-emerald-800'
+                  }`}>
+                    Genotype: {member.genotype}
+                  </span>
+                  <span className="px-2 py-0.5 rounded bg-rose-50 text-rose-700 truncate max-w-[120px]" title={member.allergies?.join(', ')}>
+                    {member.allergies?.[0] !== 'None' ? `⚠️ ${member.allergies?.[0]}` : 'No Allergies'}
+                  </span>
+                </div>
+
+                {/* Next Clinical Milestone Timer */}
+                <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
+                  <div className="flex items-center gap-1 text-slate-600 truncate">
+                    <Clock className="w-3.5 h-3.5 text-emerald-primary flex-shrink-0" />
+                    <span className="truncate">
+                      {nextVaccine 
+                        ? `Due: ${nextVaccine.name} (${nextVaccine.dueDate})`
+                        : member.regimen 
+                        ? `Refill: ${member.regimen[1]?.name || member.regimen[0]?.name} in 3 days`
+                        : member.chronicConditions?.includes('Hypertension')
+                        ? 'BP Clinic check due this week'
+                        : 'Routine preventative checkup'}
+                    </span>
+                  </div>
+
+                  <span className="text-[10px] font-extrabold text-emerald-primary flex-shrink-0 ml-2">
+                    Active
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 360° QUICK LAUNCH ACTION HUB */}
+      <section className="bg-slate-100/80 p-3.5 rounded-2xl border border-slate-200/90">
+        <h2 className="text-[11px] font-extrabold text-slate-700 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-emerald-primary" />
+          360° Quick Actions
+        </h2>
+
+        <div className="grid grid-cols-4 gap-2 text-center text-xs">
+          <button
+            onClick={onNavigateCapture}
+            className="p-2.5 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200/80 text-slate-800 flex flex-col items-center shadow-xs transition-all"
+          >
+            <div className="w-9 h-9 rounded-xl bg-emerald-light text-emerald-primary flex items-center justify-center mb-1">
+              <Camera className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-bold leading-tight">Snap Paper Record</span>
+          </button>
+
+          <button
+            onClick={onNavigateMCH}
+            className="p-2.5 rounded-xl bg-white hover:bg-pink-50 border border-slate-200/80 text-slate-800 flex flex-col items-center shadow-xs transition-all"
+          >
+            <div className="w-9 h-9 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center mb-1">
+              <Baby className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-bold leading-tight">EPI Vaccine Ladder</span>
+          </button>
+
+          <button
+            onClick={onNavigateTree}
+            className="p-2.5 rounded-xl bg-white hover:bg-indigo-50 border border-slate-200/80 text-slate-800 flex flex-col items-center shadow-xs transition-all"
+          >
+            <div className="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-accent flex items-center justify-center mb-1">
+              <Dna className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-bold leading-tight">Sickle Trait Matrix</span>
+          </button>
+
+          <button
+            onClick={onNavigateExpenses}
+            className="p-2.5 rounded-xl bg-white hover:bg-amber-50 border border-slate-200/80 text-slate-800 flex flex-col items-center shadow-xs transition-all"
+          >
+            <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center mb-1">
+              <CreditCard className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-bold leading-tight">Health Cash Ledger</span>
+          </button>
+        </div>
+      </section>
+
+      {/* URGENT HOUSEHOLD ACTIONS / CALLOUT BOX WITH REGIONAL AUDIO TTS */}
       {actionList.length > 0 && selectedMemberId === 'ALL' && (
         <section aria-labelledby="urgent-actions-title">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping" />
               <h2 id="urgent-actions-title" className="text-sm font-bold text-slate-900 tracking-tight">
-                Urgent Household Actions ({actionList.length})
+                Urgent Priority Actions ({actionList.length})
               </h2>
             </div>
-            <span className="text-[11px] font-semibold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">
-              Tap audio for speech
+            <span className="text-[10px] font-semibold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md">
+              Tap audio for regional speech
             </span>
           </div>
 
@@ -164,7 +522,7 @@ export default function DashboardView({
                         onClick={onNavigateMCH}
                         className="text-[10px] font-bold text-emerald-primary hover:underline flex items-center"
                       >
-                        View EPI Tracker <ChevronRight className="w-3 h-3 ml-0.5" />
+                        Open EPI Ladder <ChevronRight className="w-3 h-3 ml-0.5" />
                       </button>
                     )}
                   </div>
@@ -179,7 +537,7 @@ export default function DashboardView({
                         ? 'bg-emerald-primary text-white border-emerald-primary animate-pulse' 
                         : 'bg-white/80 hover:bg-emerald-50 text-slate-700 border-slate-200'
                     }`}
-                    title="Read alert aloud in regional cadence"
+                    title="Read alert aloud in regional speech"
                     aria-label="Play audio guidance"
                   >
                     <Volume2 className="w-4 h-4" />
@@ -198,79 +556,11 @@ export default function DashboardView({
         </section>
       )}
 
-      {/* 2. ACTIVE INDIVIDUAL PROFILE BANNER & ICE QUICK LAUNCH */}
-      {activeMember && (
-        <section className="glass-panel rounded-2xl p-4 border border-emerald-200/80 bg-gradient-to-br from-white/90 via-emerald-50/30 to-white/80 shadow-sm">
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <div className="flex items-center gap-3">
-              <div 
-                className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-extrabold text-lg shadow-sm"
-                style={{ backgroundColor: activeMember.avatarBg }}
-              >
-                {activeMember.name.charAt(0)}
-              </div>
-              <div>
-                <h2 className="text-base font-extrabold text-slate-900 leading-tight">
-                  {activeMember.name}
-                </h2>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">
-                  {activeMember.relation} • Born: {activeMember.dob}
-                </p>
-              </div>
-            </div>
-
-            {/* Standalone Emergency ICE Trigger */}
-            <button
-              onClick={() => onOpenICE(activeMember)}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-rose-emergency text-white font-bold text-xs shadow-sm hover:bg-rose-700 active:scale-95 transition-all animate-emergency flex-shrink-0"
-              aria-label={`Open Emergency ICE Card for ${activeMember.name}`}
-            >
-              <ShieldAlert className="w-4 h-4" />
-              <span>EMERGENCY ICE</span>
-            </button>
-          </div>
-
-          {/* Critical Clinical Vitals Row */}
-          <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-200/70">
-            <div className="bg-white/80 p-2 rounded-xl border border-slate-200/60">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Blood Group</span>
-              <span className="text-sm font-extrabold text-emerald-primary mt-0.5 block">{activeMember.bloodGroup}</span>
-            </div>
-
-            <div className="bg-white/80 p-2 rounded-xl border border-slate-200/60">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Genotype</span>
-              <span className={`text-sm font-extrabold mt-0.5 block ${activeMember.genotype === 'AS' ? 'text-amber-alert' : activeMember.genotype === 'SS' ? 'text-rose-emergency' : 'text-slate-900'}`}>
-                {activeMember.genotype}
-              </span>
-            </div>
-
-            <div className="bg-white/80 p-2 rounded-xl border border-slate-200/60 truncate">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Allergies</span>
-              <span className="text-xs font-bold text-rose-emergency mt-0.5 block truncate" title={activeMember.allergies?.join(', ')}>
-                {activeMember.allergies && activeMember.allergies.length > 0 ? activeMember.allergies.join(', ') : 'None'}
-              </span>
-            </div>
-          </div>
-
-          {/* Chronic Conditions Tags */}
-          {activeMember.chronicConditions && activeMember.chronicConditions.length > 0 && (
-            <div className="mt-3 flex items-center gap-1.5 flex-wrap">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">Chronic:</span>
-              {activeMember.chronicConditions.map((cond, idx) => (
-                <span key={idx} className="text-[11px] font-semibold bg-slate-100 text-slate-800 px-2 py-0.5 rounded-md border border-slate-200">
-                  {cond}
-                </span>
-              ))}
-            </div>
-          )}
-        </section>
-      )}
-
-      {/* 3. CONTINUOUS FAMILY HEALTH STREAM & PAPER RECORDS */}
+      {/* CONTINUOUS FAMILY HEALTH STREAM */}
       <section aria-labelledby="stream-title" className="space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <h2 id="stream-title" className="text-base font-extrabold text-slate-900 tracking-tight">
+            <h2 id="stream-title" className="text-sm font-extrabold text-slate-900 tracking-tight">
               {selectedMemberId === 'ALL' ? 'Continuous Family Health Stream' : `${activeMember?.name}'s Medical History`}
             </h2>
             <p className="text-xs text-slate-500">
@@ -321,13 +611,6 @@ export default function DashboardView({
             <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
               You can snap physical prescription sheets, clinic notes, lab investigations, or receipt cards.
             </p>
-            <button
-              onClick={onNavigateCapture}
-              className="mt-4 px-4 py-2 bg-emerald-primary text-white rounded-xl text-xs font-bold hover:bg-emerald-dark inline-flex items-center gap-1.5 shadow-sm"
-            >
-              <Camera className="w-4 h-4" />
-              Scan Paper Document
-            </button>
           </div>
         ) : (
           <div className="space-y-3">
@@ -339,7 +622,6 @@ export default function DashboardView({
                   key={rec.id}
                   className="glass-panel rounded-2xl p-4 hover:shadow-md transition-all duration-200 group border border-slate-200/90"
                 >
-                  {/* Top Bar: Category Pill & Date */}
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2">
                       <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border ${
@@ -365,7 +647,6 @@ export default function DashboardView({
                     </span>
                   </div>
 
-                  {/* Provider & Details */}
                   <h3 className="text-sm font-bold text-slate-900 group-hover:text-emerald-primary transition-colors">
                     {rec.provider}
                   </h3>
@@ -373,7 +654,6 @@ export default function DashboardView({
                     {rec.details}
                   </p>
 
-                  {/* Voice note snippet if attached */}
                   {rec.voiceNote && (
                     <div className="mt-2 flex items-center gap-2 text-[11px] text-slate-600 bg-amber-50/70 px-2.5 py-1.5 rounded-md border border-amber-200/60">
                       <Volume2 className="w-3.5 h-3.5 text-amber-700 flex-shrink-0" />
@@ -381,7 +661,6 @@ export default function DashboardView({
                     </div>
                   )}
 
-                  {/* Footer: Household Affiliation & Cash Cost */}
                   <div className="flex items-center justify-between gap-2 mt-3 pt-2.5 border-t border-slate-200/70 text-xs">
                     <div className="flex items-center gap-1.5">
                       <div 
