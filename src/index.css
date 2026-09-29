@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Colors */
+  --bg-canvas: #F4F7F6;
+  --surface-glass-default: rgba(255, 255, 255, 0.78);
+  --surface-glass-modal: rgba(255, 255, 255, 0.92);
+  --surface-glass-border: rgba(255, 255, 255, 0.65);
+  --surface-glass-card-border: rgba(226, 232, 240, 0.8);
+  --surface-opaque-fallback: #FFFFFF;
+  
+  /* Brand Accents */
+  --emerald-primary: #047857;
+  --emerald-light: #ECFDF5;
+  --amber-alert: #B45309;
+  --rose-emergency: #BE123C;
+  --indigo-accent: #4338CA;
+  
+  /* Typography & Structure */
+  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --shadow-glass: 0 4px 16px 0 rgba(31, 38, 135, 0.07);
+  --min-tap-target: 48px;
+
+  /* Safe Area Insets for Mobile / PWA notch support */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-system);
+  background-color: var(--bg-canvas);
+  color: #0F172A;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Glassmorphism Tier 1: Modern GPU accelerated */
+.glass-panel {
+  background: var(--surface-glass-default);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--surface-glass-card-border);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-modal {
+  background: var(--surface-glass-modal);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--surface-glass-border);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+}
+
+/* Tier 2: Low-overhead fallback for constrained devices & reduced-transparency */
+@media (prefers-reduced-transparency: reduce) {
+  .glass-panel,
+  .glass-modal {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--surface-opaque-fallback) !important;
+    border: 1px solid #E2E8F0 !important;
+  }
+}
+
+/* Mobile responsive app shell container */
+.app-shell {
+  max-width: 768px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 769px) {
+  .app-shell {
+    border-left: 1px solid #E2E8F0;
+    border-right: 1px solid #E2E8F0;
+  }
+}
+
+/* Touch & tap targets */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
+.touch-target {
+  min-height: var(--min-tap-target);
+  min-width: var(--min-tap-target);
+}
+
+/* Hide scrollbars for slick mobile horizontal ribbons while allowing scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Camera scan animation */
+@keyframes scanline {
+  0% { transform: translateY(0%); }
+  50% { transform: translateY(220px); }
+  100% { transform: translateY(0%); }
+}
+
+.animate-scan {
+  animation: scanline 2.5s ease-in-out infinite;
+}
+
+/* Pulse animation for emergency beacon */
+@keyframes pulse-emergency {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.03); }
+}
+
+.animate-emergency {
+  animation: pulse-emergency 2s infinite ease-in-out;
+}
