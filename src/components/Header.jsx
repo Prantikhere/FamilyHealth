@@ -6,11 +6,12 @@ import {
   Download, 
   RefreshCw, 
   Languages, 
-  QrCode,
-  HeartPulse,
-  LogOut,
-  User,
-  Check
+  QrCode, 
+  HeartPulse, 
+  LogOut, 
+  User, 
+  Check,
+  Globe2 
 } from 'lucide-react';
 
 export default function Header({ 
@@ -100,26 +101,29 @@ export default function Header({
             </button>
 
             {showLangMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-xs">
-                <div className="px-3 py-1 font-bold text-slate-400 uppercase tracking-wider text-[10px]">
-                  Audio Speech Language
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowLangMenu(false)} />
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-xs">
+                  <div className="px-3 py-1 font-bold text-slate-400 uppercase tracking-wider text-[10px]">
+                    Audio Speech Language
+                  </div>
+                  {languages.map((l) => (
+                    <button
+                      key={l.code}
+                      onClick={() => {
+                        onChangeLanguage(l.code);
+                        setShowLangMenu(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-emerald-50 transition-colors ${
+                        household.language === l.code ? 'font-bold text-emerald-primary bg-emerald-50/60' : 'text-slate-700'
+                      }`}
+                    >
+                      <span>{l.name}</span>
+                      {household.language === l.code && <Check className="w-4 h-4 text-emerald-primary" />}
+                    </button>
+                  ))}
                 </div>
-                {languages.map((l) => (
-                  <button
-                    key={l.code}
-                    onClick={() => {
-                      onChangeLanguage(l.code);
-                      setShowLangMenu(false);
-                    }}
-                    className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-emerald-50 transition-colors ${
-                      household.language === l.code ? 'font-bold text-emerald-primary bg-emerald-50/60' : 'text-slate-700'
-                    }`}
-                  >
-                    <span>{l.name}</span>
-                    {household.language === l.code && <Check className="w-4 h-4 text-emerald-primary" />}
-                  </button>
-                ))}
-              </div>
+              </>
             )}
           </div>
 
@@ -137,7 +141,7 @@ export default function Header({
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="w-8 h-8 rounded-full border-2 border-emerald-primary/40 flex items-center justify-center text-white font-bold text-xs shadow-xs"
+              className="w-8 h-8 rounded-full border-2 border-emerald-primary/40 flex items-center justify-center text-white font-bold text-xs shadow-xs touch-target"
               style={{ backgroundColor: currentUser?.avatarBg || '#047857' }}
               title={`Logged in as ${currentUser?.name || 'Amina Bello'}`}
               aria-label="User Account Menu"
@@ -146,7 +150,9 @@ export default function Header({
             </button>
 
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 text-xs">
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
                 <div className="px-3 py-2 border-b border-slate-100">
                   <span className="font-extrabold text-slate-900 block truncate">
                     {currentUser?.name || 'Amina Bello'}
@@ -194,7 +200,8 @@ export default function Header({
                   <span>Switch Account / Sign Out</span>
                 </button>
               </div>
-            )}
+            </>
+          )}
           </div>
         </div>
       </div>
