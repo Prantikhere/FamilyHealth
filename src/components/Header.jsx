@@ -21,7 +21,8 @@ export default function Header({
   onOpenTrust,
   onResetData,
   onChangeLanguage,
-  onLogout
+  onLogout,
+  onNavigateLanding
 }) {
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -157,6 +158,19 @@ export default function Header({
                     {currentUser?.role || 'Household Caretaker'}
                   </span>
                 </div>
+
+                {onNavigateLanding && (
+                  <button
+                    onClick={() => {
+                      setShowUserMenu(false);
+                      onNavigateLanding();
+                    }}
+                    className="w-full text-left px-3 py-2 hover:bg-slate-50 text-slate-700 flex items-center gap-2 border-b border-slate-100 font-medium"
+                  >
+                    <Globe2 className="w-4 h-4 text-emerald-primary" />
+                    <span>Product Showcase & Deck</span>
+                  </button>
+                )}
 
                 <button
                   onClick={() => {

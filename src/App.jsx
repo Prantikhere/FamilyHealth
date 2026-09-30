@@ -11,10 +11,12 @@ import AddMemberModal from './components/AddMemberModal';
 import DataExportModal from './components/DataExportModal';
 import OnboardingModal from './components/OnboardingModal';
 import LoginScreen, { DUMMY_ACCOUNTS } from './components/LoginScreen';
+import LandingPage from './components/LandingPage';
 import BottomNav from './components/BottomNav';
 import { storage } from './services/storage';
 
 const USER_STORAGE_KEY = 'seihealth_current_user_v1';
+const VIEW_MODE_KEY = 'seihealth_view_mode_v1';
 
 export default function App() {
   const [household, setHousehold] = useState(() => storage.load());
@@ -22,7 +24,18 @@ export default function App() {
   const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : false);
   const [activeTab, setActiveTab] = useState('DASHBOARD'); // 'DASHBOARD' | 'CAPTURE' | 'MCH' | 'TREE' | 'EXPENSES'
   
-  // Authentication & Current User State
+  // Navigation View Mode: 'LANDING' | 'LOGIN' | 'APP'
+  const [viewMode, setViewMode] = useState(() => {
+    try {
+      const savedMode = sessionStorage.getItem(VIEW_MODE_KEY);
+      if (savedMode) return savedMode;
+    } catch (e) {
+      console.warn('sessionStorage unavailable:', e);
+    }
+    return 'LANDING';
+  });
+
+  // Current User State
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const savedUser = localStorage.getItem(USER_STORAGE_KEY);
@@ -30,11 +43,8 @@ export default function App() {
     } catch (e) {
       console.warn('Could not read user from localStorage:', e);
     }
-    // Default to Amina Bello for seamless initial view, or null if logged out
     return DUMMY_ACCOUNTS[0];
   });
-
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   // Modals state
   const [iceModalMember, setIceModalMember] = useState(null);
@@ -70,21 +80,43 @@ export default function App() {
     }
   }, [currentUser]);
 
+  // Persist view mode to session storage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(VIEW_MODE_KEY, viewMode);
+    } catch (e) {}
+  }, [viewMode]);
+
   // Filtered records based on active profile tab
   const activeRecords = useMemo(() => {
     if (selectedMemberId === 'ALL') return household.records;
     return household.records.filter((r) => r.memberId === selectedMemberId);
   }, [household.records, selectedMemberId]);
 
-  // Auth Handlers
+  // Auth & View Handlers
   const handleLoginSuccess = (userObj) => {
     setCurrentUser(userObj);
-    setIsAuthenticated(true);
+    setViewMode('APP');
     setActiveTab('DASHBOARD');
   };
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
+    setViewMode('LOGIN');
+  };
+
+  const handleSelectDemoPersona = (personaIndex) => {
+    const persona = DUMMY_ACCOUNTS[personaIndex] || DUMMY_ACCOUNTS[0];
+    setCurrentUser({
+      name: persona.name,
+      email: persona.email,
+      role: persona.role,
+      badge: persona.badge,
+      clinic: persona.clinic,
+      avatarBg: persona.avatarBg,
+      isOfflineDemo: false,
+    });
+    setViewMode('APP');
+    setActiveTab('DASHBOARD');
   };
 
   // Handler: Add OCR/Physical document record
@@ -171,14 +203,30 @@ export default function App() {
     }
   };
 
-  // If user is not authenticated, display full Login Screen
-  if (!isAuthenticated) {
-    return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
+  // 1. LANDING PAGE VIEW (Investor & Product Overview Showcase)
+  if (viewMode === 'LANDING') {
+    return (
+      <LandingPage
+        onEnterApp={(showCredentials) => setViewMode(showCredentials ? 'LOGIN' : 'LOGIN')}
+        onSelectDemoUser={handleSelectDemoPersona}
+      />
+    );
   }
 
+  // 2. LOGIN SECTION VIEW (With Demo Credentials for User Acceptance)
+  if (viewMode === 'LOGIN') {
+    return (
+      <LoginScreen
+        onLoginSuccess={handleLoginSuccess}
+        onBackToLanding={() => setViewMode('LANDING')}
+      />
+    );
+  }
+
+  // 3. MAIN 360° APPLICATION VIEW
   return (
     <div className="app-shell bg-canvas text-slate-900">
-      {/* 1. TOP HEADER & STATUS BAR */}
+      {/* TOP HEADER & STATUS BAR */}
       <Header
         household={household}
         currentUser={currentUser}
@@ -188,9 +236,10 @@ export default function App() {
         onResetData={handleResetData}
         onChangeLanguage={(lang) => setHousehold(prev => ({ ...prev, language: lang }))}
         onLogout={handleLogout}
+        onNavigateLanding={() => setViewMode('LANDING')}
       />
 
-      {/* 2. HOUSEHOLD HORIZONTAL AVATAR RIBBON */}
+      {/* HOUSEHOLD HORIZONTAL AVATAR RIBBON */}
       <FamilyRibbon
         members={household.members}
         selectedMemberId={selectedMemberId}
@@ -198,7 +247,7 @@ export default function App() {
         onOpenAddMember={() => setShowAddMemberModal(true)}
       />
 
-      {/* 3. MAIN WORKSPACE / SCREEN SWITCHER */}
+      {/* MAIN 360° WORKSPACE SWITCHER */}
       <main className="flex-1 flex flex-col min-h-0" role="main">
         {activeTab === 'DASHBOARD' && (
           <DashboardView
@@ -245,13 +294,13 @@ export default function App() {
         )}
       </main>
 
-      {/* 4. PERSISTENT MOBILE-FIRST BOTTOM NAVIGATION */}
+      {/* PERSISTENT MOBILE-FIRST BOTTOM NAVIGATION */}
       <BottomNav
         activeTab={activeTab}
         onSelectTab={(tab) => setActiveTab(tab)}
       />
 
-      {/* 5. FULLSCREEN EMERGENCY ICE MODAL */}
+      {/* FULLSCREEN EMERGENCY ICE MODAL */}
       {iceModalMember && (
         <EmergencyICECard
           member={iceModalMember}
@@ -260,7 +309,7 @@ export default function App() {
         />
       )}
 
-      {/* 6. ADD MEMBER MODAL */}
+      {/* ADD MEMBER MODAL */}
       {showAddMemberModal && (
         <AddMemberModal
           onClose={() => setShowAddMemberModal(false)}
@@ -268,7 +317,7 @@ export default function App() {
         />
       )}
 
-      {/* 7. DATA SOVEREIGN EXPORT & NDPR MODAL */}
+      {/* DATA SOVEREIGN EXPORT & NDPR MODAL */}
       {showExportModal && (
         <DataExportModal
           household={household}
@@ -277,7 +326,7 @@ export default function App() {
         />
       )}
 
-      {/* 8. ONBOARDING ANCHOR SETUP MODAL (IF TRIGGERED) */}
+      {/* ONBOARDING ANCHOR SETUP MODAL (IF TRIGGERED) */}
       {showOnboardingModal && (
         <OnboardingModal
           household={household}
