@@ -1,6 +1,7 @@
 # SeiHealth — 360° Sovereign Household Health PWA
 
-> Built according to specifications in [`BluePrint.md`](file:///home/prantik/Downloads/Sei/BluePrint.md).
+> Built according to specifications in [`BluePrint.md`](file:///home/prantik/Downloads/Sei/BluePrint.md).  
+> **Live GitHub Pages URL**: **[https://prantikhere.github.io/FamilyHealth/](https://prantikhere.github.io/FamilyHealth/)**
 
 **SeiHealth** (inspired by *Sei* [生] — Life, Living & Vitality) is a responsive, local-first web application engineered specifically for maternal, infant, and multi-generational household health management in resource-constrained environments. It runs 100% offline, features client-side optical character recognition (OCR) for physical paper prescriptions and clinic cards, and generates cryptographically verifiable offline Emergency ICE (In Case of Emergency) passes.
 
