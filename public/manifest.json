@@ -3,12 +3,12 @@
   "name": "SeiHealth Sovereign Household Companion",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ],
-  "start_url": "/",
+  "start_url": "./",
   "background_color": "#F4F7F6",
   "theme_color": "#047857",
   "display": "standalone",
