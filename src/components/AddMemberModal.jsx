@@ -51,20 +51,20 @@ export default function AddMemberModal({ onClose, onSave }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+      <div className="surface-card w-full max-w-md shadow-lifted border border-white/80 overflow-hidden max-h-[90vh] flex flex-col">
         {/* Modal Header */}
-        <div className="px-5 py-4 bg-zinc-950 text-white flex items-center justify-between border-b border-zinc-800">
+        <div className="px-5 py-4 bg-gradient-to-br from-slate-900 to-slate-950 text-white flex items-center justify-between border-b border-white/10">
           <div className="flex items-center gap-2">
-            <UserPlus className="w-5 h-5" />
+            <UserPlus className="w-5 h-5 text-rose-400" />
             <h2 className="text-base font-bold">Add Family Member</h2>
           </div>
           <button 
             onClick={onClose} 
-            className="p-1 rounded-full hover:bg-white/20 transition-colors"
+            className="neu-icon-btn w-8 h-8 rounded-lg text-white/80 hover:text-white bg-white/10 border-white/20 shadow-neu-sm"
             aria-label="Close dialog"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -202,17 +202,17 @@ export default function AddMemberModal({ onClose, onSave }) {
             </div>
           </div>
 
-          <div className="pt-3 border-t border-borderRule flex items-center justify-end gap-2">
+          <div className="pt-3 border-t border-white/80 flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg border border-borderRule text-charcoal font-semibold hover:bg-zinc-100"
+              className="neu-btn btn-standard text-slate-700 font-bold text-xs"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-zinc-950 text-white font-bold hover:bg-black transition-colors shadow-sm"
+              className="neu-btn-primary btn-standard font-bold text-xs shadow-neu-primary active:scale-95 transition-all"
             >
               Save Member
             </button>

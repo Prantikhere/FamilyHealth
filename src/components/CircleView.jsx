@@ -126,87 +126,89 @@ export default function CircleView({
         </div>
       )}
 
-      {/* 2. EMERGENCY QUICK-ACTION STRIP (Section 2.2 Wireframe - Minimalist Inverted Black) */}
-      <div className="bg-zinc-950 text-white rounded-2xl p-4 shadow-card border border-zinc-800 relative overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
-          <div className="space-y-1">
+      {/* 2. EMERGENCY QUICK-ACTION STRIP (Section 2.2 Wireframe - Neumorphic Midnight) */}
+      <div className="rounded-3xl p-4 sm:p-5 shadow-neu-flat border border-white/20 relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950 text-white">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 relative z-10">
+          <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-white text-zinc-950 px-2 py-0.5 rounded-md">
-                <ShieldAlert className="w-3 h-3 text-zinc-950" />
+              <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider bg-rose-500/20 text-rose-300 border border-rose-500/40 px-2.5 py-0.5 rounded-full">
+                <ShieldAlert className="w-3 h-3 text-rose-400" />
                 {t.emergencyPass || 'EMERGENCY HEALTH PASS'}
               </span>
-              <span className="text-xs text-zinc-400 font-mono">
+              <span className="text-xs text-slate-300 font-mono">
                 {activeMember?.name} ({activeMember?.generation})
               </span>
             </div>
             <div className="flex flex-wrap items-center gap-2 text-xs font-bold pt-0.5">
-              <span className="text-white">{t.bloodGroup || 'Blood'}: <span className="bg-zinc-800 text-zinc-100 px-1.5 py-0.2 rounded font-mono font-bold">{activeMember?.bloodGroup}</span></span>
-              <span className="text-zinc-600">•</span>
-              <span className="text-white">{t.genotype || 'Genotype'}: <span className="bg-zinc-800 text-zinc-100 px-1.5 py-0.2 rounded font-mono font-bold">{activeMember?.genotype}</span></span>
-              <span className="text-zinc-600">•</span>
-              <span className="text-zinc-300 font-medium">Allergies: {activeMember?.allergies?.join(', ') || 'None'}</span>
+              <span className="text-white">{t.bloodGroup || 'Blood'}: <span className="bg-white/10 text-white px-2 py-0.5 rounded-lg font-mono font-bold shadow-neu-inset-sm border border-white/10">{activeMember?.bloodGroup}</span></span>
+              <span className="text-slate-500">•</span>
+              <span className="text-white">{t.genotype || 'Genotype'}: <span className="bg-white/10 text-white px-2 py-0.5 rounded-lg font-mono font-bold shadow-neu-inset-sm border border-white/10">{activeMember?.genotype}</span></span>
+              <span className="text-slate-500">•</span>
+              <span className="text-slate-300 font-medium">Allergies: {activeMember?.allergies?.join(', ') || 'None'}</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <button
               onClick={() => onEditMember?.(activeMember)}
-              className="px-3 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs flex items-center gap-1.5 border border-zinc-700 transition-all cursor-pointer"
+              className="h-9 px-3.5 rounded-xl font-bold text-xs inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer shadow-neu-sm"
               title="Edit Member Photo & Profile"
             >
-              <Camera className="w-3.5 h-3.5 text-zinc-300" />
+              <Camera className="w-3.5 h-3.5 text-slate-300" />
               <span>{t.editPhoto || 'Edit Photo'}</span>
             </button>
 
             <button
               onClick={() => onOpenICE(activeMember)}
-              className="px-3.5 py-2 rounded-xl bg-white hover:bg-zinc-100 text-zinc-950 font-bold text-xs flex items-center gap-2 shadow-xs active:scale-95 transition-all touch-target cursor-pointer border border-white"
+              className="neu-btn-danger h-9 px-4 rounded-xl font-extrabold text-xs inline-flex items-center gap-2 shadow-neu-sm active:scale-95 transition-all touch-target cursor-pointer"
               title="Launch Air-gapped Offline QR Emergency Medical Pass"
             >
-              <QrCode className="w-4 h-4 text-zinc-950" />
+              <QrCode className="w-4 h-4 text-white" />
               <span>{t.showQr || 'SHOW QR PASS'}</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* 3. FAMILY HEALTH COMPLETENESS MATRIX (FR-11) */}
+      {/* 3. FAMILY HEALTH COMPLETENESS MATRIX (FR-11 - Neumorphic Card) */}
       {!isSenior && (
-        <div className="surface-card p-4">
-          <div className="flex items-center justify-between gap-2 mb-2">
+        <div className="surface-card p-5 space-y-3">
+          <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <Activity className="w-4 h-4 text-zinc-950" />
-              <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-900">
+              <div className="w-7 h-7 rounded-xl neu-inset flex items-center justify-center text-slate-800">
+                <Activity className="w-4 h-4 text-slate-800" />
+              </div>
+              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-900">
                 {t.completenessIndex || 'Family Health Completeness Index'}
               </h2>
             </div>
-            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-zinc-100 text-zinc-900 border border-zinc-200">
+            <span className="neu-pill text-xs font-bold shadow-neu-sm">
               {household.completenessScore || 88}% {t.percentComplete || 'Complete'}
             </span>
           </div>
 
-          {/* Minimalist Monochrome Progress Bar */}
-          <div className="w-full bg-zinc-100 rounded-full h-2 overflow-hidden mb-3 border border-zinc-200">
+          {/* Neumorphic Inset Progress Bar */}
+          <div className="w-full neu-inset h-3 p-0.5 rounded-full overflow-hidden">
             <div 
-              className="bg-zinc-950 h-full rounded-full transition-all duration-500"
+              className="bg-gradient-to-r from-slate-700 to-slate-900 h-full rounded-full transition-all duration-500 shadow-neu-sm"
               style={{ width: `${household.completenessScore || 88}%` }}
             />
           </div>
 
           {/* Actionable Alert Chips */}
-          <div className="space-y-1.5">
+          <div className="space-y-2 pt-1">
             {household.pendingAlerts?.map(alert => (
               <div 
                 key={alert.id}
-                className="flex items-start gap-2 p-2.5 rounded-xl text-xs bg-zinc-50 text-zinc-900 border border-zinc-200"
+                className="flex items-center justify-between gap-2.5 p-3 rounded-2xl neu-inset text-xs text-slate-800"
               >
-                <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5 text-zinc-700" />
-                <div className="flex-1">
-                  <span className="font-semibold">{alert.text}</span>
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 flex-shrink-0 text-amber-600" />
+                  <span className="font-semibold text-slate-800">{alert.text}</span>
                 </div>
                 <button 
                   onClick={() => onSelectMember(alert.memberId)}
-                  className="text-[10px] font-bold uppercase tracking-wider underline hover:text-black cursor-pointer"
+                  className="neu-btn px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-800 cursor-pointer shadow-neu-sm flex-shrink-0"
                 >
                   {t.inspect || 'Inspect'}
                 </button>
@@ -217,24 +219,20 @@ export default function CircleView({
       )}
 
       {/* 4. VIEW TOGGLE: VISUAL PEDIGREE DAG vs MEMBER ROSTER */}
-      <div className="flex items-center justify-between border-b border-zinc-200 pb-2">
-        <div className="flex items-center gap-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200">
+      <div className="flex items-center justify-between gap-2 border-b border-white/80 pb-3">
+        <div className="neu-segmented p-1">
           <button
             onClick={() => setActiveTab('LINEAGE')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'LINEAGE' 
-                ? 'bg-zinc-950 text-white shadow-xs' 
-                : 'text-zinc-600 hover:text-zinc-950'
+            className={`neu-segmented-btn h-9 px-3.5 text-xs font-bold transition-all cursor-pointer ${
+              activeTab === 'LINEAGE' ? 'active shadow-neu-raised' : ''
             }`}
           >
             {t.lineageCanvas || 'Visual Lineage Graph (DAG)'}
           </button>
           <button
             onClick={() => setActiveTab('MEMBERS')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'MEMBERS' 
-                ? 'bg-zinc-950 text-white shadow-xs' 
-                : 'text-zinc-600 hover:text-zinc-950'
+            className={`neu-segmented-btn h-9 px-3.5 text-xs font-bold transition-all cursor-pointer ${
+              activeTab === 'MEMBERS' ? 'active shadow-neu-raised' : ''
             }`}
           >
             {t.memberRoster || 'Member Roster'} ({visibleMembers.length})
@@ -244,7 +242,7 @@ export default function CircleView({
         {!isSenior && (
           <button
             onClick={onOpenAddMember}
-            className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white shadow-xs transition-colors cursor-pointer border border-zinc-900"
+            className="neu-btn-primary h-9 px-3.5 rounded-xl font-bold text-xs inline-flex items-center gap-1.5 shadow-neu-primary cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>{t.addDependent || 'Add Dependent'}</span>
@@ -268,45 +266,45 @@ export default function CircleView({
 
       {/* 5B. MEMBER ROSTER LIST WITH PHOTOS & EDIT PROFILE */}
       {activeTab === 'MEMBERS' && (
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           {visibleMembers.map(member => (
             <div
               key={member.id}
               onClick={() => onSelectMember(member.id)}
-              className={`surface-card p-4 cursor-pointer transition-all hover:border-zinc-400 border ${
-                activeMember?.id === member.id ? 'ring-1 ring-zinc-950 border-zinc-950 bg-zinc-50/50' : 'border-zinc-200'
+              className={`surface-card p-4 sm:p-5 cursor-pointer transition-all ${
+                activeMember?.id === member.id ? 'shadow-neu-deep ring-2 ring-slate-800' : 'hover:shadow-neu-raised'
               }`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  {/* Member Photo / Minimalist Avatar */}
+                <div className="flex items-center gap-3.5">
+                  {/* Member Photo / Avatar */}
                   <div className="relative">
                     {member.avatarUrl ? (
                       <img 
                         src={member.avatarUrl} 
                         alt={member.name}
-                        className="w-12 h-12 rounded-2xl object-cover border border-zinc-300 shadow-xs" 
+                        className="w-13 h-13 rounded-2xl object-cover border-2 border-white shadow-neu-raised" 
                       />
                     ) : (
                       <div 
-                        className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-bold text-sm shadow-xs border border-zinc-300 bg-zinc-900"
+                        className="w-13 h-13 rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-neu-raised border-2 border-white bg-gradient-to-br from-slate-800 to-slate-950"
                       >
                         {member.avatarIcon || (member.firstName?.[0] || 'A')}
                       </div>
                     )}
-                    <span className="absolute -bottom-1 -right-1 text-[9px] font-bold bg-zinc-950 text-white px-1.5 py-0.2 rounded border border-white">
+                    <span className="absolute -bottom-1 -right-1 text-[9px] font-bold bg-slate-900 text-white px-1.5 py-0.2 rounded-full border border-white shadow-xs">
                       {member.generation}
                     </span>
                   </div>
 
                   <div>
-                    <div className="flex items-center gap-1.5">
-                      <h3 className="font-bold text-sm text-zinc-950">{member.name}</h3>
-                      <span className="text-[10px] font-semibold px-2 py-0.2 rounded-full bg-zinc-100 text-zinc-800 border border-zinc-200">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-extrabold text-sm text-slate-900">{member.name}</h3>
+                      <span className="neu-pill text-[9px] font-bold shadow-xs">
                         {member.statusNote || 'Active'}
                       </span>
                     </div>
-                    <p className="text-xs text-zinc-500">
+                    <p className="text-xs text-slate-500 font-medium mt-0.5">
                       {member.relation} • Born: {member.dob}
                     </p>
                   </div>
@@ -318,10 +316,10 @@ export default function CircleView({
                       e.stopPropagation();
                       onEditMember?.(member);
                     }}
-                    className="px-2.5 py-1.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-900 text-xs font-semibold flex items-center gap-1 transition-colors border border-zinc-200 cursor-pointer"
+                    className="neu-btn h-8 px-3 rounded-xl text-xs font-bold inline-flex items-center gap-1 shadow-neu-sm cursor-pointer"
                     title="Edit Profile & Photo"
                   >
-                    <Edit3 className="w-3.5 h-3.5 text-zinc-500" />
+                    <Edit3 className="w-3.5 h-3.5 text-slate-500" />
                     <span>{t.editProfile || 'Edit Profile'}</span>
                   </button>
 
@@ -330,7 +328,7 @@ export default function CircleView({
                       e.stopPropagation();
                       onOpenICE(member);
                     }}
-                    className="px-2.5 py-1.5 rounded-xl bg-zinc-950 text-white hover:bg-zinc-800 text-xs font-bold flex items-center gap-1 transition-colors cursor-pointer border border-zinc-900"
+                    className="neu-btn-primary h-8 px-3 rounded-xl text-xs font-extrabold inline-flex items-center gap-1 shadow-neu-sm cursor-pointer"
                     title="Open Offline Emergency Pass"
                   >
                     <QrCode className="w-3.5 h-3.5" />
@@ -340,21 +338,21 @@ export default function CircleView({
               </div>
 
               {/* Clinical Attributes Strip */}
-              <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-zinc-100 text-center text-xs">
-                <div className="bg-zinc-50 p-2 rounded-xl border border-zinc-200">
-                  <span className="text-[10px] text-zinc-500 block font-medium">{t.bloodGroup || 'Blood Group'}</span>
-                  <span className="font-bold text-zinc-950 font-mono">{member.bloodGroup}</span>
+              <div className="grid grid-cols-3 gap-2.5 mt-3.5 pt-3.5 border-t border-white/80 text-center text-xs">
+                <div className="neu-inset p-2.5 rounded-2xl">
+                  <span className="text-[10px] text-slate-500 block font-medium">{t.bloodGroup || 'Blood Group'}</span>
+                  <span className="font-black text-slate-900 font-mono text-sm">{member.bloodGroup}</span>
                 </div>
-                <div className="bg-zinc-50 p-2 rounded-xl border border-zinc-200">
-                  <span className="text-[10px] text-zinc-500 block font-medium">{t.genotype || 'Genotype'}</span>
-                  <span className="font-bold text-zinc-950 font-mono">
+                <div className="neu-inset p-2.5 rounded-2xl">
+                  <span className="text-[10px] text-slate-500 block font-medium">{t.genotype || 'Genotype'}</span>
+                  <span className="font-black text-slate-900 font-mono text-sm">
                     {member.genotype}
                   </span>
                 </div>
-                <div className="bg-zinc-50 p-2 rounded-xl border border-zinc-200">
-                  <span className="text-[10px] text-zinc-500 block font-medium">{t.resuscitation || 'Resuscitation'}</span>
-                  <span className="font-semibold text-zinc-950 truncate block">
-                    {member.resuscitationOrder || 'Full Code'}
+                <div className="neu-inset p-2.5 rounded-2xl">
+                  <span className="text-[10px] text-slate-500 block font-medium">{t.resuscitation || 'Resuscitation'}</span>
+                  <span className="font-bold text-slate-800 text-[11px] truncate block">
+                    {member.resuscitationOrder?.includes('Full') ? 'Full Code' : 'DNR'}
                   </span>
                 </div>
               </div>

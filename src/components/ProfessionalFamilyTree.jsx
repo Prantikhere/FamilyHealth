@@ -63,14 +63,14 @@ export default function ProfessionalFamilyTree({
         </div>
 
         {/* Action Controls: Zoom & Trait Filter */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5">
           {/* Trait Filter */}
-          <div className="flex items-center gap-1 bg-zinc-100 p-1 rounded-xl text-[11px] font-bold border border-zinc-200">
-            <Filter className="w-3.5 h-3.5 text-zinc-500 ml-1" />
+          <div className="neu-inset px-2.5 py-1.5 rounded-xl text-[11px] font-bold flex items-center gap-1.5">
+            <Filter className="w-3.5 h-3.5 text-slate-500" />
             <select
               value={traitFilter}
               onChange={(e) => setTraitFilter(e.target.value)}
-              className="bg-transparent text-zinc-900 outline-none font-bold cursor-pointer"
+              className="bg-transparent text-slate-800 outline-none font-bold cursor-pointer"
             >
               <option value="ALL">All Members</option>
               <option value="AS">Sickle Carriers (AS)</option>
@@ -79,35 +79,35 @@ export default function ProfessionalFamilyTree({
             </select>
           </div>
 
-          {/* Zoom Buttons */}
-          <div className="flex items-center gap-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200">
+          {/* Zoom Buttons (Proportioned Icon Buttons) */}
+          <div className="flex items-center gap-1.5">
             <button 
               onClick={() => setZoomLevel(prev => Math.min(prev + 0.1, 1.25))}
-              className="p-1 rounded-lg hover:bg-zinc-200 text-zinc-800 cursor-pointer"
+              className="neu-icon-btn w-8 h-8 rounded-lg shadow-neu-sm"
               title="Zoom In"
             >
-              <ZoomIn className="w-4 h-4" />
+              <ZoomIn className="w-4 h-4 text-slate-700" />
             </button>
             <button 
               onClick={() => setZoomLevel(prev => Math.max(prev - 0.1, 0.75))}
-              className="p-1 rounded-lg hover:bg-zinc-200 text-zinc-800 cursor-pointer"
+              className="neu-icon-btn w-8 h-8 rounded-lg shadow-neu-sm"
               title="Zoom Out"
             >
-              <ZoomOut className="w-4 h-4" />
+              <ZoomOut className="w-4 h-4 text-slate-700" />
             </button>
             <button 
               onClick={() => setZoomLevel(1)}
-              className="p-1 rounded-lg hover:bg-zinc-200 text-zinc-800 cursor-pointer"
+              className="neu-icon-btn w-8 h-8 rounded-lg shadow-neu-sm"
               title="Reset Zoom"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-4 h-4 text-slate-700" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* 2. PEDIGREE GRAPH CANVAS */}
-      <div className="bg-white rounded-2xl p-4 sm:p-6 border border-zinc-200 overflow-x-auto relative min-h-[380px]">
+      {/* 2. PEDIGREE GRAPH CANVAS (Neumorphic Inset Canvas) */}
+      <div className="neu-inset rounded-3xl p-4 sm:p-6 overflow-x-auto relative min-h-[380px]">
         <div 
           className="transition-transform origin-top min-w-[560px] space-y-6"
           style={{ transform: `scale(${zoomLevel})` }}
@@ -116,7 +116,7 @@ export default function ProfessionalFamilyTree({
           {/* TIER G0: GRANDPARENTS */}
           <div className="space-y-2">
             <div className="flex items-center justify-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 rounded-full">
+              <span className="neu-pill text-[10px] font-bold tracking-widest text-slate-600 shadow-neu-sm">
                 Generation 0 (Grandparents)
               </span>
             </div>
@@ -130,10 +130,10 @@ export default function ProfessionalFamilyTree({
                   <div
                     key={m.id}
                     onClick={() => onSelectMember(m.id)}
-                    className={`relative w-44 p-3.5 rounded-2xl border transition-all cursor-pointer ${
+                    className={`relative w-44 p-3.5 rounded-2xl transition-all cursor-pointer ${
                       isSelected 
-                        ? 'border-zinc-950 bg-zinc-50 shadow-md ring-1 ring-zinc-950 scale-105' 
-                        : 'border-zinc-200 bg-white hover:border-zinc-400 shadow-xs'
+                        ? 'surface-card shadow-neu-deep ring-2 ring-slate-900 scale-105' 
+                        : 'neu-btn text-left hover:shadow-neu-raised'
                     } ${isDimmed ? 'opacity-30 grayscale' : ''}`}
                   >
                     {/* Clinical Pedigree Symbol (Square for Male, Circle for Female) */}

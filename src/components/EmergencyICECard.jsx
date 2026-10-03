@@ -217,7 +217,7 @@ export default function EmergencyICECard({ member, household, onClose }) {
 
             <a
               href={`tel:${(household.emergencyPhone || '+2348035550192').replace(/\s+/g, '')}`}
-              className="px-4 py-3 rounded-xl bg-zinc-950 text-white font-black text-xs flex items-center gap-2 shadow-md hover:bg-black active:scale-95 transition-all"
+              className="neu-btn-primary h-11 px-4 rounded-xl text-white font-bold text-xs inline-flex items-center gap-2 shadow-neu-primary active:scale-95 transition-all"
             >
               <PhoneCall className="w-4 h-4" />
               <span>SPEED DIAL</span>
@@ -225,42 +225,42 @@ export default function EmergencyICECard({ member, household, onClose }) {
           </div>
 
           {/* 5. HIGH-DENSITY OFFLINE ICE QR CODE */}
-          <div className="p-4 rounded-2xl bg-white border border-borderRule text-center shadow-xs">
-            <span className="text-[11px] font-extrabold uppercase tracking-wider text-charcoal block mb-1">
+          <div className="p-4 rounded-2xl neu-inset text-center shadow-neu-pressed">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-800 block mb-1">
               OFFLINE ENCRYPTED QR EMERGENCY PASS
             </span>
-            <p className="text-[11px] text-charcoal-muted max-w-xs mx-auto mb-3">
+            <p className="text-[11px] text-slate-500 max-w-xs mx-auto mb-3 font-medium">
               Triage personnel and first responders can scan this code offline to read the encrypted health record directly without internet or authentication.
             </p>
 
             {qrDataUrl ? (
-              <div className="inline-block p-2 bg-white rounded-2xl border-2 border-zinc-950 shadow-md">
-                <img src={qrDataUrl} alt="Offline ICE QR Matrix" className="w-48 h-48 mx-auto" />
+              <div className="inline-block p-2.5 bg-white rounded-2xl border-2 border-slate-900 shadow-neu-raised">
+                <img src={qrDataUrl} alt="Offline ICE QR Matrix" className="w-48 h-48 mx-auto rounded-lg" />
               </div>
             ) : (
-              <div className="w-48 h-48 mx-auto flex items-center justify-center bg-zinc-100 rounded-2xl">
-                <span className="text-xs text-zinc-400">Generating QR...</span>
+              <div className="w-48 h-48 mx-auto flex items-center justify-center bg-white/40 rounded-2xl">
+                <span className="text-xs text-slate-400 font-bold">Generating QR...</span>
               </div>
             )}
             
-            <div className="mt-2 text-[10px] font-mono text-zinc-500">
+            <div className="mt-2 text-[10px] font-mono text-slate-500 font-bold">
               Protocol: SEI_ICE_V1 • Standalone Zero Cloud Access
             </div>
           </div>
 
-          {/* Action Row: Print, Share, Close */}
-          <div className="flex items-center gap-2 pt-2">
+          {/* Action Row: Print, Share, Close (Proportioned Buttons) */}
+          <div className="flex items-center gap-2.5 pt-2">
             <button
               onClick={handlePrint}
-              className="flex-1 py-3 rounded-xl border border-borderRule font-bold text-xs text-charcoal hover:bg-zinc-100 flex items-center justify-center gap-1.5"
+              className="flex-1 neu-btn btn-standard font-bold text-xs text-slate-700"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-4 h-4 text-slate-500" />
               <span>Print Card</span>
             </button>
 
             <button
               onClick={handleShare}
-              className="flex-1 py-3 rounded-xl bg-zinc-950 text-white font-bold text-xs hover:bg-black flex items-center justify-center gap-1.5"
+              className="flex-1 neu-btn-primary btn-standard font-bold text-xs shadow-neu-primary"
             >
               {copied ? <Check className="w-4 h-4 text-white" /> : <Share2 className="w-4 h-4" />}
               <span>{copied ? 'Copied Details!' : 'Share Pass'}</span>

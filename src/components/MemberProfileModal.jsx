@@ -154,7 +154,7 @@ export default function MemberProfileModal({
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="px-3 py-1.5 rounded-xl bg-zinc-950 hover:bg-black text-white font-extrabold text-xs flex items-center gap-1.5 shadow-xs transition-colors"
+                    className="neu-btn-primary h-9 px-3.5 rounded-xl font-bold text-xs inline-flex items-center gap-1.5 shadow-neu-sm transition-all"
                   >
                     <Upload className="w-3.5 h-3.5" />
                     <span>{t.uploadPhoto || 'Upload Photo'}</span>
@@ -164,22 +164,22 @@ export default function MemberProfileModal({
                     <button
                       type="button"
                       onClick={() => setAvatarUrl('')}
-                      className="px-2.5 py-1.5 rounded-xl bg-sand hover:bg-sand-variant text-charcoal-muted text-xs font-bold"
+                      className="neu-btn h-9 px-3 rounded-xl text-slate-500 text-xs font-bold shadow-neu-sm"
                     >
                       Remove Photo
                     </button>
                   )}
                 </div>
 
-                <p className="text-[11px] text-charcoal-muted">
+                <p className="text-[11px] text-slate-500 font-medium">
                   Supports camera photos, PNG, JPG, or pick from African illustrated portraits below:
                 </p>
               </div>
             </div>
 
             {/* Preset Avatars Bar */}
-            <div className="pt-2 border-t border-borderRule">
-              <span className="text-[10px] font-black uppercase text-charcoal-muted block mb-1.5">
+            <div className="pt-2 border-t border-white/80">
+              <span className="text-[10px] font-black uppercase text-slate-500 block mb-1.5">
                 {t.choosePreset || 'Choose Illustrated Avatar'}:
               </span>
               <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
@@ -194,8 +194,8 @@ export default function MemberProfileModal({
                     }}
                     className={`w-10 h-10 rounded-2xl flex items-center justify-center text-lg flex-shrink-0 transition-transform ${
                       avatarIcon === av.icon && !avatarUrl 
-                        ? 'ring-2 ring-zinc-950 scale-110 shadow-xs' 
-                        : 'opacity-80 hover:opacity-100'
+                        ? 'ring-2 ring-slate-900 scale-110 shadow-neu-raised' 
+                        : 'neu-btn hover:opacity-100 shadow-neu-sm'
                     }`}
                     style={{ backgroundColor: av.bg }}
                     title={av.label}
@@ -395,18 +395,18 @@ export default function MemberProfileModal({
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="pt-3 border-t border-borderRule flex items-center justify-end gap-2">
+          {/* Action Buttons (Proportioned h-10 buttons) */}
+          <div className="pt-3 border-t border-white/80 flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-charcoal font-bold text-xs"
+              className="neu-btn btn-standard text-slate-700 font-bold text-xs"
             >
               {t.cancelBtn || 'Cancel'}
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl bg-zinc-950 hover:bg-black text-white font-black text-xs shadow-md active:scale-95 transition-all"
+              className="neu-btn-primary btn-standard font-bold text-xs shadow-neu-primary active:scale-95 transition-all"
             >
               {isNew ? (t.addDependent || 'Add to Health Circle') : (t.saveProfile || 'Save Profile Changes')}
             </button>

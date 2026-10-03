@@ -181,38 +181,38 @@ export default function TimelineView({
       )}
 
       {/* 1. TOP HEADER & PROVENANCE FILTER */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-200 pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/80 pb-3">
         <div>
-          <h2 className="text-base font-bold text-zinc-950 tracking-tight">
+          <h2 className="text-base font-bold text-slate-900 tracking-tight">
             {t.timelineHeading || 'Dual-Tier Health Records Timeline'}
           </h2>
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-slate-500">
             {t.timelineSubtitle || 'Cryptographically signed official records & patient self-reported logs'}
           </p>
         </div>
 
-        {/* Filter Pills */}
-        <div className="flex items-center gap-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200 self-start sm:self-auto">
+        {/* Filter Pills (Neumorphic Segmented) */}
+        <div className="neu-segmented p-1 self-start sm:self-auto">
           <button
             onClick={() => setFilterType('ALL')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              filterType === 'ALL' ? 'bg-zinc-950 text-white shadow-xs' : 'text-zinc-600 hover:text-zinc-950'
+            className={`neu-segmented-btn h-8 px-3 text-xs font-bold transition-all cursor-pointer ${
+              filterType === 'ALL' ? 'active shadow-neu-raised' : ''
             }`}
           >
             All ({roleRecords.length})
           </button>
           <button
             onClick={() => setFilterType('OFFICIAL')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              filterType === 'OFFICIAL' ? 'bg-zinc-950 text-white shadow-xs' : 'text-zinc-600 hover:text-zinc-950'
+            className={`neu-segmented-btn h-8 px-3 text-xs font-bold transition-all cursor-pointer ${
+              filterType === 'OFFICIAL' ? 'active shadow-neu-raised' : ''
             }`}
           >
             Official Verified
           </button>
           <button
             onClick={() => setFilterType('SELF')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              filterType === 'SELF' ? 'bg-zinc-950 text-white shadow-xs' : 'text-zinc-600 hover:text-zinc-950'
+            className={`neu-segmented-btn h-8 px-3 text-xs font-bold transition-all cursor-pointer ${
+              filterType === 'SELF' ? 'active shadow-neu-raised' : ''
             }`}
           >
             Self-Reported
@@ -221,42 +221,42 @@ export default function TimelineView({
       </div>
 
       {/* 2. SELECTIVE TRANSFER ACTIVATION BAR (Section 2.2 Wireframe) */}
-      <div className="surface-card p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white border border-zinc-200">
-        <div className="flex items-center gap-2">
+      <div className="surface-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
           <input
             type="checkbox"
             checked={selectedRecordIds.length > 0 && selectedRecordIds.length === filteredRecords.length}
             onChange={handleSelectAll}
-            className="w-4 h-4 rounded border-zinc-300 text-zinc-950 focus:ring-zinc-950 cursor-pointer"
+            className="w-4 h-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900 cursor-pointer"
             id="selectAllRecords"
           />
-          <label htmlFor="selectAllRecords" className="text-xs font-semibold text-zinc-900 cursor-pointer">
+          <label htmlFor="selectAllRecords" className="text-xs font-bold text-slate-800 cursor-pointer">
             Select records to compile temporary doctor transfer PIN
           </label>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 self-end sm:self-auto">
+        <div className="flex flex-wrap items-center gap-2.5 self-end sm:self-auto">
           {onOpenOcr && (
             <button
               onClick={onOpenOcr}
-              className="px-3 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border border-zinc-300 text-xs font-bold flex items-center gap-1.5 shadow-xs transition-transform active:scale-95 cursor-pointer"
+              className="neu-btn h-9 px-3.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 shadow-neu-sm transition-all cursor-pointer"
               title="Scan and parse paper prescription or receipt via WASM OCR"
             >
-              <Camera className="w-3.5 h-3.5 text-zinc-600" />
+              <Camera className="w-3.5 h-3.5 text-slate-500" />
               <span>{t.scanAction || 'Scan (OCR)'}</span>
             </button>
           )}
 
-          <span className="text-xs font-mono text-zinc-500">
+          <span className="text-xs font-mono text-slate-500 font-bold px-1">
             {selectedRecordIds.length} selected
           </span>
           <button
             onClick={handleInitiateTransfer}
             disabled={selectedRecordIds.length === 0}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs ${
+            className={`h-9 px-4 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 transition-all ${
               selectedRecordIds.length > 0 
-                ? 'bg-zinc-950 hover:bg-zinc-800 text-white cursor-pointer active:scale-95 border border-zinc-900' 
-                : 'bg-zinc-100 text-zinc-400 cursor-not-allowed border border-zinc-200'
+                ? 'neu-btn-primary shadow-neu-primary cursor-pointer active:scale-95' 
+                : 'neu-inset text-slate-400 opacity-60 cursor-not-allowed'
             }`}
           >
             <Share2 className="w-3.5 h-3.5" />

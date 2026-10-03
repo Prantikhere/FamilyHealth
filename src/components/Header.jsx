@@ -39,76 +39,76 @@ export default function Header({
   const pendingAlertCount = household.pendingAlerts?.length || 2;
 
   return (
-    <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-zinc-200 px-3 sm:px-4 py-2.5 shadow-xs" role="banner">
+    <header className="sticky top-0 z-30 bg-[#E8EDF5]/95 backdrop-blur-md border-b border-white/80 px-3 sm:px-4 py-2.5 shadow-[0_4px_14px_rgba(202,211,222,0.5)]" role="banner">
       <div className="flex items-center justify-between gap-2">
         
         {/* 1. BRAND IDENTITY & HOME CLICK */}
         <button
           onClick={onNavigateLanding}
-          className="flex items-center gap-2 min-w-0 text-left group touch-target cursor-pointer hover:opacity-90 transition-opacity"
+          className="flex items-center gap-2.5 min-w-0 text-left group touch-target cursor-pointer hover:opacity-95 transition-opacity"
           title="Return to FamilyHealth Product Showcase & Overview"
         >
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-zinc-950 flex items-center justify-center text-white shadow-xs flex-shrink-0 group-hover:scale-105 transition-transform">
-            <HeartPulse className="w-5 h-5 sm:w-6 sm:h-6" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-950 flex items-center justify-center text-white shadow-neu-raised flex-shrink-0 group-hover:scale-105 transition-transform border border-white/20">
+            <HeartPulse className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-rose-400" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
-              <h1 className="text-sm sm:text-base font-black text-zinc-950 tracking-tight leading-none">
+              <h1 className="text-sm sm:text-base font-black text-slate-900 tracking-tight leading-none">
                 FamilyHealth
               </h1>
-              <span className="text-[8px] sm:text-[9px] uppercase font-black bg-zinc-100 text-zinc-900 px-1.5 py-0.2 rounded border border-zinc-200">
+              <span className="text-[8px] sm:text-[9px] uppercase font-black bg-white/70 text-slate-700 px-1.5 py-0.5 rounded-full border border-white shadow-xs">
                 AFRICA
               </span>
             </div>
-            <p className="text-[10px] sm:text-[11px] text-zinc-500 font-medium truncate mt-0.5">
-              Circle: <span className="font-bold text-zinc-900">{household.head}</span>
+            <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium truncate mt-0.5">
+              Circle: <span className="font-bold text-slate-800">{household.head}</span>
             </p>
           </div>
         </button>
 
         {/* 2. ACTION CONTROLS & STATUS */}
-        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+        <div className="flex items-center gap-2 flex-shrink-0">
           
-          {/* Quick OCR Scanner Button */}
+          {/* Quick OCR Scanner Button (Proportioned h-9) */}
           {onOpenOcr && (
             <button
               onClick={onOpenOcr}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white font-black text-xs shadow-xs transition-transform active:scale-95 touch-target border border-zinc-900"
+              className="h-9 px-3 rounded-xl neu-btn-primary font-bold text-xs inline-flex items-center gap-1.5 transition-all touch-target"
               title="Scan clinic prescription, immunization leaflet, or receipt via WASM OCR"
             >
-              <Camera className="w-3.5 h-3.5" />
+              <Camera className="w-3.5 h-3.5 text-slate-300" />
               <span className="hidden sm:inline">{t.scanAction || 'Scan Record (OCR)'}</span>
             </button>
           )}
 
-          {/* Pending Alerts Counter Pill */}
+          {/* Pending Alerts Counter (Proportioned h-9) */}
           <button
             onClick={onOpenAlerts}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border border-zinc-200 text-xs font-bold transition-colors"
+            className="h-9 px-3 rounded-xl neu-btn font-bold text-xs inline-flex items-center gap-1.5 transition-all"
             title={`${pendingAlertCount} actionable alerts in your family health circle`}
           >
-            <Bell className="w-3.5 h-3.5 text-zinc-600" />
+            <Bell className="w-3.5 h-3.5 text-slate-600" />
             <span className="hidden sm:inline">{t.alertsBadge || 'Alerts'} ({pendingAlertCount})</span>
             <span className="sm:hidden">{pendingAlertCount}</span>
           </button>
 
-          {/* Language Selector Dropdown */}
+          {/* Language Selector Dropdown (Proportioned h-9) */}
           <div className="relative">
             <button
               onClick={() => setShowLangMenu(!showLangMenu)}
-              className="px-2.5 py-1 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-900 text-xs font-bold flex items-center gap-1 border border-zinc-200"
+              className="h-9 px-2.5 rounded-xl neu-btn text-xs font-bold inline-flex items-center gap-1"
               aria-label="Change Language"
             >
-              <Languages className="w-3.5 h-3.5 text-zinc-500" />
+              <Languages className="w-3.5 h-3.5 text-slate-500" />
               <span className="uppercase text-[11px] font-bold">{household.language || 'en'}</span>
-              <ChevronDown className="w-3 h-3 text-zinc-500" />
+              <ChevronDown className="w-3 h-3 text-slate-500" />
             </button>
 
             {showLangMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowLangMenu(false)} />
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-lifted border border-zinc-200 py-2 z-50 text-xs animate-in fade-in duration-150">
-                  <div className="px-3 py-1.5 font-bold text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-100 mb-1">
+                <div className="absolute right-0 mt-2 w-56 surface-card shadow-lifted border border-white/80 py-2 z-50 text-xs animate-in fade-in duration-150">
+                  <div className="px-3 py-1.5 font-bold text-slate-400 uppercase tracking-wider text-[10px] border-b border-slate-200/60 mb-1">
                     Vernacular Localization
                   </div>
                   {languages.map((l) => (
@@ -118,12 +118,12 @@ export default function Header({
                         onChangeLanguage(l.code);
                         setShowLangMenu(false);
                       }}
-                      className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-zinc-50 transition-colors ${
-                        household.language === l.code ? 'font-bold text-zinc-950 bg-zinc-100' : 'text-zinc-700'
+                      className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-white/40 transition-colors ${
+                        household.language === l.code ? 'font-bold text-slate-900 bg-white/60' : 'text-slate-700'
                       }`}
                     >
                       <span>{l.name}</span>
-                      {household.language === l.code && <Check className="w-4 h-4 text-zinc-950" />}
+                      {household.language === l.code && <Check className="w-4 h-4 text-slate-900" />}
                     </button>
                   ))}
                 </div>
@@ -131,11 +131,11 @@ export default function Header({
             )}
           </div>
 
-          {/* User Account Menu Dropdown */}
+          {/* User Account Menu Dropdown (Proportioned w-9 h-9) */}
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-2xl bg-zinc-950 text-white font-bold text-xs shadow-xs flex items-center justify-center border border-zinc-200 touch-target cursor-pointer hover:scale-105 transition-transform"
+              className="w-9 h-9 rounded-xl neu-icon-btn font-black text-xs text-slate-800 touch-target cursor-pointer"
               title={`Logged in as ${currentUser?.name || 'Femi Adeyemi'}`}
               aria-label="User Account Menu"
             >
@@ -145,16 +145,16 @@ export default function Header({
             {showUserMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-lifted border border-borderRule py-2 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute right-0 mt-2 w-64 surface-card shadow-lifted border border-white/80 py-2 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
                   
-                  <div className="px-4 py-2.5 border-b border-borderRule">
-                    <span className="font-black text-charcoal block truncate text-sm">
+                  <div className="px-4 py-2.5 border-b border-slate-200/60">
+                    <span className="font-black text-slate-900 block truncate text-sm">
                       {currentUser?.name || 'Femi Adeyemi'}
                     </span>
-                    <span className="text-[11px] text-charcoal-muted block truncate">
+                    <span className="text-[11px] text-slate-500 block truncate">
                       {currentUser?.email || 'femi.adeyemi@familyhealth.africa'}
                     </span>
-                    <span className="inline-block mt-1 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-900 border border-zinc-200">
+                    <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/70 text-slate-700 border border-white shadow-xs">
                       {currentUser?.role || 'Primary Caretaker (G1)'}
                     </span>
                   </div>
@@ -165,9 +165,9 @@ export default function Header({
                       setShowUserMenu(false);
                       onNavigateLanding();
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-zinc-50 text-zinc-900 font-bold flex items-center gap-2 transition-colors"
+                    className="w-full text-left px-4 py-2.5 hover:bg-white/40 text-slate-800 font-bold flex items-center gap-2 transition-colors"
                   >
-                    <Globe2 className="w-4 h-4 text-zinc-600" />
+                    <Globe2 className="w-4 h-4 text-slate-500" />
                     <span>Product Showcase & Overview</span>
                   </button>
 
@@ -177,9 +177,9 @@ export default function Header({
                       setShowUserMenu(false);
                       onResetData();
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-zinc-50 text-charcoal flex items-center gap-2 transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-white/40 text-slate-700 flex items-center gap-2 transition-colors"
                   >
-                    <RefreshCw className="w-4 h-4 text-charcoal-muted" />
+                    <RefreshCw className="w-4 h-4 text-slate-400" />
                     <span>Reset to Initial LLD Dataset</span>
                   </button>
 
@@ -189,7 +189,7 @@ export default function Header({
                       setShowUserMenu(false);
                       onLogout();
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-zinc-100 text-zinc-950 font-bold flex items-center gap-2 border-t border-borderRule transition-colors"
+                    className="w-full text-left px-4 py-2.5 hover:bg-white/60 text-slate-900 font-bold flex items-center gap-2 border-t border-slate-200/60 transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out / Switch Account</span>

@@ -3,28 +3,31 @@
 @tailwind utilities;
 
 :root {
-  /* Minimalist + Monochrome Design Tokens */
-  --bg-canvas: #FAFAFA;              /* Crisp Minimalist Off-White */
-  --surface-white: #FFFFFF;          /* Pure Luminous White */
-  --surface-sand: #F4F4F5;           /* Subtle Zinc Container */
-  --surface-variant: #E4E4E7;        /* Hairline Border / Subtle Surface */
-  --color-terracotta: #09090B;       /* Deep Obsidian Black (Primary Action) */
-  --color-forest: #18181B;           /* Deep Graphite */
-  --color-charcoal: #09090B;         /* High Contrast Stark Black Ink */
-  --color-muted: #71717A;            /* Refined Secondary Zinc */
-  --color-border: #E4E4E7;           /* Razor-Sharp Hairline Border */
+  /* Neumorphic Design Tokens (Soft UI, Dual Specular & Occlusion Shadows) */
+  --bg-canvas: #E8EDF5;              /* Soft Slate-Tinted Neumorphic Canvas */
+  --surface-neu: #E8EDF5;            /* Base Extruded Surface */
+  --neu-light: #FFFFFF;              /* Pure Specular Light Reflection (Top-Left) */
+  --neu-dark: #CAD3DE;               /* Ambient Soft Occlusion Shadow (Bottom-Right) */
+  --neu-dark-deep: #BCC8D6;          /* Deeper Occlusion for Lifted State */
   
-  /* Dual-Tier Provenance Badges (Monochrome Refinement) */
-  --provenance-official: #09090B;    /* Inverted Black Seal */
-  --provenance-self: #27272A;        /* Slate / Zinc */
-  --emergency-accent: #09090B;       /* High-Contrast Inverted Tag */
-  
-  /* Typography & Structure */
+  --color-terracotta: #0F172A;       /* Midnight Slate (Primary Action) */
+  --color-forest: #1E293B;           /* Deep Graphite Slate */
+  --color-charcoal: #0F172A;         /* High Contrast Crisp Typography */
+  --color-muted: #64748B;            /* Refined Slate Secondary */
+  --color-border: rgba(255, 255, 255, 0.85); /* Specular Rim Light */
+
+  /* Provenance & Emergency Badges */
+  --provenance-official: #0F172A;
+  --provenance-self: #334155;
+  --emergency-accent: #E11D48;
+
+  /* Typography & Proportions */
   --font-system: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
   --min-tap-target: 48px;
 
   /* Safe Area Insets for Mobile / PWA */
@@ -46,26 +49,237 @@ body {
   letter-spacing: -0.011em;
 }
 
-/* Minimalist Structural Surface Styles */
+/* ==========================================================================
+   NEUMORPHIC CORE SURFACE & ELEVATION CLASSES
+   ========================================================================== */
+
+/* 1. Neumorphic Extruded Cards & Containers (Flat / Raised Soft Elevation) */
 .surface-card {
-  background-color: #FFFFFF;
-  border: 1px solid var(--color-border);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
-  border-radius: 18px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: var(--surface-neu);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 7px 7px 16px var(--neu-dark), -7px -7px 16px var(--neu-light);
+  border-radius: 22px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .surface-card:hover {
-  border-color: #D4D4D8;
+  box-shadow: 8px 8px 18px var(--neu-dark-deep), -8px -8px 18px var(--neu-light);
 }
 
-.sand-card {
-  background-color: var(--surface-sand);
-  border: 1px solid var(--color-border);
+/* 2. Inset / Sunken / Pressed Wells & Channels */
+.neu-inset, .sand-card {
+  background-color: var(--surface-neu);
+  border: 1px solid rgba(200, 210, 222, 0.4);
+  box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
   border-radius: 18px;
 }
 
-/* Mobile responsive app shell container */
+/* Deep Inset Form Inputs */
+.neu-input, input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, select {
+  background-color: var(--surface-neu);
+  border: 1px solid rgba(195, 206, 220, 0.6);
+  box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+  border-radius: 14px;
+  color: var(--color-charcoal);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.neu-input:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: rgba(15, 23, 42, 0.3);
+  box-shadow: inset 3px 3px 7px var(--neu-dark-deep), inset -3px -3px 7px var(--neu-light), 0 0 0 2px rgba(15, 23, 42, 0.12);
+}
+
+/* ==========================================================================
+   PROPORTIONED NEUMORPHIC BUTTONS & CONTROLS
+   ========================================================================== */
+
+/* Standard Tactile Raised Button (Light) */
+.neu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #f2f7fc, #dee5ef);
+  box-shadow: 4px 4px 9px var(--neu-dark), -4px -4px 9px var(--neu-light);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  color: var(--color-charcoal);
+  font-weight: 700;
+  border-radius: 14px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.neu-btn:hover {
+  box-shadow: 6px 6px 14px var(--neu-dark-deep), -6px -6px 14px var(--neu-light);
+  transform: translateY(-1px);
+}
+
+.neu-btn:active, .neu-btn.active {
+  box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+  transform: translateY(1px);
+}
+
+/* Primary High-Contrast Neumorphic Button (Deep Slate / Obsidian) */
+.neu-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  box-shadow: 5px 5px 12px var(--neu-dark), -3px -3px 8px var(--neu-light);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-weight: 800;
+  border-radius: 14px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.neu-btn-primary:hover {
+  box-shadow: 6px 6px 15px var(--neu-dark-deep), -4px -4px 10px var(--neu-light);
+  transform: translateY(-1px);
+}
+
+.neu-btn-primary:active {
+  box-shadow: inset 3px 3px 6px #06090f, inset -2px -2px 4px #26344d;
+  transform: translateY(1px);
+}
+
+/* Emergency Crimson Neumorphic Button */
+.neu-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #e11d48, #be123c);
+  box-shadow: 5px 5px 12px var(--neu-dark), -3px -3px 8px var(--neu-light);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-weight: 800;
+  border-radius: 14px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.neu-btn-danger:hover {
+  box-shadow: 6px 6px 15px var(--neu-dark-deep), -4px -4px 10px var(--neu-light);
+  transform: translateY(-1px);
+}
+
+.neu-btn-danger:active {
+  box-shadow: inset 3px 3px 6px #881337, inset -2px -2px 4px #fb7185;
+  transform: translateY(1px);
+}
+
+/* Standardized Icon Buttons */
+.neu-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(145deg, #f2f7fc, #dee5ef);
+  box-shadow: 4px 4px 8px var(--neu-dark), -4px -4px 8px var(--neu-light);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  color: var(--color-charcoal);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.neu-icon-btn:hover {
+  box-shadow: 5px 5px 11px var(--neu-dark-deep), -5px -5px 11px var(--neu-light);
+  transform: translateY(-1px);
+}
+
+.neu-icon-btn:active, .neu-icon-btn.active {
+  box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+  transform: translateY(1px);
+}
+
+/* Neumorphic Segmented Tab Controls */
+.neu-segmented {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--surface-neu);
+  border: 1px solid rgba(200, 210, 222, 0.4);
+  box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+  border-radius: 16px;
+}
+
+.neu-segmented-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.neu-segmented-btn.active {
+  background: linear-gradient(145deg, #f2f7fc, #dee5ef);
+  box-shadow: 3px 3px 7px var(--neu-dark), -3px -3px 7px var(--neu-light);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  color: var(--color-charcoal);
+}
+
+/* Neumorphic Badges & Tags */
+.neu-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  background: var(--surface-neu);
+  box-shadow: 2px 2px 5px var(--neu-dark), -2px -2px 5px var(--neu-light);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-charcoal);
+}
+
+/* Proportioned Size Helpers */
+.btn-hero {
+  min-height: 48px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 18px;
+  gap: 10px;
+}
+
+.btn-standard {
+  min-height: 40px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 14px;
+  gap: 8px;
+}
+
+.btn-compact {
+  min-height: 32px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 10px;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   APP SHELL & MOBILE LAYOUT
+   ========================================================================== */
+
 .app-shell {
   max-width: 768px;
   margin: 0 auto;
@@ -74,13 +288,13 @@ body {
   flex-direction: column;
   position: relative;
   background-color: var(--bg-canvas);
-  box-shadow: 0 0 50px -10px rgba(0, 0, 0, 0.06);
+  box-shadow: 12px 0 28px rgba(188, 200, 214, 0.4), -12px 0 28px rgba(255, 255, 255, 0.8);
 }
 
 @media (min-width: 769px) {
   .app-shell {
-    border-left: 1px solid var(--color-border);
-    border-right: 1px solid var(--color-border);
+    border-left: 1px solid rgba(255, 255, 255, 0.8);
+    border-right: 1px solid rgba(200, 210, 222, 0.5);
   }
 }
 
@@ -98,6 +312,7 @@ button, a, input, select, textarea {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -106,25 +321,28 @@ button, a, input, select, textarea {
 /* Subtle pulse animation for emergency beacon */
 @keyframes pulse-emergency {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.015); }
+  50% { opacity: 0.92; transform: scale(1.02); }
 }
 
 .animate-emergency {
   animation: pulse-emergency 2.5s infinite ease-in-out;
 }
 
-/* Custom Minimalist Monochrome Scrollbar for Modals / Trees */
+/* Custom Neumorphic Scrollbar for Modals / Trees */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #F4F4F5;
+  background: var(--surface-neu);
+  box-shadow: inset 1px 1px 3px var(--neu-dark);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D4D4D8;
-  border-radius: 3px;
+  background: #BCC8D6;
+  border-radius: 4px;
+  box-shadow: 1px 1px 3px var(--neu-dark);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #A1A1AA;
+  background: #94A3B8;
 }

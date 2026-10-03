@@ -368,30 +368,30 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
         )}
       </div>
 
-      {/* QUICK PRESET SAMPLES (FOR INSTANT ACCURATE DEMO) */}
-      <div className="bg-zinc-100 rounded-2xl p-3 border border-zinc-200">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-[11px] font-black text-charcoal uppercase tracking-wider flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-zinc-950" />
+      {/* QUICK PRESET SAMPLES (FOR INSTANT ACCURATE DEMO - Neumorphic Tray) */}
+      <div className="neu-inset rounded-2xl p-3.5 space-y-2.5">
+        <div className="flex items-center justify-between">
+          <span className="text-[11px] font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+            <Zap className="w-3.5 h-3.5 text-slate-900" />
             Instant Test Presets (Paper Simulators)
           </span>
         </div>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           {SAMPLE_DOCUMENTS.map((sample) => (
             <button
               key={sample.id}
               onClick={() => handleSelectSample(sample)}
-              className="text-left p-2.5 rounded-xl bg-white border border-borderRule hover:border-zinc-950 hover:bg-zinc-50 transition-colors text-[11px] shadow-xs"
+              className="text-left p-3 rounded-xl neu-btn hover:shadow-neu-raised transition-all text-[11px] shadow-neu-sm flex-col items-start w-full cursor-pointer"
             >
-              <div className="font-extrabold text-charcoal truncate">{sample.title}</div>
-              <div className="text-charcoal-muted text-[10px] mt-0.5">{sample.type} • ₦{sample.suggestedCost}</div>
+              <div className="font-extrabold text-slate-900 truncate w-full">{sample.title}</div>
+              <div className="text-slate-500 text-[10px] mt-0.5">{sample.type} • ₦{sample.suggestedCost}</div>
             </button>
           ))}
         </div>
       </div>
 
       {/* EXTRACTED STRUCTURED FIELDS & CONFIDENCE HIGHLIGHTS */}
-      <div className="surface-card rounded-2xl p-4 space-y-3.5 border border-borderRule shadow-xs">
+      <div className="surface-card rounded-2xl p-4 sm:p-5 space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
             Parsed Medical Information
@@ -399,10 +399,10 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
 
           {/* Confidence Badge */}
           <div 
-            className="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-zinc-900 text-zinc-100 border border-zinc-800"
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full neu-pill shadow-neu-sm text-[11px] font-bold"
             title="Extraction confidence score"
           >
-            <Sparkles className="w-3 h-3" />
+            <Sparkles className="w-3 h-3 text-slate-800" />
             <span>{confidence}% Confidence ({confidence >= 90 ? 'High' : 'Review'})</span>
           </div>
         </div>
@@ -410,41 +410,41 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
         {/* ConfidenceDataField: Provider / Health Clinic */}
         <div>
           <div className="flex items-center justify-between mb-1">
-            <label className="text-xs font-black text-charcoal">
+            <label className="text-xs font-black text-slate-700">
               Provider / Health Clinic
             </label>
-            <span className="text-[10px] text-zinc-600 font-bold">Matched regex</span>
+            <span className="text-[10px] text-slate-500 font-bold">Matched regex</span>
           </div>
           <input
             type="text"
             placeholder="e.g. Adeyemi Chemist, St. Nicholas Outpost"
             value={providerName}
             onChange={(e) => setProviderName(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-1 focus:ring-zinc-950 focus:border-zinc-950 text-xs font-bold text-charcoal"
+            className="neu-input w-full px-3 py-2.5 rounded-xl text-xs font-bold text-slate-900"
           />
         </div>
 
         {/* ConfidenceDataField: Extracted Diagnosis / Dosage / Regimen */}
         <div>
           <div className="flex items-center justify-between mb-1">
-            <label className="text-xs font-black text-charcoal">
+            <label className="text-xs font-black text-slate-700">
               Extracted Regimen / Dosage / Schedule
             </label>
-            <span className="text-[10px] text-charcoal-muted font-mono">bd, tds, nocte</span>
+            <span className="text-[10px] text-slate-500 font-mono">bd, tds, nocte</span>
           </div>
           <textarea
             rows={3}
             placeholder="Medications and doses will appear here after scanning..."
             value={details}
             onChange={(e) => setDetails(e.target.value)}
-            className="w-full px-3 py-2 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-1 focus:ring-zinc-950 focus:border-zinc-950 text-xs text-charcoal leading-relaxed font-medium"
+            className="neu-input w-full px-3 py-2 rounded-xl text-xs text-slate-900 leading-relaxed font-medium"
           />
         </div>
 
         {/* ConfidenceDataField: Cash Paid Cost */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-black text-charcoal mb-1">
+            <label className="block text-xs font-black text-slate-700 mb-1">
               Out-of-Pocket Cash Cost (₦)
             </label>
             <input
@@ -452,28 +452,28 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
               placeholder="e.g. 3500"
               value={cost}
               onChange={(e) => setCost(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-1 focus:ring-zinc-950 focus:border-zinc-950 text-xs font-black text-charcoal"
+              className="neu-input w-full px-3 py-2.5 rounded-xl text-xs font-black text-slate-900"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-black text-charcoal mb-1">
+            <label className="block text-xs font-black text-slate-700 mb-1">
               Verification Status
             </label>
-            <div className="h-[38px] flex items-center px-3 rounded-xl bg-zinc-100 border border-zinc-300 text-zinc-950 text-xs font-black">
+            <div className="h-[42px] flex items-center px-3 rounded-xl neu-inset text-slate-900 text-xs font-black shadow-neu-pressed">
               ✓ Ready for Family Ledger
             </div>
           </div>
         </div>
 
         {/* VoiceAnnotationButton (8-second spoken note attachment) */}
-        <div className="pt-2 border-t border-borderRule">
+        <div className="pt-2 border-t border-white/80">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-black text-charcoal">
+            <span className="text-xs font-black text-slate-700">
               8-Second Spoken Voice Annotation
             </span>
             {isRecording && (
-              <span className="text-[10px] font-black text-emergency animate-pulse">
+              <span className="text-[10px] font-black text-rose-600 animate-pulse">
                 Recording ({recordingSeconds}/8s)
               </span>
             )}
@@ -483,12 +483,10 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             <button
               type="button"
               onClick={toggleVoiceRecording}
-              className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1.5 transition-all ${
+              className={`neu-btn h-9 px-3.5 rounded-xl font-bold text-xs inline-flex items-center gap-1.5 transition-all shadow-neu-sm cursor-pointer ${
                 isRecording
-                  ? 'bg-emergency text-white animate-pulse shadow-md'
-                  : voiceNote
-                  ? 'bg-zinc-100 text-zinc-950 border border-zinc-300'
-                  : 'bg-zinc-100 text-charcoal hover:bg-zinc-200'
+                  ? 'neu-btn-danger animate-pulse'
+                  : ''
               }`}
             >
               {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
@@ -496,24 +494,24 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             </button>
 
             {voiceNote && (
-              <span className="text-[11px] text-charcoal italic truncate flex-1 bg-white px-2 py-1.5 rounded-lg border border-borderRule">
+              <span className="text-[11px] text-slate-700 italic truncate flex-1 neu-inset px-2.5 py-1.5 rounded-lg shadow-neu-pressed">
                 "{voiceNote}"
               </span>
             )}
           </div>
         </div>
 
-        {/* Action Buttons: Save or Discard */}
-        <div className="flex items-center gap-3 pt-3 border-t border-borderRule">
+        {/* Action Buttons: Save or Discard (Proportioned h-10 buttons) */}
+        <div className="flex items-center gap-3 pt-3 border-t border-white/80">
           <button
             onClick={onCancel}
-            className="flex-1 py-3 rounded-xl border border-borderRule font-bold text-xs text-charcoal-muted hover:bg-zinc-100 transition-colors"
+            className="flex-1 neu-btn btn-standard text-slate-600 font-bold text-xs"
           >
             Discard
           </button>
           <button
             onClick={handleSaveRecord}
-            className="flex-[2] py-3 rounded-xl bg-zinc-950 hover:bg-black text-white font-black text-xs shadow-xs transition-all active:scale-[0.98]"
+            className="flex-[2] neu-btn-primary btn-standard text-xs font-bold shadow-neu-primary active:scale-[0.98]"
           >
             Save to Family Log
           </button>

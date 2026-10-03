@@ -166,15 +166,15 @@ export default function EmergencySOSView({
   return (
     <div className="space-y-4 pb-24 animate-in fade-in duration-200">
 
-      {/* 1. EMERGENCY TOP NOTIFICATION */}
-      <div className="bg-emergency text-white px-4 py-3 rounded-2xl flex items-center justify-between shadow-card">
+      {/* 1. EMERGENCY TOP NOTIFICATION (Neumorphic Crimson) */}
+      <div className="bg-gradient-to-r from-rose-600 to-rose-700 text-white px-4 py-3.5 rounded-2xl flex items-center justify-between shadow-neu-raised border border-white/20">
         <div className="flex items-center gap-2.5">
-          <ShieldAlert className="w-5 h-5 animate-emergency text-white" />
+          <ShieldAlert className="w-5 h-5 animate-emergency text-white flex-shrink-0" />
           <div>
             <h2 className="text-xs font-black uppercase tracking-wider">
               Zero-Click Crisis Health Card & Triage
             </h2>
-            <p className="text-[10px] text-sand-variant">
+            <p className="text-[10px] text-rose-100">
               Offline emergency profile directly readable by any offline scanner
             </p>
           </div>
@@ -187,98 +187,98 @@ export default function EmergencySOSView({
             setSelectedSosMemberId(e.target.value);
             onSelectMember(e.target.value);
           }}
-          className="bg-white/20 text-white font-bold text-xs py-1.5 px-3 rounded-xl border border-white/30 outline-none cursor-pointer"
+          className="bg-white/20 hover:bg-white/30 text-white font-bold text-xs py-1.5 px-3 rounded-xl border border-white/30 outline-none cursor-pointer shadow-neu-sm transition-all"
         >
           {household.members.map(m => (
-            <option key={m.id} value={m.id} className="text-charcoal bg-white">
+            <option key={m.id} value={m.id} className="text-slate-900 bg-white">
               {m.name} ({m.generation})
             </option>
           ))}
         </select>
       </div>
 
-      {/* 2. EMERGENCY HEALTH CARD (Section 2.2 Wireframe Topology) */}
-      <div className="surface-card p-5 space-y-4 border border-zinc-200">
+      {/* 2. EMERGENCY HEALTH CARD (Neumorphic Surface Card) */}
+      <div className="surface-card p-5 sm:p-6 space-y-4">
         
-        <div className="text-center space-y-0.5 border-b border-zinc-200 pb-3">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">
+        <div className="text-center space-y-0.5 border-b border-white/80 pb-3">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
             EMERGENCY HEALTH CARD
           </span>
-          <h3 className="text-xl font-bold text-zinc-950">
+          <h3 className="text-xl font-black text-slate-900">
             {currentMember.name}
           </h3>
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-slate-500 font-medium">
             {currentMember.relation} • Born: {currentMember.dob}
           </p>
         </div>
 
-        {/* AIR-GAPPED OFFLINE QR CODE */}
-        <div className="text-center py-3 bg-zinc-50 rounded-2xl border border-zinc-200">
-          <div className="inline-block p-2.5 bg-white rounded-2xl border border-zinc-300 shadow-xs">
+        {/* AIR-GAPPED OFFLINE QR CODE (Neumorphic Inset Frame) */}
+        <div className="text-center py-4 neu-inset rounded-3xl">
+          <div className="inline-block p-3 bg-white rounded-3xl shadow-neu-raised border-2 border-white">
             {qrDataUrl ? (
-              <img src={qrDataUrl} alt="Offline ICE QR Matrix" className="w-48 h-48 mx-auto" />
+              <img src={qrDataUrl} alt="Offline ICE QR Matrix" className="w-48 h-48 mx-auto rounded-xl" />
             ) : (
-              <div className="w-48 h-48 flex items-center justify-center text-xs text-zinc-500">
+              <div className="w-48 h-48 flex items-center justify-center text-xs text-slate-500 font-bold">
                 Generating Offline Pass...
               </div>
             )}
           </div>
-          <div className="text-[10px] font-mono text-zinc-500 mt-2 font-bold">
+          <div className="text-[10px] font-mono text-slate-500 mt-2 font-bold">
             Offline Scan: Direct CBOR Decryption • Zero Cloud Dependency
           </div>
         </div>
 
-        {/* CRITICAL MEDICAL ATTRIBUTES (48pt Blood Group + Genotype - Minimalist Contrast) */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="p-3.5 rounded-2xl bg-zinc-950 text-white border border-zinc-900 text-center shadow-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">
+        {/* CRITICAL MEDICAL ATTRIBUTES (48pt Blood Group + Genotype - Neumorphic Extrusion) */}
+        <div className="grid grid-cols-2 gap-3.5">
+          <div className="p-4 rounded-3xl bg-gradient-to-br from-slate-900 to-slate-950 text-white border border-white/10 text-center shadow-neu-raised">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">
               BLOOD GROUP
             </span>
             <div className="text-4xl sm:text-5xl font-black text-white my-1 font-mono">
               {currentMember.bloodGroup}
             </div>
-            <span className="text-[10px] font-bold text-zinc-400">Rh Factor Verified</span>
+            <span className="text-[10px] font-bold text-slate-400">Rh Factor Verified</span>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-zinc-100 text-zinc-950 border border-zinc-200 text-center shadow-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">
+          <div className="p-4 rounded-3xl neu-inset text-center shadow-neu-pressed">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 block">
               GENOTYPE
             </span>
-            <div className="text-4xl sm:text-5xl font-black text-zinc-950 my-1 font-mono">
+            <div className="text-4xl sm:text-5xl font-black text-slate-900 my-1 font-mono">
               {currentMember.genotype}
             </div>
-            <span className="text-[10px] font-bold text-zinc-500">Mendelian Trait</span>
+            <span className="text-[10px] font-bold text-slate-500">Mendelian Trait</span>
           </div>
         </div>
 
         {/* ALLERGIES & RESUSCITATION SPECIFICATION */}
-        <div className="space-y-2 text-xs bg-zinc-50 p-3.5 rounded-xl border border-zinc-200">
-          <div className="flex items-start gap-2">
-            <AlertTriangle className="w-4 h-4 text-zinc-900 flex-shrink-0 mt-0.5" />
+        <div className="space-y-2.5 text-xs neu-inset p-4 rounded-2xl">
+          <div className="flex items-start gap-2.5">
+            <AlertTriangle className="w-4 h-4 text-rose-500 flex-shrink-0 mt-0.5" />
             <div>
-              <span className="font-bold text-zinc-950 block">Severe Allergies:</span>
-              <span className="text-zinc-800 font-semibold">
+              <span className="font-extrabold text-slate-900 block">Severe Allergies:</span>
+              <span className="text-slate-800 font-semibold">
                 {currentMember.allergies?.join(', ') || 'No known drug allergies declared'}
               </span>
             </div>
           </div>
 
-          <div className="flex items-start gap-2 pt-2 border-t border-zinc-200">
-            <Heart className="w-4 h-4 text-zinc-900 flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2.5 pt-2 border-t border-white/80">
+            <Heart className="w-4 h-4 text-slate-800 flex-shrink-0 mt-0.5" />
             <div>
-              <span className="font-bold text-zinc-950 block">Resuscitation Order:</span>
-              <span className="text-zinc-800 font-medium">
+              <span className="font-extrabold text-slate-900 block">Resuscitation Order:</span>
+              <span className="text-slate-800 font-medium">
                 {currentMember.resuscitationOrder || 'Full Code (CPR / Endotracheal Intubation)'}
               </span>
             </div>
           </div>
 
           {currentMember.chronicConditions && currentMember.chronicConditions.length > 0 && (
-            <div className="flex items-start gap-2 pt-2 border-t border-zinc-200">
-              <Activity className="w-4 h-4 text-zinc-900 flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2.5 pt-2 border-t border-white/80">
+              <Activity className="w-4 h-4 text-slate-800 flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-bold text-zinc-950 block">Chronic Conditions:</span>
-                <span className="text-zinc-600">
+                <span className="font-extrabold text-slate-900 block">Chronic Conditions:</span>
+                <span className="text-slate-600 font-medium">
                   {currentMember.chronicConditions.join(', ')}
                 </span>
               </div>
@@ -286,33 +286,33 @@ export default function EmergencySOSView({
           )}
         </div>
 
-        {/* DIRECT EMERGENCY CONTACTS (ONE-TOUCH SPEED DIAL) */}
+        {/* DIRECT EMERGENCY CONTACTS (Proportioned Speed Dial) */}
         <div className="space-y-2">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 block">
+          <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 block">
             Direct Emergency Contacts (One-Touch Call)
           </span>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <a
               href={`tel:${household.emergencyPhone?.replace(/\s+/g, '') || '+2348023341122'}`}
-              className="p-3 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white font-bold text-xs flex items-center justify-between shadow-xs transition-colors border border-zinc-900 cursor-pointer"
+              className="neu-btn-primary min-h-[48px] px-4 rounded-xl text-xs font-bold flex items-center justify-between shadow-neu-primary cursor-pointer"
             >
               <div>
                 <span className="block font-bold text-white">Call Caretaker ({household.head})</span>
-                <span className="text-[11px] text-zinc-400 font-mono">{household.emergencyPhone}</span>
+                <span className="text-[11px] text-slate-400 font-mono">{household.emergencyPhone}</span>
               </div>
               <PhoneCall className="w-4 h-4 text-white" />
             </a>
 
             <a
               href="tel:112"
-              className="p-3 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-900 font-bold text-xs flex items-center justify-between border border-zinc-300 transition-colors cursor-pointer"
+              className="neu-btn min-h-[48px] px-4 rounded-xl text-xs font-bold flex items-center justify-between shadow-neu-raised cursor-pointer"
             >
               <div>
-                <span className="block font-bold text-zinc-950">Lagos State Emergency Service</span>
-                <span className="text-[11px] text-zinc-600 font-mono">Toll-Free Hotline: 112 / 767</span>
+                <span className="block font-bold text-slate-900">Lagos State Emergency Service</span>
+                <span className="text-[11px] text-slate-500 font-mono">Toll-Free Hotline: 112 / 767</span>
               </div>
-              <AlertOctagon className="w-4 h-4 text-zinc-900" />
+              <AlertOctagon className="w-4 h-4 text-slate-900" />
             </a>
           </div>
         </div>
@@ -320,15 +320,17 @@ export default function EmergencySOSView({
       </div>
 
       {/* 3. "KNOW BEFORE YOU GO" SYMPTOM TRIAGE (Section 1.1 FR-07) */}
-      <div className="surface-card p-5 space-y-3 border-2 border-borderRule">
+      <div className="surface-card p-5 space-y-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Compass className="w-5 h-5 text-terracotta" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl neu-inset flex items-center justify-center text-slate-800">
+              <Compass className="w-4 h-4 text-slate-800" />
+            </div>
             <div>
-              <h3 className="text-xs font-black uppercase tracking-wider text-charcoal">
+              <h3 className="text-xs font-black uppercase tracking-wider text-slate-900">
                 {t.knowBeforeYouGo || 'Know Before You Go — Triage'}
               </h3>
-              <p className="text-[11px] text-charcoal-muted">
+              <p className="text-[11px] text-slate-500 font-medium">
                 Rule-based clinical decision support & regional endemic symptom cascades
               </p>
             </div>
@@ -341,7 +343,7 @@ export default function EmergencySOSView({
               setTriageStep('SYMPTOM_SELECT');
               setShowTriageModal(true);
             }}
-            className="px-3 py-1.5 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white font-extrabold text-xs flex items-center gap-1 shadow-xs transition-colors"
+            className="neu-btn-primary h-9 px-3.5 rounded-xl font-bold text-xs inline-flex items-center gap-1.5 shadow-neu-primary cursor-pointer"
           >
             <span>Launch Triage</span>
             <ChevronRight className="w-3.5 h-3.5" />

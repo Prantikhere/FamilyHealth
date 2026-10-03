@@ -12,22 +12,22 @@ export default function OcrScannerModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-charcoal/70 backdrop-blur-sm animate-in fade-in duration-150">
-      <div className="bg-canvas border-2 border-borderRule rounded-3xl w-full max-w-2xl max-h-[94vh] overflow-y-auto shadow-lifted relative p-4 sm:p-6 space-y-4">
+      <div className="surface-card rounded-3xl w-full max-w-2xl max-h-[94vh] overflow-y-auto shadow-lifted relative p-5 sm:p-6 space-y-4 border border-white/80">
         
         {/* Modal Header */}
-        <div className="flex items-center justify-between border-b border-borderRule pb-3">
+        <div className="flex items-center justify-between border-b border-white/80 pb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white flex items-center justify-center shadow-xs">
-              <Camera className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-950 text-white flex items-center justify-center shadow-neu-raised border border-white/20">
+              <Camera className="w-5 h-5 text-rose-400" />
             </div>
             <div>
-              <h2 className="text-base font-black text-charcoal flex items-center gap-2">
+              <h2 className="text-base font-black text-slate-900 flex items-center gap-2">
                 <span>{t.ocrScannerHeading || 'Scan Health Document (OCR)'}</span>
-                <span className="text-[10px] font-black uppercase tracking-wider bg-zinc-100 text-zinc-950 px-2 py-0.5 rounded-full border border-zinc-200">
+                <span className="neu-pill text-[10px] font-bold shadow-xs">
                   WASM OCR
                 </span>
               </h2>
-              <p className="text-xs text-charcoal-muted">
+              <p className="text-xs text-slate-500 font-medium">
                 {t.ocrScannerSubtitle || 'Extract clinic prescriptions, immunization cards, and receipts offline'}
               </p>
             </div>
@@ -35,7 +35,7 @@ export default function OcrScannerModal({
 
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-2xl bg-sand hover:bg-sand-variant text-charcoal flex items-center justify-center font-bold text-sm transition-colors touch-target"
+            className="neu-icon-btn w-9 h-9 rounded-xl text-slate-700 touch-target"
             aria-label="Close OCR Scanner"
           >
             <X className="w-5 h-5" />
