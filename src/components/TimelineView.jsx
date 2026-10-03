@@ -18,12 +18,17 @@ import {
   X,
   Copy,
   Sparkles,
-  Stethoscope
+  Stethoscope,
+  Camera,
+  ShieldAlert,
+  HeartPulse
 } from 'lucide-react';
 
 export default function TimelineView({
   household,
   onAddRecord,
+  onOpenOcr,
+  currentUser,
   currentLang = 'en',
   translations
 }) {
@@ -48,8 +53,24 @@ export default function TimelineView({
 
   const t = translations || {};
 
-  // Filter records
-  const filteredRecords = household.records.filter(r => {
+  // Role-based visibility
+  const role = currentUser?.role || '';
+  const isChew = role.includes('CHEW') || role.includes('Community Health');
+  const isSenior = role.includes('Elder') || role.includes('Dependent') || currentUser?.name?.includes('Baba');
+
+  // Filter records based on role
+  const roleRecords = household.records.filter(r => {
+    if (isChew) {
+      return r.memberId === 'mem_tunde' || r.memberId === 'mem_sade' || r.memberId === 'mem_kehinde';
+    }
+    if (isSenior) {
+      return r.memberId === 'mem_baba';
+    }
+    return true;
+  });
+
+  // Filter records by provenance
+  const filteredRecords = roleRecords.filter(r => {
     if (filterType === 'OFFICIAL') return r.provenance === 'OFFICIAL_VERIFIED';
     if (filterType === 'SELF') return r.provenance === 'SELF_REPORTED';
     return true;
@@ -116,14 +137,57 @@ export default function TimelineView({
   return (
     <div className="space-y-4 pb-24 animate-in fade-in duration-200">
       
+      {/* ROLE PERSPECTIVE NOTIFICATION BANNER */}
+      {isChew && (
+        <div className="bg-forest-light border-2 border-forest/30 text-forest p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-forest text-white flex items-center justify-center flex-shrink-0">
+              <Stethoscope className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="font-black block uppercase tracking-wider text-[11px]">
+                {t.chewPerspective || 'CHEW Nurse Maternal & Child Records Filter'}
+              </span>
+              <p className="text-[11px] text-forest/90 font-medium">
+                Showing pediatric immunizations & maternal records. Private financial transactions are masked.
+              </p>
+            </div>
+          </div>
+          <span className="text-[10px] font-black uppercase bg-forest text-white px-2 py-0.5 rounded-full flex-shrink-0">
+            PHC Scope
+          </span>
+        </div>
+      )}
+
+      {isSenior && (
+        <div className="bg-ochre-container border-2 border-ochre/30 text-charcoal p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-ochre text-white flex items-center justify-center flex-shrink-0">
+              <HeartPulse className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="font-black block uppercase tracking-wider text-[11px]">
+                Personal Senior Health Ledger (Baba Adeyemi)
+              </span>
+              <p className="text-[11px] text-charcoal-muted font-medium">
+                Filtered strictly to Baba's clinical consultations, blood pressure readings, and cardiology reports.
+              </p>
+            </div>
+          </div>
+          <span className="text-[10px] font-black uppercase bg-ochre text-white px-2 py-0.5 rounded-full flex-shrink-0">
+            G0 Ledger
+          </span>
+        </div>
+      )}
+
       {/* 1. TOP HEADER & PROVENANCE FILTER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-borderRule pb-3">
         <div>
           <h2 className="text-base font-black text-charcoal tracking-tight">
-            Dual-Tier Health Records Timeline
+            {t.timelineHeading || 'Dual-Tier Health Records Timeline'}
           </h2>
           <p className="text-xs text-charcoal-muted">
-            Cryptographically signed official records & patient self-reported logs
+            {t.timelineSubtitle || 'Cryptographically signed official records & patient self-reported logs'}
           </p>
         </div>
 
@@ -135,7 +199,7 @@ export default function TimelineView({
               filterType === 'ALL' ? 'bg-charcoal text-white shadow-xs' : 'text-charcoal-muted hover:text-charcoal'
             }`}
           >
-            All ({household.records.length})
+            All ({roleRecords.length})
           </button>
           <button
             onClick={() => setFilterType('OFFICIAL')}
@@ -171,7 +235,18 @@ export default function TimelineView({
           </label>
         </div>
 
-        <div className="flex items-center gap-2 self-end sm:self-auto">
+        <div className="flex flex-wrap items-center gap-2 self-end sm:self-auto">
+          {onOpenOcr && (
+            <button
+              onClick={onOpenOcr}
+              className="px-3 py-2 rounded-xl bg-forest hover:bg-forest-dark text-white text-xs font-black flex items-center gap-1.5 shadow-xs transition-transform active:scale-95"
+              title="Scan and parse paper prescription or receipt via WASM OCR"
+            >
+              <Camera className="w-3.5 h-3.5" />
+              <span>{t.scanAction || 'Scan (OCR)'}</span>
+            </button>
+          )}
+
           <span className="text-xs font-mono text-charcoal-muted">
             {selectedRecordIds.length} selected
           </span>

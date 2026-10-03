@@ -51,6 +51,17 @@ export const DUMMY_ACCOUNTS = [
     avatarBg: '#1B2A4A',
     icon: AlertOctagon,
     description: 'Cardiovascular & ER specialist requiring zero-click offline patient blood group, genotype, and allergy profile.'
+  },
+  {
+    role: 'Elder Dependent (G0)',
+    name: 'Baba Adeyemi',
+    email: 'baba.adeyemi@familyhealth.africa',
+    password: 'Elder#2026',
+    badge: 'Senior Patient View',
+    clinic: 'Lagos Island General Hospital (Geriatrics)',
+    avatarBg: '#D9822B',
+    icon: HeartPulse,
+    description: 'Elder patriarch monitoring chronic hypertension, daily Amlodipine regimen, and personal emergency ICE card.'
   }
 ];
 

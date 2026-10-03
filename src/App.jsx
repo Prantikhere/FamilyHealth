@@ -5,12 +5,14 @@ import TimelineView from './components/TimelineView';
 import EmergencySOSView from './components/EmergencySOSView';
 import EmergencyICECard from './components/EmergencyICECard';
 import AddMemberModal from './components/AddMemberModal';
-import DataExportModal from './components/DataExportModal';
+import MemberProfileModal from './components/MemberProfileModal';
+import OcrScannerModal from './components/OcrScannerModal';
 import LoginScreen, { DUMMY_ACCOUNTS } from './components/LoginScreen';
 import LandingPage from './components/LandingPage';
 import BottomNav from './components/BottomNav';
 import { storage } from './services/storage';
 import { VERNACULAR_TRANSLATIONS } from './constants/initialData';
+import { TRANSLATIONS } from './services/i18n';
 
 const USER_STORAGE_KEY = 'familyhealth_current_user_v2';
 const VIEW_MODE_KEY = 'familyhealth_view_mode_v2';
@@ -98,6 +100,8 @@ export default function App() {
   const [iceModalMember, setIceModalMember] = useState(null);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [showAlertsModal, setShowAlertsModal] = useState(false);
+  const [editingMember, setEditingMember] = useState(null);
+  const [showOcrModal, setShowOcrModal] = useState(false);
 
   // Monitor network online/offline state
   useEffect(() => {
@@ -127,7 +131,7 @@ export default function App() {
 
   // Auth & View Handlers
   const handleLoginSuccess = (userObj) => {
-    setCurrentUser(userObj);
+    handleSwitchUser(userObj);
     setViewMode('APP');
     setActiveTab('CIRCLE');
   };
@@ -136,9 +140,22 @@ export default function App() {
     setViewMode('LOGIN');
   };
 
+  const handleSwitchUser = (userObj) => {
+    setCurrentUser(userObj);
+    const role = userObj?.role || '';
+    if (role.includes('CHEW') || role.includes('Community Health')) {
+      setSelectedMemberId('mem_tunde');
+    } else if (role.includes('Elder') || role.includes('Dependent') || userObj?.name?.includes('Baba')) {
+      setSelectedMemberId('mem_baba');
+    } else {
+      setSelectedMemberId('mem_femi');
+    }
+    setActiveTab('CIRCLE');
+  };
+
   const handleSelectDemoPersona = (personaIndex) => {
     const persona = DUMMY_ACCOUNTS[personaIndex] || DUMMY_ACCOUNTS[0];
-    setCurrentUser({
+    handleSwitchUser({
       name: persona.name,
       email: persona.email,
       role: persona.role,
@@ -151,20 +168,48 @@ export default function App() {
     setActiveTab('CIRCLE');
   };
 
-  // Handler: Add new family member
-  const handleAddMember = (newMember) => {
-    const memberWithGen = {
-      ...newMember,
-      generation: newMember.generation || 'G2',
-      statusNote: 'Active',
-      resuscitationOrder: 'Full Code',
+  // Handler: Add new family member or update existing
+  const handleSaveMemberProfile = (updatedMember) => {
+    setHousehold((prev) => {
+      const exists = prev.members.some(m => m.id === updatedMember.id);
+      const newMembers = exists
+        ? prev.members.map(m => m.id === updatedMember.id ? updatedMember : m)
+        : [...prev.members, updatedMember];
+      return {
+        ...prev,
+        members: newMembers,
+      };
+    });
+    setEditingMember(null);
+    setShowAddMemberModal(false);
+    setSelectedMemberId(updatedMember.id);
+  };
+
+  // Handler: Save OCR extracted record
+  const handleSaveOcrRecord = (newRecord) => {
+    const formattedRecord = {
+      id: newRecord.id || `rec_${Date.now()}`,
+      memberId: newRecord.memberId || selectedMemberId,
+      provenance: 'OFFICIAL_VERIFIED',
+      title: `${newRecord.type || 'Prescription'}: ${newRecord.provider || 'Clinical Outpost'}`,
+      issuerName: newRecord.provider || 'Lagos State Health Post',
+      issuerId: 'iss_lagos_ocr_99',
+      recordedDate: newRecord.date || new Date().toISOString().split('T')[0],
+      category: newRecord.category || 'Medication',
+      details: newRecord.details || 'Scanned record processed on-device via WASM OCR.',
+      cost: Number(newRecord.cost) || 0,
+      attestationSignature: 'ed25519_sig_ocr_' + Math.random().toString(36).substr(2, 8),
+      voiceNote: newRecord.voiceNote,
+      ocrConfidence: newRecord.confidence || 95,
+      offlineCached: true,
     };
+
     setHousehold((prev) => ({
       ...prev,
-      members: [...prev.members, memberWithGen],
+      records: [formattedRecord, ...prev.records],
+      completenessScore: Math.min(100, (prev.completenessScore || 88) + 2),
     }));
-    setShowAddMemberModal(false);
-    setSelectedMemberId(memberWithGen.id);
+    setShowOcrModal(false);
   };
 
   // Handler: Reset demo dataset
@@ -177,15 +222,19 @@ export default function App() {
     }
   };
 
-  // Current Translations
+  // Current Translations (Unified i18n dictionary)
   const currentLang = household.language || 'en';
-  const translations = VERNACULAR_TRANSLATIONS[currentLang] || VERNACULAR_TRANSLATIONS['en'];
+  const translations = useMemo(() => {
+    const v1 = VERNACULAR_TRANSLATIONS[currentLang] || VERNACULAR_TRANSLATIONS['en'];
+    const v2 = TRANSLATIONS[currentLang] || TRANSLATIONS['en'];
+    return { ...v1, ...v2 };
+  }, [currentLang]);
 
   // 1. LANDING PAGE VIEW (Investor & Product Overview Showcase)
   if (viewMode === 'LANDING') {
     return (
       <LandingPage
-        onEnterApp={(showCredentials) => setViewMode(showCredentials ? 'LOGIN' : 'LOGIN')}
+        onEnterApp={(showCredentials) => setViewMode(showCredentials ? 'LOGIN' : 'APP')}
         onSelectDemoUser={handleSelectDemoPersona}
       />
     );
@@ -215,6 +264,9 @@ export default function App() {
         onLogout={handleLogout}
         onNavigateLanding={() => setViewMode('LANDING')}
         onOpenAlerts={() => setShowAlertsModal(true)}
+        onOpenOcr={() => setShowOcrModal(true)}
+        onSwitchUser={handleSwitchUser}
+        translations={translations}
       />
 
       {/* MAIN 3-HUB WORKSPACE */}
@@ -228,6 +280,8 @@ export default function App() {
             onSelectMember={(id) => setSelectedMemberId(id)}
             onOpenICE={(member) => setIceModalMember(member)}
             onOpenAddMember={() => setShowAddMemberModal(true)}
+            onEditMember={(member) => setEditingMember(member)}
+            currentUser={currentUser}
             currentLang={currentLang}
             translations={translations}
           />
@@ -237,6 +291,8 @@ export default function App() {
         {activeTab === 'TIMELINE' && (
           <TimelineView
             household={household}
+            onOpenOcr={() => setShowOcrModal(true)}
+            currentUser={currentUser}
             currentLang={currentLang}
             translations={translations}
           />
@@ -248,6 +304,7 @@ export default function App() {
             household={household}
             selectedMemberId={selectedMemberId}
             onSelectMember={(id) => setSelectedMemberId(id)}
+            currentUser={currentUser}
             currentLang={currentLang}
             translations={translations}
           />
@@ -271,11 +328,34 @@ export default function App() {
         />
       )}
 
-      {/* ADD MEMBER MODAL */}
+      {/* ADD / CREATE MEMBER MODAL WITH PHOTO & GENOTYPE */}
       {showAddMemberModal && (
-        <AddMemberModal
+        <MemberProfileModal
+          isNew={true}
           onClose={() => setShowAddMemberModal(false)}
-          onSave={handleAddMember}
+          onSave={handleSaveMemberProfile}
+          translations={translations}
+        />
+      )}
+
+      {/* EDIT INDIVIDUAL MEMBER PROFILE & PHOTO MODAL */}
+      {editingMember && (
+        <MemberProfileModal
+          member={editingMember}
+          isNew={false}
+          onClose={() => setEditingMember(null)}
+          onSave={handleSaveMemberProfile}
+          translations={translations}
+        />
+      )}
+
+      {/* OCR SCANNER MODAL */}
+      {showOcrModal && (
+        <OcrScannerModal
+          members={household.members}
+          onSaveRecord={handleSaveOcrRecord}
+          onClose={() => setShowOcrModal(false)}
+          translations={translations}
         />
       )}
 

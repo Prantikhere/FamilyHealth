@@ -197,36 +197,36 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
     <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 pb-24">
       {/* Title & Technical Purpose */}
       <div>
-        <h2 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-          <span>High-Yield Document Capture</span>
-          <span className="text-[10px] font-bold bg-emerald-light text-emerald-primary px-2 py-0.5 rounded-full border border-emerald-primary/20">
+        <h2 className="text-base font-black text-charcoal tracking-tight flex items-center gap-2">
+          <span>High-Yield Document Capture (OCR)</span>
+          <span className="text-[10px] font-black bg-terracotta-container text-terracotta px-2 py-0.5 rounded-full border border-terracotta/20">
             WASM OCR Engine
           </span>
         </h2>
-        <p className="text-xs text-slate-500 mt-0.5">
+        <p className="text-xs text-charcoal-muted mt-0.5">
           Converts paper clinic cards, chemist notes, and receipts into structured database records offline.
         </p>
       </div>
 
       {/* Target Family Member Horizontal Ribbon */}
       <div>
-        <label className="block text-xs font-bold text-slate-800 mb-1.5">
-          Which household member is this record for?
+        <label className="block text-xs font-black text-charcoal mb-1.5 uppercase tracking-wider text-[11px]">
+          Target Family Member:
         </label>
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
           {members.map((m) => (
             <button
               key={m.id}
               onClick={() => setSelectedMemberId(m.id)}
-              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 flex-shrink-0 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 flex-shrink-0 ${
                 selectedMemberId === m.id
-                  ? 'bg-emerald-primary text-white shadow-sm ring-2 ring-emerald-primary/30'
-                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+                  ? 'bg-terracotta text-white shadow-xs ring-2 ring-terracotta/30'
+                  : 'bg-sand text-charcoal border border-borderRule hover:bg-sand-variant'
               }`}
             >
               <span 
                 className="w-2.5 h-2.5 rounded-full"
-                style={{ backgroundColor: m.avatarBg || '#047857' }}
+                style={{ backgroundColor: m.avatarBg || '#C85A32' }}
               />
               <span>{m.name}</span>
             </button>
@@ -236,16 +236,16 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
 
       {/* Mode Switcher Segmented Control */}
       <div>
-        <label className="block text-xs font-bold text-slate-800 mb-1.5">Document Mode</label>
-        <div className="grid grid-cols-4 gap-1.5 p-1 bg-slate-200/70 rounded-xl">
+        <label className="block text-xs font-black text-charcoal mb-1.5 uppercase tracking-wider text-[11px]">Document Mode</label>
+        <div className="grid grid-cols-4 gap-1.5 p-1 bg-sand rounded-xl border border-borderRule">
           {['Prescription', 'Immunization', 'Lab Test', 'Receipt'].map((mode) => (
             <button
               key={mode}
               onClick={() => setCategory(mode)}
-              className={`py-2 rounded-lg text-[11px] font-bold transition-all text-center ${
+              className={`py-2 rounded-lg text-[11px] font-black transition-all text-center ${
                 category === mode
-                  ? 'bg-white text-emerald-primary shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-charcoal text-white shadow-xs'
+                  : 'text-charcoal-muted hover:text-charcoal'
               }`}
             >
               {mode}
@@ -321,28 +321,28 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             </div>
           </div>
         ) : (
-          <div className="p-6 text-center bg-gradient-to-b from-white/90 to-slate-50/80">
-            <div className="w-16 h-16 rounded-full bg-emerald-light text-emerald-primary flex items-center justify-center mx-auto mb-3 shadow-inner">
+          <div className="p-6 text-center bg-gradient-to-b from-white to-chalk">
+            <div className="w-16 h-16 rounded-2xl bg-terracotta-light text-terracotta flex items-center justify-center mx-auto mb-3 shadow-xs">
               <Camera className="w-8 h-8" />
             </div>
-            <h3 className="text-sm font-extrabold text-slate-800">
-              Snap Photo of Paper, Note, or Card
+            <h3 className="text-sm font-black text-charcoal">
+              Snap Photo of Paper Prescription, Note, or Card
             </h3>
-            <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
+            <p className="text-xs text-charcoal-muted mt-1 max-w-xs mx-auto">
               Runs 100% offline using edge canvas contrast adjustment & local regex pattern matching.
             </p>
 
             <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2">
               <button
                 onClick={startCamera}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-primary text-white font-bold text-xs shadow-md hover:bg-emerald-dark flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-terracotta text-white font-black text-xs shadow-xs hover:bg-terracotta-dark flex items-center justify-center gap-2"
               >
                 <Camera className="w-4 h-4" /> Open Device Camera
               </button>
               
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white text-slate-700 font-bold text-xs border border-slate-300 hover:bg-slate-50 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white text-charcoal font-bold text-xs border border-borderRule hover:bg-sand-variant flex items-center justify-center gap-2 shadow-xs"
               >
                 <Upload className="w-4 h-4" /> Upload Image
               </button>
@@ -361,7 +361,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
 
         {/* Processing Indicator Banner */}
         {isProcessing && (
-          <div className="p-3 bg-amber-500 text-white text-xs font-bold flex items-center justify-center gap-2 animate-pulse">
+          <div className="p-3 bg-ochre text-white text-xs font-black flex items-center justify-center gap-2 animate-pulse">
             <Sparkles className="w-4 h-4 animate-spin" />
             <span>Processing document on-device with WASM OCR pipeline...</span>
           </div>
@@ -369,10 +369,10 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
       </div>
 
       {/* QUICK PRESET SAMPLES (FOR INSTANT ACCURATE DEMO) */}
-      <div className="bg-slate-100/80 rounded-xl p-3 border border-slate-200/80">
+      <div className="bg-sand rounded-2xl p-3 border border-borderRule">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-amber-500" />
+          <span className="text-[11px] font-black text-charcoal uppercase tracking-wider flex items-center gap-1.5">
+            <Zap className="w-3.5 h-3.5 text-terracotta" />
             Instant Test Presets (Paper Simulators)
           </span>
         </div>
@@ -381,10 +381,10 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             <button
               key={sample.id}
               onClick={() => handleSelectSample(sample)}
-              className="text-left p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-primary hover:bg-emerald-50/50 transition-colors text-[11px]"
+              className="text-left p-2.5 rounded-xl bg-white border border-borderRule hover:border-terracotta hover:bg-terracotta-light/40 transition-colors text-[11px] shadow-xs"
             >
-              <div className="font-bold text-slate-800 truncate">{sample.title}</div>
-              <div className="text-slate-500 text-[10px] mt-0.5">{sample.type} • ₦{sample.suggestedCost}</div>
+              <div className="font-extrabold text-charcoal truncate">{sample.title}</div>
+              <div className="text-charcoal-muted text-[10px] mt-0.5">{sample.type} • ₦{sample.suggestedCost}</div>
             </button>
           ))}
         </div>
@@ -399,10 +399,10 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
 
           {/* Confidence Badge */}
           <div 
-            className={`flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold border ${
+            className={`flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black border ${
               confidence >= 90
-                ? 'bg-emerald-100 text-emerald-primary border-emerald-300'
-                : 'bg-amber-100 text-amber-alert border-amber-300'
+                ? 'bg-forest-light text-forest border-forest/30'
+                : 'bg-ochre-container text-ochre border-ochre/30'
             }`}
             title="Extraction confidence score"
           >
@@ -414,41 +414,41 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
         {/* ConfidenceDataField: Provider / Health Clinic */}
         <div>
           <div className="flex items-center justify-between mb-1">
-            <label className="text-xs font-bold text-slate-800">
+            <label className="text-xs font-black text-charcoal">
               Provider / Health Clinic
             </label>
-            <span className="text-[10px] text-emerald-primary font-semibold">Matched regex</span>
+            <span className="text-[10px] text-forest font-bold">Matched regex</span>
           </div>
           <input
             type="text"
             placeholder="e.g. Adeyemi Chemist, St. Nicholas Outpost"
             value={providerName}
             onChange={(e) => setProviderName(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-primary/40 text-xs font-semibold text-slate-900"
+            className="w-full px-3 py-2.5 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-2 focus:ring-terracotta/40 text-xs font-bold text-charcoal"
           />
         </div>
 
         {/* ConfidenceDataField: Extracted Diagnosis / Dosage / Regimen */}
         <div>
           <div className="flex items-center justify-between mb-1">
-            <label className="text-xs font-bold text-slate-800">
+            <label className="text-xs font-black text-charcoal">
               Extracted Regimen / Dosage / Schedule
             </label>
-            <span className="text-[10px] text-slate-400 font-mono">bd, tds, nocte</span>
+            <span className="text-[10px] text-charcoal-muted font-mono">bd, tds, nocte</span>
           </div>
           <textarea
             rows={3}
             placeholder="Medications and doses will appear here after scanning..."
             value={details}
             onChange={(e) => setDetails(e.target.value)}
-            className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-primary/40 text-xs text-slate-900 leading-relaxed"
+            className="w-full px-3 py-2 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-2 focus:ring-terracotta/40 text-xs text-charcoal leading-relaxed font-medium"
           />
         </div>
 
         {/* ConfidenceDataField: Cash Paid Cost */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">
+            <label className="block text-xs font-black text-charcoal mb-1">
               Out-of-Pocket Cash Cost (₦)
             </label>
             <input
@@ -456,28 +456,28 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
               placeholder="e.g. 3500"
               value={cost}
               onChange={(e) => setCost(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-primary/40 text-xs font-bold text-slate-900"
+              className="w-full px-3 py-2 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-2 focus:ring-terracotta/40 text-xs font-black text-charcoal"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1">
+            <label className="block text-xs font-black text-charcoal mb-1">
               Verification Status
             </label>
-            <div className="h-[38px] flex items-center px-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-primary text-xs font-bold">
-              ✓ Ready for Storage
+            <div className="h-[38px] flex items-center px-3 rounded-xl bg-forest-light border border-forest/30 text-forest text-xs font-black">
+              ✓ Ready for Family Ledger
             </div>
           </div>
         </div>
 
         {/* VoiceAnnotationButton (8-second spoken note attachment) */}
-        <div className="pt-2 border-t border-slate-200/80">
+        <div className="pt-2 border-t border-borderRule">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-bold text-slate-800">
+            <span className="text-xs font-black text-charcoal">
               8-Second Spoken Voice Annotation
             </span>
             {isRecording && (
-              <span className="text-[10px] font-bold text-rose-emergency animate-pulse">
+              <span className="text-[10px] font-black text-emergency animate-pulse">
                 Recording ({recordingSeconds}/8s)
               </span>
             )}
@@ -487,12 +487,12 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             <button
               type="button"
               onClick={toggleVoiceRecording}
-              className={`px-3 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all ${
+              className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1.5 transition-all ${
                 isRecording
-                  ? 'bg-rose-emergency text-white animate-pulse shadow-md'
+                  ? 'bg-emergency text-white animate-pulse shadow-md'
                   : voiceNote
-                  ? 'bg-emerald-light text-emerald-primary border border-emerald-300'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  ? 'bg-forest-light text-forest border border-forest/30'
+                  : 'bg-sand text-charcoal hover:bg-sand-variant'
               }`}
             >
               {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
@@ -500,7 +500,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             </button>
 
             {voiceNote && (
-              <span className="text-[11px] text-slate-600 italic truncate flex-1 bg-slate-50 px-2 py-1.5 rounded-lg border border-slate-200">
+              <span className="text-[11px] text-charcoal italic truncate flex-1 bg-white px-2 py-1.5 rounded-lg border border-borderRule">
                 "{voiceNote}"
               </span>
             )}
@@ -508,16 +508,16 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
         </div>
 
         {/* Action Buttons: Save or Discard */}
-        <div className="flex items-center gap-3 pt-3 border-t border-slate-200">
+        <div className="flex items-center gap-3 pt-3 border-t border-borderRule">
           <button
             onClick={onCancel}
-            className="flex-1 py-3 rounded-xl border border-slate-300 font-bold text-xs text-slate-600 hover:bg-slate-100 transition-colors"
+            className="flex-1 py-3 rounded-xl border border-borderRule font-bold text-xs text-charcoal-muted hover:bg-sand transition-colors"
           >
             Discard
           </button>
           <button
             onClick={handleSaveRecord}
-            className="flex-[2] py-3 rounded-xl bg-emerald-primary hover:bg-emerald-dark text-white font-extrabold text-xs shadow-md transition-all active:scale-[0.98]"
+            className="flex-[2] py-3 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white font-black text-xs shadow-xs transition-all active:scale-[0.98]"
           >
             Save to Family Log
           </button>

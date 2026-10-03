@@ -11,8 +11,14 @@ import {
   Bell, 
   ShieldCheck, 
   RefreshCw,
-  ChevronDown
+  ChevronDown,
+  Camera,
+  Users,
+  Stethoscope,
+  AlertOctagon,
+  UserCheck
 } from 'lucide-react';
+import { DUMMY_ACCOUNTS } from './LoginScreen';
 
 export default function Header({
   household,
@@ -22,10 +28,16 @@ export default function Header({
   onResetData,
   onLogout,
   onNavigateLanding,
-  onOpenAlerts
+  onOpenAlerts,
+  onOpenOcr,
+  onSwitchUser,
+  translations
 }) {
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showRoleMenu, setShowRoleMenu] = useState(false);
+
+  const t = translations || {};
 
   const languages = [
     { code: 'en', name: 'English (UK / West Africa)' },
@@ -37,29 +49,45 @@ export default function Header({
 
   const pendingAlertCount = household.pendingAlerts?.length || 2;
 
+  // Determine role perspective short label & badge
+  const role = currentUser?.role || '';
+  let roleLabel = 'Admin';
+  let roleBadgeClass = 'bg-terracotta-container text-terracotta border-terracotta/20';
+
+  if (role.includes('CHEW') || role.includes('Community Health')) {
+    roleLabel = 'CHEW Nurse';
+    roleBadgeClass = 'bg-forest-container text-forest border-forest/20';
+  } else if (role.includes('Emergency') || role.includes('Clinician') || role.includes('Cardiologist')) {
+    roleLabel = 'ER Doctor';
+    roleBadgeClass = 'bg-indigoVerified-container text-indigoVerified border-indigoVerified/20';
+  } else if (role.includes('Elder') || role.includes('Dependent') || currentUser?.name?.includes('Baba')) {
+    roleLabel = 'Senior Patient';
+    roleBadgeClass = 'bg-ochre-container text-charcoal border-ochre/25';
+  }
+
   return (
-    <header className="sticky top-0 z-30 bg-chalk/90 backdrop-blur-md border-b border-borderRule px-4 py-3 shadow-subtle" role="banner">
+    <header className="sticky top-0 z-30 bg-chalk/90 backdrop-blur-md border-b border-borderRule px-3 sm:px-4 py-2.5 shadow-subtle" role="banner">
       <div className="flex items-center justify-between gap-2">
         
         {/* 1. BRAND IDENTITY & HOME CLICK */}
         <button
           onClick={onNavigateLanding}
-          className="flex items-center gap-2.5 min-w-0 text-left group touch-target cursor-pointer hover:opacity-95 transition-opacity"
+          className="flex items-center gap-2 min-w-0 text-left group touch-target cursor-pointer hover:opacity-95 transition-opacity"
           title="Return to FamilyHealth Product Showcase & Overview"
         >
-          <div className="w-10 h-10 rounded-2xl bg-terracotta flex items-center justify-center text-white shadow-xs flex-shrink-0 group-hover:scale-105 transition-transform">
-            <HeartPulse className="w-6 h-6" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-terracotta flex items-center justify-center text-white shadow-xs flex-shrink-0 group-hover:scale-105 transition-transform">
+            <HeartPulse className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
-              <h1 className="text-base font-black text-charcoal tracking-tight leading-none group-hover:text-terracotta transition-colors">
+              <h1 className="text-sm sm:text-base font-black text-charcoal tracking-tight leading-none group-hover:text-terracotta transition-colors">
                 FamilyHealth
               </h1>
-              <span className="text-[9px] uppercase font-black bg-terracotta-container text-terracotta px-1.5 py-0.2 rounded-full border border-terracotta/20">
+              <span className="text-[8px] sm:text-[9px] uppercase font-black bg-terracotta-container text-terracotta px-1.5 py-0.2 rounded-full border border-terracotta/20">
                 AFRICA
               </span>
             </div>
-            <p className="text-[11px] text-charcoal-muted font-medium truncate mt-0.5">
+            <p className="text-[10px] sm:text-[11px] text-charcoal-muted font-medium truncate mt-0.5">
               Circle: <span className="font-bold text-charcoal">{household.head}</span>
             </p>
           </div>
@@ -68,19 +96,70 @@ export default function Header({
         {/* 2. ACTION CONTROLS & STATUS */}
         <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           
-          {/* Offline / Synced Indicator (Section 1.2 NFR Resilience) */}
-          <div 
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border transition-colors ${
-              isOffline 
-                ? 'bg-amber-100 text-amber-900 border-amber-300' 
-                : 'bg-forest-light text-forest border-forest/30'
-            }`}
-            title={isOffline ? 'Offline SQLCipher queue active.' : 'Synced to GCP Edge PoP (Lagos). AES-256-GCM Zero-Knowledge.'}
-          >
-            <span className={`w-2 h-2 rounded-full ${isOffline ? 'bg-amber-600 animate-pulse' : 'bg-forest'}`} />
-            <span className="hidden sm:inline">
-              {isOffline ? 'Offline (SQLCipher)' : 'Synced (Edge PoP)'}
-            </span>
+          {/* Quick OCR Scanner Button */}
+          {onOpenOcr && (
+            <button
+              onClick={onOpenOcr}
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white font-black text-xs shadow-xs transition-transform active:scale-95 touch-target"
+              title="Scan clinic prescription, immunization leaflet, or receipt via WASM OCR"
+            >
+              <Camera className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">{t.scanAction || 'Scan Record (OCR)'}</span>
+            </button>
+          )}
+
+          {/* Role Perspective Selector Pill */}
+          <div className="relative">
+            <button
+              onClick={() => setShowRoleMenu(!showRoleMenu)}
+              className={`flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-full text-xs font-black border transition-all ${roleBadgeClass}`}
+              title="Change active user profile / access perspective"
+              aria-label="Switch User Profile Perspective"
+            >
+              <span className="w-2 h-2 rounded-full bg-current" />
+              <span className="truncate max-w-[90px] sm:max-w-none">{roleLabel}</span>
+              <ChevronDown className="w-3 h-3 opacity-70" />
+            </button>
+
+            {showRoleMenu && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowRoleMenu(false)} />
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-lifted border border-borderRule py-2 z-50 text-xs animate-in fade-in duration-150">
+                  <div className="px-3 py-1 font-black text-charcoal-muted uppercase tracking-wider text-[10px] border-b border-borderRule/60 mb-1">
+                    Role-Based Access Perspective
+                  </div>
+                  {DUMMY_ACCOUNTS.map((acc, idx) => {
+                    const isSelected = currentUser?.email === acc.email;
+                    return (
+                      <button
+                        key={acc.email}
+                        onClick={() => {
+                          onSwitchUser?.(acc);
+                          setShowRoleMenu(false);
+                        }}
+                        className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-sand transition-colors ${
+                          isSelected ? 'bg-terracotta-light/50 font-black text-charcoal' : 'text-charcoal'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span 
+                            className="w-6 h-6 rounded-lg text-white font-black text-[10px] flex items-center justify-center flex-shrink-0"
+                            style={{ backgroundColor: acc.avatarBg || '#C85A32' }}
+                          >
+                            {acc.name[0]}
+                          </span>
+                          <div className="truncate">
+                            <span className="font-extrabold block truncate leading-tight">{acc.name}</span>
+                            <span className="text-[10px] text-charcoal-muted truncate block">{acc.badge}</span>
+                          </div>
+                        </div>
+                        {isSelected && <Check className="w-4 h-4 text-terracotta flex-shrink-0 ml-1" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </>
+            )}
           </div>
 
           {/* Pending Alerts Counter Pill */}
@@ -90,7 +169,8 @@ export default function Header({
             title={`${pendingAlertCount} actionable alerts in your family health circle`}
           >
             <Bell className="w-3.5 h-3.5" />
-            <span>Alerts ({pendingAlertCount})</span>
+            <span className="hidden sm:inline">{t.alertsBadge || 'Alerts'} ({pendingAlertCount})</span>
+            <span className="sm:hidden">{pendingAlertCount}</span>
           </button>
 
           {/* Language Selector Dropdown */}
@@ -136,7 +216,7 @@ export default function Header({
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="w-9 h-9 rounded-2xl bg-terracotta text-white font-black text-xs shadow-xs flex items-center justify-center border-2 border-white touch-target cursor-pointer hover:scale-105 transition-transform"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-2xl bg-terracotta text-white font-black text-xs shadow-xs flex items-center justify-center border-2 border-white touch-target cursor-pointer hover:scale-105 transition-transform"
               style={{ backgroundColor: currentUser?.avatarBg || '#C85A32' }}
               title={`Logged in as ${currentUser?.name || 'Femi Adeyemi'}`}
               aria-label="User Account Menu"
@@ -147,7 +227,7 @@ export default function Header({
             {showUserMenu && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
-                <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-lifted border border-borderRule py-2 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-lifted border border-borderRule py-2 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
                   
                   <div className="px-4 py-2.5 border-b border-borderRule">
                     <span className="font-black text-charcoal block truncate text-sm">
