@@ -3,26 +3,28 @@
 @tailwind utilities;
 
 :root {
-  /* African Earth Tone Design Tokens (BluePrint.md LLD v2.4.0) */
-  --bg-canvas: #F9F6F0;              /* Warm Chalk */
-  --surface-sand: #EFE9DF;           /* Sand Container */
-  --surface-variant: #E4DDD1;
-  --color-terracotta: #C85A32;       /* Terracotta Primary - Action & Urgency */
-  --color-forest: #1E4D38;           /* Forest Palm - Trust & Health */
-  --color-charcoal: #141210;         /* Deep Charcoal - High Contrast Ink */
-  --color-muted: #5C564E;
-  --color-border: #E2DCD2;           /* Border Rule */
+  /* Minimalist + Monochrome Design Tokens */
+  --bg-canvas: #FAFAFA;              /* Crisp Minimalist Off-White */
+  --surface-white: #FFFFFF;          /* Pure Luminous White */
+  --surface-sand: #F4F4F5;           /* Subtle Zinc Container */
+  --surface-variant: #E4E4E7;        /* Hairline Border / Subtle Surface */
+  --color-terracotta: #09090B;       /* Deep Obsidian Black (Primary Action) */
+  --color-forest: #18181B;           /* Deep Graphite */
+  --color-charcoal: #09090B;         /* High Contrast Stark Black Ink */
+  --color-muted: #71717A;            /* Refined Secondary Zinc */
+  --color-border: #E4E4E7;           /* Razor-Sharp Hairline Border */
   
-  /* Dual-Tier Provenance Badges */
-  --provenance-official: #1B2A4A;    /* Indigo Verified Seal */
-  --provenance-self: #D9822B;        /* Ochre Alert */
-  --emergency-accent: #BA1A1A;       /* Red Emergency */
+  /* Dual-Tier Provenance Badges (Monochrome Refinement) */
+  --provenance-official: #09090B;    /* Inverted Black Seal */
+  --provenance-self: #27272A;        /* Slate / Zinc */
+  --emergency-accent: #09090B;       /* High-Contrast Inverted Tag */
   
   /* Typography & Structure */
-  --font-system: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 16px;
+  --font-system: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
   --min-tap-target: 48px;
 
   /* Safe Area Insets for Mobile / PWA */
@@ -41,20 +43,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
+  letter-spacing: -0.011em;
 }
 
-/* Structural Card & Surface Styles */
+/* Minimalist Structural Surface Styles */
 .surface-card {
   background-color: #FFFFFF;
   border: 1px solid var(--color-border);
-  box-shadow: 0 2px 8px rgba(20, 18, 16, 0.04);
-  border-radius: 16px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  border-radius: 18px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.surface-card:hover {
+  border-color: #D4D4D8;
 }
 
 .sand-card {
   background-color: var(--surface-sand);
   border: 1px solid var(--color-border);
-  border-radius: 16px;
+  border-radius: 18px;
 }
 
 /* Mobile responsive app shell container */
@@ -66,7 +74,7 @@ body {
   flex-direction: column;
   position: relative;
   background-color: var(--bg-canvas);
-  box-shadow: 0 0 40px rgba(20, 18, 16, 0.05);
+  box-shadow: 0 0 50px -10px rgba(0, 0, 0, 0.06);
 }
 
 @media (min-width: 769px) {
@@ -95,12 +103,28 @@ button, a, input, select, textarea {
   scrollbar-width: none;
 }
 
-/* Pulse animation for emergency SOS beacon */
+/* Subtle pulse animation for emergency beacon */
 @keyframes pulse-emergency {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.02); }
+  50% { opacity: 0.9; transform: scale(1.015); }
 }
 
 .animate-emergency {
-  animation: pulse-emergency 2s infinite ease-in-out;
+  animation: pulse-emergency 2.5s infinite ease-in-out;
+}
+
+/* Custom Minimalist Monochrome Scrollbar for Modals / Trees */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F4F4F5;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4D4D8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A1A1AA;
 }

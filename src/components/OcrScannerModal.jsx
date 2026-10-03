@@ -17,13 +17,13 @@ export default function OcrScannerModal({
         {/* Modal Header */}
         <div className="flex items-center justify-between border-b border-borderRule pb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-terracotta text-white flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white flex items-center justify-center shadow-xs">
               <Camera className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-base font-black text-charcoal flex items-center gap-2">
                 <span>{t.ocrScannerHeading || 'Scan Health Document (OCR)'}</span>
-                <span className="text-[10px] font-black uppercase tracking-wider bg-terracotta-container text-terracotta px-2 py-0.5 rounded-full border border-terracotta/20">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-zinc-100 text-zinc-950 px-2 py-0.5 rounded-full border border-zinc-200">
                   WASM OCR
                 </span>
               </h2>

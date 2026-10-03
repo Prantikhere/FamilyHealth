@@ -137,82 +137,82 @@ export default function TimelineView({
   return (
     <div className="space-y-4 pb-24 animate-in fade-in duration-200">
       
-      {/* ROLE PERSPECTIVE NOTIFICATION BANNER */}
+      {/* ROLE PERSPECTIVE NOTIFICATION BANNER (Minimalist Monochrome) */}
       {isChew && (
-        <div className="bg-forest-light border-2 border-forest/30 text-forest p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
+        <div className="bg-zinc-100 border border-zinc-200 text-zinc-900 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-forest text-white flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-zinc-950 text-white flex items-center justify-center flex-shrink-0">
               <Stethoscope className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-black block uppercase tracking-wider text-[11px]">
+              <span className="font-bold block uppercase tracking-wider text-[11px] text-zinc-950">
                 {t.chewPerspective || 'CHEW Nurse Maternal & Child Records Filter'}
               </span>
-              <p className="text-[11px] text-forest/90 font-medium">
+              <p className="text-[11px] text-zinc-600 font-medium">
                 Showing pediatric immunizations & maternal records. Private financial transactions are masked.
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-black uppercase bg-forest text-white px-2 py-0.5 rounded-full flex-shrink-0">
+          <span className="text-[10px] font-bold uppercase bg-zinc-900 text-white px-2.5 py-0.5 rounded-full flex-shrink-0">
             PHC Scope
           </span>
         </div>
       )}
 
       {isSenior && (
-        <div className="bg-ochre-container border-2 border-ochre/30 text-charcoal p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
+        <div className="bg-zinc-100 border border-zinc-200 text-zinc-900 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-ochre text-white flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-zinc-950 text-white flex items-center justify-center flex-shrink-0">
               <HeartPulse className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-black block uppercase tracking-wider text-[11px]">
+              <span className="font-bold block uppercase tracking-wider text-[11px] text-zinc-950">
                 Personal Senior Health Ledger (Baba Adeyemi)
               </span>
-              <p className="text-[11px] text-charcoal-muted font-medium">
+              <p className="text-[11px] text-zinc-600 font-medium">
                 Filtered strictly to Baba's clinical consultations, blood pressure readings, and cardiology reports.
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-black uppercase bg-ochre text-white px-2 py-0.5 rounded-full flex-shrink-0">
+          <span className="text-[10px] font-bold uppercase bg-zinc-900 text-white px-2.5 py-0.5 rounded-full flex-shrink-0">
             G0 Ledger
           </span>
         </div>
       )}
 
       {/* 1. TOP HEADER & PROVENANCE FILTER */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-borderRule pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-200 pb-3">
         <div>
-          <h2 className="text-base font-black text-charcoal tracking-tight">
+          <h2 className="text-base font-bold text-zinc-950 tracking-tight">
             {t.timelineHeading || 'Dual-Tier Health Records Timeline'}
           </h2>
-          <p className="text-xs text-charcoal-muted">
+          <p className="text-xs text-zinc-500">
             {t.timelineSubtitle || 'Cryptographically signed official records & patient self-reported logs'}
           </p>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-1 bg-sand p-1 rounded-xl self-start sm:self-auto">
+        <div className="flex items-center gap-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200 self-start sm:self-auto">
           <button
             onClick={() => setFilterType('ALL')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-              filterType === 'ALL' ? 'bg-charcoal text-white shadow-xs' : 'text-charcoal-muted hover:text-charcoal'
+            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              filterType === 'ALL' ? 'bg-zinc-950 text-white shadow-xs' : 'text-zinc-600 hover:text-zinc-950'
             }`}
           >
             All ({roleRecords.length})
           </button>
           <button
             onClick={() => setFilterType('OFFICIAL')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-              filterType === 'OFFICIAL' ? 'bg-indigoVerified text-white shadow-xs' : 'text-charcoal-muted hover:text-charcoal'
+            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              filterType === 'OFFICIAL' ? 'bg-zinc-950 text-white shadow-xs' : 'text-zinc-600 hover:text-zinc-950'
             }`}
           >
             Official Verified
           </button>
           <button
             onClick={() => setFilterType('SELF')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-              filterType === 'SELF' ? 'bg-ochre text-white shadow-xs' : 'text-charcoal-muted hover:text-charcoal'
+            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              filterType === 'SELF' ? 'bg-zinc-950 text-white shadow-xs' : 'text-zinc-600 hover:text-zinc-950'
             }`}
           >
             Self-Reported
@@ -221,16 +221,16 @@ export default function TimelineView({
       </div>
 
       {/* 2. SELECTIVE TRANSFER ACTIVATION BAR (Section 2.2 Wireframe) */}
-      <div className="surface-card p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-chalk border-2 border-borderRule">
+      <div className="surface-card p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white border border-zinc-200">
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
             checked={selectedRecordIds.length > 0 && selectedRecordIds.length === filteredRecords.length}
             onChange={handleSelectAll}
-            className="w-4 h-4 rounded border-borderRule text-terracotta focus:ring-terracotta cursor-pointer"
+            className="w-4 h-4 rounded border-zinc-300 text-zinc-950 focus:ring-zinc-950 cursor-pointer"
             id="selectAllRecords"
           />
-          <label htmlFor="selectAllRecords" className="text-xs font-bold text-charcoal cursor-pointer">
+          <label htmlFor="selectAllRecords" className="text-xs font-semibold text-zinc-900 cursor-pointer">
             Select records to compile temporary doctor transfer PIN
           </label>
         </div>
@@ -239,24 +239,24 @@ export default function TimelineView({
           {onOpenOcr && (
             <button
               onClick={onOpenOcr}
-              className="px-3 py-2 rounded-xl bg-forest hover:bg-forest-dark text-white text-xs font-black flex items-center gap-1.5 shadow-xs transition-transform active:scale-95"
+              className="px-3 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-900 border border-zinc-300 text-xs font-bold flex items-center gap-1.5 shadow-xs transition-transform active:scale-95 cursor-pointer"
               title="Scan and parse paper prescription or receipt via WASM OCR"
             >
-              <Camera className="w-3.5 h-3.5" />
+              <Camera className="w-3.5 h-3.5 text-zinc-600" />
               <span>{t.scanAction || 'Scan (OCR)'}</span>
             </button>
           )}
 
-          <span className="text-xs font-mono text-charcoal-muted">
+          <span className="text-xs font-mono text-zinc-500">
             {selectedRecordIds.length} selected
           </span>
           <button
             onClick={handleInitiateTransfer}
             disabled={selectedRecordIds.length === 0}
-            className={`px-4 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition-all shadow-xs ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs ${
               selectedRecordIds.length > 0 
-                ? 'bg-terracotta hover:bg-terracotta-dark text-white cursor-pointer active:scale-95' 
-                : 'bg-sand text-charcoal-muted cursor-not-allowed opacity-60'
+                ? 'bg-zinc-950 hover:bg-zinc-800 text-white cursor-pointer active:scale-95 border border-zinc-900' 
+                : 'bg-zinc-100 text-zinc-400 cursor-not-allowed border border-zinc-200'
             }`}
           >
             <Share2 className="w-3.5 h-3.5" />
@@ -276,44 +276,38 @@ export default function TimelineView({
             <div 
               key={record.id}
               className={`surface-card p-4 transition-all relative overflow-hidden ${
-                isSelected ? 'ring-2 ring-terracotta border-transparent' : 'border-borderRule'
+                isSelected ? 'ring-1 ring-zinc-950 border-zinc-950 bg-zinc-50/50' : 'border-zinc-200'
               }`}
             >
-              {/* Top Accent Strip */}
-              <div 
-                className="absolute top-0 left-0 right-0 h-1"
-                style={{ backgroundColor: isOfficial ? '#1B2A4A' : '#D9822B' }}
-              />
-
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-2.5">
                   <input
                     type="checkbox"
                     checked={isSelected}
                     onChange={() => toggleSelectRecord(record.id)}
-                    className="mt-1 w-4 h-4 rounded border-borderRule text-terracotta focus:ring-terracotta cursor-pointer"
+                    className="mt-1 w-4 h-4 rounded border-zinc-300 text-zinc-950 focus:ring-zinc-950 cursor-pointer"
                   />
                   <div>
-                    {/* Provenance Badge */}
+                    {/* Provenance Badge (Monochrome) */}
                     <div className="flex items-center gap-2 mb-1">
                       {isOfficial ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-indigoVerified text-white">
-                          <ShieldCheck className="w-3 h-3 text-sky-300" />
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-950 text-white">
+                          <ShieldCheck className="w-3 h-3 text-zinc-300" />
                           {t.officialSeal || 'OFFICIAL VERIFIED SEAL'}
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-ochre text-white">
-                          <AlertCircle className="w-3 h-3 text-amber-200" />
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-100 text-zinc-900 border border-zinc-300">
+                          <AlertCircle className="w-3 h-3 text-zinc-600" />
                           {t.selfReported || 'SELF-REPORTED ENTRY'}
                         </span>
                       )}
                       
-                      <span className="text-[10px] font-bold text-charcoal-muted">
+                      <span className="text-[10px] font-semibold text-zinc-500">
                         {member?.name} ({member?.generation})
                       </span>
                     </div>
 
-                    <h3 className="font-extrabold text-sm text-charcoal">
+                    <h3 className="font-bold text-sm text-zinc-950">
                       {record.title}
                     </h3>
                   </div>

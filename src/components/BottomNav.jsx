@@ -34,11 +34,11 @@ export default function BottomNav({ activeTab, onSelectTab, translations }) {
 
   return (
     <nav 
-      className="fixed bottom-0 inset-x-0 max-w-[768px] mx-auto z-40 bg-sand/95 backdrop-blur-md border-t-2 border-borderRule shadow-lifted pb-[env(safe-area-inset-bottom,0px)]"
+      className="fixed bottom-0 inset-x-0 max-w-[768px] mx-auto z-40 bg-white/95 backdrop-blur-md border-t border-zinc-200 shadow-xs pb-[env(safe-area-inset-bottom,0px)]"
       role="navigation"
       aria-label="Bottom Navigation Hubs"
     >
-      <div className="flex items-center justify-around h-[72px] px-3">
+      <div className="flex items-center justify-around h-[68px] px-3">
         {hubs.map((hub) => {
           const isActive = activeTab === hub.id;
           const IconComponent = hub.icon;
@@ -50,23 +50,23 @@ export default function BottomNav({ activeTab, onSelectTab, translations }) {
                 onClick={() => onSelectTab(hub.id)}
                 className={`flex-1 flex flex-col items-center justify-center py-1 touch-target transition-all rounded-xl ${
                   isActive 
-                    ? 'text-emergency font-black' 
-                    : 'text-charcoal-muted hover:text-emergency'
+                    ? 'text-zinc-950 font-black' 
+                    : 'text-zinc-400 hover:text-zinc-950'
                 }`}
                 aria-label={hub.label}
                 aria-current={isActive ? 'page' : undefined}
               >
                 <div className={`p-1.5 rounded-xl transition-all ${
                   isActive 
-                    ? 'bg-emergency-container text-emergency scale-105' 
-                    : 'bg-chalk text-emergency/80'
+                    ? 'bg-zinc-950 text-white scale-105 shadow-xs' 
+                    : 'bg-zinc-100 text-zinc-800'
                 }`}>
-                  <IconComponent className={`w-5 h-5 ${isActive ? 'stroke-[2.8]' : 'stroke-[2]'}`} />
+                  <IconComponent className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-[1.8]'}`} />
                 </div>
-                <span className="text-[11px] font-black mt-0.5 tracking-tight uppercase">
+                <span className="text-[10px] font-black mt-0.5 tracking-wider uppercase">
                   {hub.label}
                 </span>
-                <span className="text-[9px] text-charcoal-muted hidden sm:inline">
+                <span className="text-[9px] text-zinc-400 hidden sm:inline">
                   {hub.sublabel}
                 </span>
               </button>
@@ -79,23 +79,23 @@ export default function BottomNav({ activeTab, onSelectTab, translations }) {
               onClick={() => onSelectTab(hub.id)}
               className={`flex-1 flex flex-col items-center justify-center py-1 touch-target transition-all rounded-xl ${
                 isActive 
-                  ? 'text-terracotta font-black' 
-                  : 'text-charcoal-muted hover:text-charcoal'
+                  ? 'text-zinc-950 font-black' 
+                  : 'text-zinc-400 hover:text-zinc-950'
               }`}
               aria-label={hub.label}
               aria-current={isActive ? 'page' : undefined}
             >
               <div className={`p-1.5 rounded-xl transition-all ${
                 isActive 
-                  ? 'bg-terracotta-container text-terracotta scale-105' 
-                  : ''
+                  ? 'bg-zinc-950 text-white scale-105 shadow-xs' 
+                  : 'text-zinc-500'
               }`}>
                 <IconComponent className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-[1.8]'}`} />
               </div>
-              <span className="text-[11px] font-extrabold mt-0.5 tracking-tight">
+              <span className="text-[10px] font-bold mt-0.5 tracking-tight">
                 {hub.label}
               </span>
-              <span className="text-[9px] text-charcoal-muted hidden sm:inline">
+              <span className="text-[9px] text-zinc-400 hidden sm:inline">
                 {hub.sublabel}
               </span>
             </button>

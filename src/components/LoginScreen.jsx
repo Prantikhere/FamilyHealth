@@ -143,7 +143,7 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
 
       {/* Brand Header */}
       <div className="text-center mb-6">
-        <div className="w-16 h-16 rounded-2xl bg-terracotta text-white flex items-center justify-center mx-auto shadow-card mb-3">
+        <div className="w-16 h-16 rounded-2xl bg-zinc-950 text-white flex items-center justify-center mx-auto shadow-card mb-3">
           <HeartPulse className="w-9 h-9" />
         </div>
         <h1 className="text-2xl font-black text-charcoal tracking-tight">
@@ -155,11 +155,11 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
       </div>
 
       {/* 1-Tap Quick Evaluator Access Banner */}
-      <div className="mb-4 p-3 rounded-2xl bg-terracotta-light border-2 border-terracotta/40 shadow-xs flex items-center justify-between gap-2">
+      <div className="mb-4 p-3 rounded-2xl bg-zinc-100 border border-zinc-200 shadow-xs flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-terracotta flex-shrink-0" />
+          <Sparkles className="w-5 h-5 text-zinc-950 flex-shrink-0" />
           <div>
-            <span className="text-xs font-black text-terracotta block">
+            <span className="text-xs font-black text-zinc-950 block">
               1-Tap Evaluator Access
             </span>
             <span className="text-[11px] text-charcoal-muted block">
@@ -170,7 +170,7 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
 
         <button
           onClick={handleEvaluatorBypass}
-          className="px-3.5 py-2 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white font-black text-xs shadow-xs active:scale-95 transition-all flex items-center gap-1"
+          className="px-3.5 py-2 rounded-xl bg-zinc-950 hover:bg-black text-white font-black text-xs shadow-xs active:scale-95 transition-all flex items-center gap-1"
         >
           <span>Launch POV</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -192,7 +192,7 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="femi.adeyemi@familyhealth.africa"
-                className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-borderRule bg-chalk text-xs font-medium focus:border-terracotta focus:ring-1 focus:ring-terracotta outline-none transition-all"
+                className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-borderRule bg-chalk text-xs font-medium focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950 outline-none transition-all"
               />
             </div>
           </div>
@@ -209,7 +209,7 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-borderRule bg-chalk text-xs font-medium focus:border-terracotta focus:ring-1 focus:ring-terracotta outline-none transition-all"
+                className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-borderRule bg-chalk text-xs font-medium focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950 outline-none transition-all"
               />
               <button
                 type="button"
@@ -233,11 +233,11 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-borderRule text-terracotta focus:ring-terracotta"
+                className="rounded border-borderRule text-zinc-950 focus:ring-zinc-950"
               />
               <span>Remember credential</span>
             </label>
-            <span className="text-terracotta font-bold hover:underline cursor-pointer">
+            <span className="text-zinc-950 font-bold hover:underline cursor-pointer">
               Forgot PIN?
             </span>
           </div>
@@ -245,7 +245,7 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 px-4 rounded-xl bg-charcoal hover:bg-black text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98] disabled:opacity-60 cursor-pointer"
+            className="w-full py-3 px-4 rounded-xl bg-zinc-950 hover:bg-black text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98] disabled:opacity-60 cursor-pointer"
           >
             <span>{isLoading ? 'Decrypting Session...' : 'Sign In to Health Circle'}</span>
             <ArrowRight className="w-4 h-4" />
@@ -268,10 +268,10 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
                   key={index}
                   type="button"
                   onClick={() => handleSelectPreset(acc)}
-                  className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-start gap-3 ${
+                  className={`w-full text-left p-3 rounded-xl border transition-all flex items-start gap-3 ${
                     isSelected 
-                      ? 'border-terracotta bg-terracotta-light shadow-xs' 
-                      : 'border-borderRule bg-chalk hover:bg-sand'
+                      ? 'border-zinc-950 bg-zinc-100 ring-1 ring-zinc-950 shadow-xs' 
+                      : 'border-borderRule bg-chalk hover:bg-zinc-50'
                   }`}
                 >
                   <div 
@@ -307,7 +307,7 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
 
       {/* Security Footnote */}
       <div className="mt-5 text-center text-[11px] text-charcoal-muted flex items-center justify-center gap-1.5">
-        <ShieldCheck className="w-4 h-4 text-forest" />
+        <ShieldCheck className="w-4 h-4 text-zinc-900" />
         <span>Client-side AES-256-GCM Envelope Encryption (Zero-Knowledge)</span>
       </div>
 

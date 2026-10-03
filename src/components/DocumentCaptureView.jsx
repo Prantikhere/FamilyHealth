@@ -199,7 +199,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
       <div>
         <h2 className="text-base font-black text-charcoal tracking-tight flex items-center gap-2">
           <span>High-Yield Document Capture (OCR)</span>
-          <span className="text-[10px] font-black bg-terracotta-container text-terracotta px-2 py-0.5 rounded-full border border-terracotta/20">
+          <span className="text-[10px] font-black bg-zinc-100 text-zinc-950 px-2 py-0.5 rounded-full border border-zinc-200">
             WASM OCR Engine
           </span>
         </h2>
@@ -220,7 +220,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
               onClick={() => setSelectedMemberId(m.id)}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 flex-shrink-0 ${
                 selectedMemberId === m.id
-                  ? 'bg-terracotta text-white shadow-xs ring-2 ring-terracotta/30'
+                  ? 'bg-zinc-950 text-white shadow-xs ring-1 ring-zinc-950'
                   : 'bg-sand text-charcoal border border-borderRule hover:bg-sand-variant'
               }`}
             >
@@ -237,15 +237,15 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
       {/* Mode Switcher Segmented Control */}
       <div>
         <label className="block text-xs font-black text-charcoal mb-1.5 uppercase tracking-wider text-[11px]">Document Mode</label>
-        <div className="grid grid-cols-4 gap-1.5 p-1 bg-sand rounded-xl border border-borderRule">
+        <div className="grid grid-cols-4 gap-1.5 p-1 bg-zinc-100 rounded-xl border border-zinc-200">
           {['Prescription', 'Immunization', 'Lab Test', 'Receipt'].map((mode) => (
             <button
               key={mode}
               onClick={() => setCategory(mode)}
               className={`py-2 rounded-lg text-[11px] font-black transition-all text-center ${
                 category === mode
-                  ? 'bg-charcoal text-white shadow-xs'
-                  : 'text-charcoal-muted hover:text-charcoal'
+                  ? 'bg-zinc-950 text-white shadow-xs'
+                  : 'text-zinc-600 hover:text-zinc-950'
               }`}
             >
               {mode}
@@ -321,8 +321,8 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             </div>
           </div>
         ) : (
-          <div className="p-6 text-center bg-gradient-to-b from-white to-chalk">
-            <div className="w-16 h-16 rounded-2xl bg-terracotta-light text-terracotta flex items-center justify-center mx-auto mb-3 shadow-xs">
+          <div className="p-6 text-center bg-zinc-50 border border-zinc-200 rounded-2xl">
+            <div className="w-16 h-16 rounded-2xl bg-zinc-100 text-zinc-950 flex items-center justify-center mx-auto mb-3 shadow-xs border border-zinc-200">
               <Camera className="w-8 h-8" />
             </div>
             <h3 className="text-sm font-black text-charcoal">
@@ -335,14 +335,14 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2">
               <button
                 onClick={startCamera}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-terracotta text-white font-black text-xs shadow-xs hover:bg-terracotta-dark flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-zinc-950 text-white font-black text-xs shadow-xs hover:bg-black flex items-center justify-center gap-2"
               >
                 <Camera className="w-4 h-4" /> Open Device Camera
               </button>
               
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white text-charcoal font-bold text-xs border border-borderRule hover:bg-sand-variant flex items-center justify-center gap-2 shadow-xs"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white text-charcoal font-bold text-xs border border-borderRule hover:bg-zinc-50 flex items-center justify-center gap-2 shadow-xs"
               >
                 <Upload className="w-4 h-4" /> Upload Image
               </button>
@@ -361,7 +361,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
 
         {/* Processing Indicator Banner */}
         {isProcessing && (
-          <div className="p-3 bg-ochre text-white text-xs font-black flex items-center justify-center gap-2 animate-pulse">
+          <div className="p-3 bg-zinc-900 text-white text-xs font-black flex items-center justify-center gap-2 animate-pulse">
             <Sparkles className="w-4 h-4 animate-spin" />
             <span>Processing document on-device with WASM OCR pipeline...</span>
           </div>
@@ -369,10 +369,10 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
       </div>
 
       {/* QUICK PRESET SAMPLES (FOR INSTANT ACCURATE DEMO) */}
-      <div className="bg-sand rounded-2xl p-3 border border-borderRule">
+      <div className="bg-zinc-100 rounded-2xl p-3 border border-zinc-200">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[11px] font-black text-charcoal uppercase tracking-wider flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-terracotta" />
+            <Zap className="w-3.5 h-3.5 text-zinc-950" />
             Instant Test Presets (Paper Simulators)
           </span>
         </div>
@@ -381,7 +381,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             <button
               key={sample.id}
               onClick={() => handleSelectSample(sample)}
-              className="text-left p-2.5 rounded-xl bg-white border border-borderRule hover:border-terracotta hover:bg-terracotta-light/40 transition-colors text-[11px] shadow-xs"
+              className="text-left p-2.5 rounded-xl bg-white border border-borderRule hover:border-zinc-950 hover:bg-zinc-50 transition-colors text-[11px] shadow-xs"
             >
               <div className="font-extrabold text-charcoal truncate">{sample.title}</div>
               <div className="text-charcoal-muted text-[10px] mt-0.5">{sample.type} • ₦{sample.suggestedCost}</div>
@@ -391,7 +391,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
       </div>
 
       {/* EXTRACTED STRUCTURED FIELDS & CONFIDENCE HIGHLIGHTS */}
-      <div className="glass-panel rounded-2xl p-4 space-y-3.5 border border-slate-200">
+      <div className="surface-card rounded-2xl p-4 space-y-3.5 border border-borderRule shadow-xs">
         <div className="flex items-center justify-between">
           <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
             Parsed Medical Information
@@ -399,11 +399,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
 
           {/* Confidence Badge */}
           <div 
-            className={`flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black border ${
-              confidence >= 90
-                ? 'bg-forest-light text-forest border-forest/30'
-                : 'bg-ochre-container text-ochre border-ochre/30'
-            }`}
+            className="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-zinc-900 text-zinc-100 border border-zinc-800"
             title="Extraction confidence score"
           >
             <Sparkles className="w-3 h-3" />
@@ -417,14 +413,14 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             <label className="text-xs font-black text-charcoal">
               Provider / Health Clinic
             </label>
-            <span className="text-[10px] text-forest font-bold">Matched regex</span>
+            <span className="text-[10px] text-zinc-600 font-bold">Matched regex</span>
           </div>
           <input
             type="text"
             placeholder="e.g. Adeyemi Chemist, St. Nicholas Outpost"
             value={providerName}
             onChange={(e) => setProviderName(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-2 focus:ring-terracotta/40 text-xs font-bold text-charcoal"
+            className="w-full px-3 py-2.5 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-1 focus:ring-zinc-950 focus:border-zinc-950 text-xs font-bold text-charcoal"
           />
         </div>
 
@@ -441,7 +437,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             placeholder="Medications and doses will appear here after scanning..."
             value={details}
             onChange={(e) => setDetails(e.target.value)}
-            className="w-full px-3 py-2 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-2 focus:ring-terracotta/40 text-xs text-charcoal leading-relaxed font-medium"
+            className="w-full px-3 py-2 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-1 focus:ring-zinc-950 focus:border-zinc-950 text-xs text-charcoal leading-relaxed font-medium"
           />
         </div>
 
@@ -456,7 +452,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
               placeholder="e.g. 3500"
               value={cost}
               onChange={(e) => setCost(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-2 focus:ring-terracotta/40 text-xs font-black text-charcoal"
+              className="w-full px-3 py-2 rounded-xl border border-borderRule bg-white focus:outline-none focus:ring-1 focus:ring-zinc-950 focus:border-zinc-950 text-xs font-black text-charcoal"
             />
           </div>
 
@@ -464,7 +460,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             <label className="block text-xs font-black text-charcoal mb-1">
               Verification Status
             </label>
-            <div className="h-[38px] flex items-center px-3 rounded-xl bg-forest-light border border-forest/30 text-forest text-xs font-black">
+            <div className="h-[38px] flex items-center px-3 rounded-xl bg-zinc-100 border border-zinc-300 text-zinc-950 text-xs font-black">
               ✓ Ready for Family Ledger
             </div>
           </div>
@@ -491,8 +487,8 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
                 isRecording
                   ? 'bg-emergency text-white animate-pulse shadow-md'
                   : voiceNote
-                  ? 'bg-forest-light text-forest border border-forest/30'
-                  : 'bg-sand text-charcoal hover:bg-sand-variant'
+                  ? 'bg-zinc-100 text-zinc-950 border border-zinc-300'
+                  : 'bg-zinc-100 text-charcoal hover:bg-zinc-200'
               }`}
             >
               {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
@@ -511,13 +507,13 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
         <div className="flex items-center gap-3 pt-3 border-t border-borderRule">
           <button
             onClick={onCancel}
-            className="flex-1 py-3 rounded-xl border border-borderRule font-bold text-xs text-charcoal-muted hover:bg-sand transition-colors"
+            className="flex-1 py-3 rounded-xl border border-borderRule font-bold text-xs text-charcoal-muted hover:bg-zinc-100 transition-colors"
           >
             Discard
           </button>
           <button
             onClick={handleSaveRecord}
-            className="flex-[2] py-3 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white font-black text-xs shadow-xs transition-all active:scale-[0.98]"
+            className="flex-[2] py-3 rounded-xl bg-zinc-950 hover:bg-black text-white font-black text-xs shadow-xs transition-all active:scale-[0.98]"
           >
             Save to Family Log
           </button>

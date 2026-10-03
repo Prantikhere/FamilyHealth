@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer-core';
 
 const CHROME_PATH = '/usr/bin/google-chrome';
 const LOCAL_URL = 'http://localhost:3001/FamilyHealth/';
+const TARGET_URL = process.argv[2] || LOCAL_URL;
 
 async function findButtonByText(page, searchTexts) {
   const texts = Array.isArray(searchTexts) ? searchTexts : [searchTexts];
@@ -26,7 +27,7 @@ async function findButtonByText(page, searchTexts) {
 async function runObservationsAudit() {
   console.log(`\n==================================================`);
   console.log(`🚀 RUNNING 5-OBSERVATION COMPREHENSIVE AUDIT`);
-  console.log(`   URL: ${LOCAL_URL}`);
+  console.log(`   URL: ${TARGET_URL}`);
   console.log(`==================================================\n`);
 
   const browser = await puppeteer.launch({
@@ -67,7 +68,7 @@ async function runObservationsAudit() {
   try {
     // 1. Initial Load & Landing Page
     console.log(`[Phase 1: Initial Page Load & Landing Navigation]`);
-    const response = await page.goto(LOCAL_URL, { waitUntil: 'networkidle2', timeout: 30000 });
+    const response = await page.goto(TARGET_URL, { waitUntil: 'networkidle2', timeout: 30000 });
     assert(response && response.status() === 200, 'Page loaded successfully with HTTP 200');
 
     // Click Enter Live Demo on Landing Page

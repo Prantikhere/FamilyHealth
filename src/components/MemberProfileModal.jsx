@@ -97,7 +97,7 @@ export default function MemberProfileModal({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-borderRule pb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-terracotta text-white flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white flex items-center justify-center shadow-xs">
               <User className="w-5 h-5" />
             </div>
             <div>
@@ -154,7 +154,7 @@ export default function MemberProfileModal({
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="px-3 py-1.5 rounded-xl bg-charcoal hover:bg-black text-white font-extrabold text-xs flex items-center gap-1.5 shadow-xs transition-colors"
+                    className="px-3 py-1.5 rounded-xl bg-zinc-950 hover:bg-black text-white font-extrabold text-xs flex items-center gap-1.5 shadow-xs transition-colors"
                   >
                     <Upload className="w-3.5 h-3.5" />
                     <span>{t.uploadPhoto || 'Upload Photo'}</span>
@@ -194,7 +194,7 @@ export default function MemberProfileModal({
                     }}
                     className={`w-10 h-10 rounded-2xl flex items-center justify-center text-lg flex-shrink-0 transition-transform ${
                       avatarIcon === av.icon && !avatarUrl 
-                        ? 'ring-2 ring-terracotta scale-110 shadow-xs' 
+                        ? 'ring-2 ring-zinc-950 scale-110 shadow-xs' 
                         : 'opacity-80 hover:opacity-100'
                     }`}
                     style={{ backgroundColor: av.bg }}
@@ -400,13 +400,13 @@ export default function MemberProfileModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-sand hover:bg-sand-variant text-charcoal font-bold text-xs"
+              className="px-4 py-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-charcoal font-bold text-xs"
             >
               {t.cancelBtn || 'Cancel'}
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white font-black text-xs shadow-md active:scale-95 transition-all"
+              className="px-5 py-2.5 rounded-xl bg-zinc-950 hover:bg-black text-white font-black text-xs shadow-md active:scale-95 transition-all"
             >
               {isNew ? (t.addDependent || 'Add to Health Circle') : (t.saveProfile || 'Save Profile Changes')}
             </button>
