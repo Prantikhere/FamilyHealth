@@ -1,13 +1,17 @@
 import { INITIAL_HOUSEHOLD } from '../constants/initialData';
 
-const STORAGE_KEY = 'seihealth_household_v1';
+const STORAGE_KEY = 'familyhealth_household_v2';
+const QUEUE_KEY = 'familyhealth_sync_queue_v2';
 
 export const storage = {
   load: () => {
     try {
       const data = localStorage.getItem(STORAGE_KEY);
       if (data) {
-        return JSON.parse(data);
+        const parsed = JSON.parse(data);
+        if (parsed && parsed.members && parsed.members.length > 0) {
+          return parsed;
+        }
       }
     } catch (e) {
       console.warn('Could not read from localStorage, using initial dataset:', e);
@@ -28,11 +32,43 @@ export const storage = {
   reset: () => {
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(QUEUE_KEY);
       return INITIAL_HOUSEHOLD;
     } catch (e) {
       console.error('Failed to reset storage:', e);
       return INITIAL_HOUSEHOLD;
     }
+  },
+
+  // Mutation Queue (Section 3.2 local_sync_mutation_queue)
+  getMutationQueue: () => {
+    try {
+      const raw = localStorage.getItem(QUEUE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  },
+
+  queueMutation: (mutation) => {
+    try {
+      const q = storage.getMutationQueue();
+      const newEntry = {
+        mutationId: 'mut_' + Math.random().toString(36).substr(2, 9),
+        deviceTimestamp: Date.now(),
+        attemptCount: 0,
+        ...mutation
+      };
+      q.push(newEntry);
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(q));
+      return newEntry;
+    } catch (e) {
+      console.error('Failed to append to sync queue:', e);
+    }
+  },
+
+  clearMutationQueue: () => {
+    localStorage.removeItem(QUEUE_KEY);
   },
 
   exportJSON: (household) => {
@@ -41,7 +77,7 @@ export const storage = {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `seihealth_backup_${household.head.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `familyhealth_backup_${household.head.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.json`;
     a.click();
     URL.revokeObjectURL(url);
   },

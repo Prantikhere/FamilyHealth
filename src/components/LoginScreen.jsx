@@ -14,20 +14,21 @@ import {
   Eye,
   EyeOff,
   ChevronLeft,
-  Sparkles
+  Sparkles,
+  Users
 } from 'lucide-react';
 
 export const DUMMY_ACCOUNTS = [
   {
-    role: 'Caretaker & Mother',
-    name: 'Amina Bello',
-    email: 'amina@seihealth.org',
+    role: 'Primary Caretaker (G1)',
+    name: 'Femi Adeyemi',
+    email: 'femi.adeyemi@familyhealth.africa',
     password: 'Pass@1234',
     badge: 'Household Admin',
-    clinic: 'Iru Comprehensive Primary Health Post',
-    avatarBg: '#047857',
+    clinic: 'General Hospital Ikeja & Iru PHC',
+    avatarBg: '#C85A32',
     icon: UserCheck,
-    description: 'Primary caretaker managing 4 multi-generational members, infant vaccines, and chronic regimens.'
+    description: 'Primary household caretaker managing 6 multi-generational members (G0 to G2), chronic regimens, and child vaccines.'
   },
   {
     role: 'Community Health Worker (CHEW)',
@@ -36,32 +37,32 @@ export const DUMMY_ACCOUNTS = [
     password: 'Clinic#2026',
     badge: 'Intermediary Provider',
     clinic: 'Lagos State Primary Health Care Board',
-    avatarBg: '#2563EB',
+    avatarBg: '#1E4D38',
     icon: Stethoscope,
-    description: 'Field nurse administering WHO EPI vaccines, MUAC malnutrition strips, and rural clinic care.'
+    description: 'Field nurse administering WHO EPI vaccines, MUAC tape malnutrition checks, and rural maternal clinic care.'
   },
   {
-    role: 'Emergency Triage First Responder',
-    name: 'Dr. Kelechi Okafor',
-    email: 'dr.okafor@emergency.ice',
+    role: 'Emergency Clinician / Cardiologist',
+    name: 'Dr. Babajide Okafor',
+    email: 'dr.babajide@firstcardiology.ng',
     password: 'Triage#99',
     badge: 'Emergency ICE Access',
-    clinic: 'St. Nicholas Hospital & Trauma Outpost',
-    avatarBg: '#BE123C',
+    clinic: 'First Cardiology Consultants & Trauma Unit',
+    avatarBg: '#1B2A4A',
     icon: AlertOctagon,
-    description: 'First responder / ER clinician requiring instant offline patient blood & allergy pass.'
+    description: 'Cardiovascular & ER specialist requiring zero-click offline patient blood group, genotype, and allergy profile.'
   }
 ];
 
 export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
-  const [email, setEmail] = useState('amina@seihealth.org');
+  const [email, setEmail] = useState('femi.adeyemi@familyhealth.africa');
   const [password, setPassword] = useState('Pass@1234');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Quick fill dummy account
+  // Quick fill preset account
   const handleSelectPreset = (acc) => {
     setEmail(acc.email);
     setPassword(acc.password);
@@ -93,221 +94,212 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
           role: 'Household Caretaker',
           badge: 'Verified User',
           clinic: 'Community Health Post',
-          avatarBg: '#047857',
+          avatarBg: '#C85A32',
           isOfflineDemo: false,
         });
       } else {
         setErrorMsg('Please enter valid credentials or tap one of the demo accounts below.');
       }
-    }, 500);
+    }, 400);
   };
 
-  // 1-Click Investor / Offline Bypass
-  const handleOfflineBypass = () => {
+  // 1-Click Evaluator Bypass
+  const handleEvaluatorBypass = () => {
     onLoginSuccess({
-      name: 'Amina Bello (Investor POV)',
-      email: 'investor.demo@seihealth.org',
-      role: 'Family Caretaker',
-      badge: 'Full Access Demo',
-      clinic: 'Iru Comprehensive Primary Health Post',
-      avatarBg: '#047857',
+      name: 'Femi Adeyemi (Evaluator POV)',
+      email: 'evaluator.pov@familyhealth.africa',
+      role: 'Primary Caretaker (G1)',
+      badge: 'Full Access Evaluator',
+      clinic: 'General Hospital Ikeja & Iru PHC',
+      avatarBg: '#C85A32',
       isOfflineDemo: true,
     });
   };
 
   return (
-    <div className="min-h-screen bg-canvas flex flex-col justify-center px-4 py-8 max-w-md mx-auto relative animate-in fade-in duration-300">
+    <div className="min-h-screen bg-canvas flex flex-col justify-center px-4 py-8 max-w-md mx-auto relative animate-in fade-in duration-200">
       
-      {/* Back to Landing Page Button */}
+      {/* Back to Product Overview Button */}
       {onBackToLanding && (
         <button
           onClick={onBackToLanding}
-          className="self-start mb-4 inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-emerald-primary transition-colors p-2 rounded-xl hover:bg-slate-200/60"
+          className="self-start mb-4 inline-flex items-center gap-1.5 text-xs font-bold text-charcoal-muted hover:text-terracotta transition-colors p-2 rounded-xl hover:bg-sand"
         >
           <ChevronLeft className="w-4 h-4" />
           <span>Back to Product Overview</span>
         </button>
       )}
 
-      {/* Decorative Brand Header */}
-      <div className="text-center mb-5">
-        <div className="w-16 h-16 rounded-2xl bg-emerald-primary text-white flex items-center justify-center mx-auto shadow-xl mb-3">
+      {/* Brand Header */}
+      <div className="text-center mb-6">
+        <div className="w-16 h-16 rounded-2xl bg-terracotta text-white flex items-center justify-center mx-auto shadow-card mb-3">
           <HeartPulse className="w-9 h-9" />
         </div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-          SeiHealth Sovereign
+        <h1 className="text-2xl font-black text-charcoal tracking-tight">
+          FamilyHealth
         </h1>
-        <p className="text-xs text-slate-500 font-medium mt-1">
-          360° Household Health Companion & Emergency ICE Vault
+        <p className="text-xs text-charcoal-muted font-medium mt-1">
+          African Family Health Platform • Sovereign Identity & Records
         </p>
       </div>
 
-      {/* Main Login Glass Card */}
-      <div className="glass-modal rounded-3xl p-6 border border-slate-200 shadow-xl bg-white/95">
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+      {/* 1-Tap Quick Evaluator Access Banner */}
+      <div className="mb-4 p-3 rounded-2xl bg-terracotta-light border-2 border-terracotta/40 shadow-xs flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-terracotta flex-shrink-0" />
           <div>
-            <h2 className="text-sm font-extrabold text-slate-900">Sign In to Health Vault</h2>
-            <p className="text-[11px] text-slate-500">Access your family's 360° health dashboard</p>
+            <span className="text-xs font-black text-terracotta block">
+              1-Tap Evaluator Access
+            </span>
+            <span className="text-[11px] text-charcoal-muted block">
+              Instant access into the 3-Hub Health Circle
+            </span>
           </div>
-          <span className="text-[10px] font-bold uppercase bg-emerald-light text-emerald-primary px-2.5 py-0.5 rounded-full border border-emerald-200">
-            NDPR Safe
-          </span>
         </div>
 
-        {errorMsg && (
-          <div className="mb-4 p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-emergency text-xs font-semibold">
-            {errorMsg}
-          </div>
-        )}
+        <button
+          onClick={handleEvaluatorBypass}
+          className="px-3.5 py-2 rounded-xl bg-terracotta hover:bg-terracotta-dark text-white font-black text-xs shadow-xs active:scale-95 transition-all flex items-center gap-1"
+        >
+          <span>Launch POV</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </button>
+      </div>
 
-        {/* Login Form */}
-        <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">
+      {/* Form Container */}
+      <div className="surface-card p-6 shadow-card border border-borderRule">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block font-bold text-slate-700 mb-1">
-              Email / Health ID
+            <label className="block text-xs font-black uppercase tracking-wider text-charcoal mb-1">
+              Registered Phone / Email
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Mail className="w-4 h-4 text-charcoal-muted absolute left-3 top-3.5" />
               <input
-                type="email"
+                type="text"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="e.g. amina@seihealth.org"
-                className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-primary/40 focus:border-emerald-primary bg-white text-slate-900"
+                placeholder="femi.adeyemi@familyhealth.africa"
+                className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-borderRule bg-chalk text-xs font-medium focus:border-terracotta focus:ring-1 focus:ring-terracotta outline-none transition-all"
               />
             </div>
           </div>
 
           <div>
-            <label className="block font-bold text-slate-700 mb-1">
-              Access Password / PIN
+            <label className="block text-xs font-black uppercase tracking-wider text-charcoal mb-1">
+              Argon2id Master PIN / Password
             </label>
             <div className="relative">
-              <Key className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Lock className="w-4 h-4 text-charcoal-muted absolute left-3 top-3.5" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
-                className="w-full pl-9 pr-9 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-primary/40 focus:border-emerald-primary bg-white text-slate-900"
+                placeholder="••••••••"
+                className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-borderRule bg-chalk text-xs font-medium focus:border-terracotta focus:ring-1 focus:ring-terracotta outline-none transition-all"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                className="absolute right-3 top-3 text-charcoal-muted hover:text-charcoal"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-[11px] pt-1">
-            <label className="flex items-center gap-1.5 text-slate-600 font-medium cursor-pointer">
+          {errorMsg && (
+            <div className="p-2.5 rounded-xl bg-emergency-container text-emergency text-xs font-bold border border-emergency/20">
+              {errorMsg}
+            </div>
+          )}
+
+          <div className="flex items-center justify-between text-xs pt-1">
+            <label className="flex items-center gap-2 cursor-pointer text-charcoal-muted font-medium">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-3.5 h-3.5 rounded text-emerald-primary focus:ring-emerald-primary"
+                className="rounded border-borderRule text-terracotta focus:ring-terracotta"
               />
-              <span>Remember on this device</span>
+              <span>Remember credential</span>
             </label>
-            <button
-              type="button"
-              onClick={handleOfflineBypass}
-              className="text-emerald-primary font-bold hover:underline"
-            >
-              1-Tap Demo Pass
-            </button>
+            <span className="text-terracotta font-bold hover:underline cursor-pointer">
+              Forgot PIN?
+            </span>
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-xl bg-emerald-primary hover:bg-emerald-dark text-white font-extrabold text-xs shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-2 mt-2"
+            className="w-full py-3 px-4 rounded-xl bg-charcoal hover:bg-black text-white font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98] disabled:opacity-60 cursor-pointer"
           >
-            {isLoading ? (
-              <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
-            ) : (
-              <>
-                <span>Enter 360° Health Dashboard</span>
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )}
+            <span>{isLoading ? 'Decrypting Session...' : 'Sign In to Health Circle'}</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </form>
 
-        {/* 1-Click Investor & Offline Access */}
-        <div className="mt-3 pt-3 border-t border-slate-100">
-          <button
-            type="button"
-            onClick={handleOfflineBypass}
-            className="w-full py-2.5 rounded-xl border border-slate-200 bg-emerald-50/60 hover:bg-emerald-100 text-emerald-primary font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
-          >
-            <Sparkles className="w-4 h-4 text-emerald-600" />
-            <span>Instant Investor / Offline Acceptance Mode</span>
-          </button>
-        </div>
-      </div>
-
-      {/* DUMMY TEST CREDENTIALS BOX */}
-      <div className="mt-5 glass-panel rounded-2xl p-4 border border-slate-200/90 text-xs">
-        <div className="flex items-center justify-between mb-2.5">
-          <span className="font-extrabold text-slate-800 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-            Demo Accounts for User Acceptance & Investors
+        {/* Demo Personas Quick Select */}
+        <div className="mt-6 pt-5 border-t border-borderRule space-y-2.5">
+          <span className="text-[10px] font-black uppercase tracking-wider text-charcoal-muted block text-center">
+            Tap a Demo Role to Pre-fill Credentials:
           </span>
-          <span className="text-[10px] text-slate-400 font-semibold">Tap to auto-fill</span>
-        </div>
 
-        <div className="space-y-2">
-          {DUMMY_ACCOUNTS.map((acc, idx) => {
-            const Icon = acc.icon;
-            const isCurrentlySelected = email === acc.email;
+          <div className="space-y-2">
+            {DUMMY_ACCOUNTS.map((acc, index) => {
+              const IconComp = acc.icon;
+              const isSelected = email.toLowerCase() === acc.email.toLowerCase();
 
-            return (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => handleSelectPreset(acc)}
-                className={`w-full p-2.5 rounded-xl border text-left transition-all flex items-start gap-2.5 ${
-                  isCurrentlySelected
-                    ? 'border-emerald-primary bg-emerald-50/80 shadow-xs ring-2 ring-emerald-primary/40'
-                    : 'border-slate-200 bg-white/70 hover:bg-white hover:border-slate-300'
-                }`}
-              >
-                <div 
-                  className="w-8 h-8 rounded-lg text-white flex items-center justify-center flex-shrink-0 mt-0.5 shadow-xs"
-                  style={{ backgroundColor: acc.avatarBg }}
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => handleSelectPreset(acc)}
+                  className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-start gap-3 ${
+                    isSelected 
+                      ? 'border-terracotta bg-terracotta-light shadow-xs' 
+                      : 'border-borderRule bg-chalk hover:bg-sand'
+                  }`}
                 >
-                  <Icon className="w-4 h-4" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-1">
-                    <span className="font-bold text-slate-900 text-xs truncate">{acc.name}</span>
-                    <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-700">
-                      {acc.badge}
+                  <div 
+                    className="w-8 h-8 rounded-xl flex items-center justify-center text-white flex-shrink-0 mt-0.5"
+                    style={{ backgroundColor: acc.avatarBg }}
+                  >
+                    <IconComp className="w-4 h-4" />
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="font-extrabold text-xs text-charcoal truncate">
+                        {acc.name}
+                      </span>
+                      <span className="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-sand text-charcoal flex-shrink-0">
+                        {acc.badge}
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-charcoal-muted block truncate">
+                      {acc.role}
                     </span>
+                    <p className="text-[10px] text-charcoal-muted line-clamp-1 mt-0.5">
+                      {acc.description}
+                    </p>
                   </div>
-                  <div className="text-[10px] text-slate-500 font-mono mt-0.5 truncate">
-                    {acc.email} • Pass: <span className="font-bold text-slate-800">{acc.password}</span>
-                  </div>
-                  <p className="text-[10px] text-slate-600 mt-1 line-clamp-1">
-                    {acc.description}
-                  </p>
-                </div>
-              </button>
-            );
-          })}
+                </button>
+              );
+            })}
+          </div>
         </div>
+
       </div>
 
-      {/* Footer Trust Notice */}
-      <div className="mt-4 text-center text-[11px] text-slate-400 font-medium flex items-center justify-center gap-1.5">
-        <ShieldCheck className="w-3.5 h-3.5 text-emerald-primary" />
-        <span>Local-first architecture • Compliant with NDPR & Zero Cloud Lock-in</span>
+      {/* Security Footnote */}
+      <div className="mt-5 text-center text-[11px] text-charcoal-muted flex items-center justify-center gap-1.5">
+        <ShieldCheck className="w-4 h-4 text-forest" />
+        <span>Client-side AES-256-GCM Envelope Encryption (Zero-Knowledge)</span>
       </div>
+
     </div>
   );
 }

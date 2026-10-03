@@ -22,7 +22,7 @@ export default function EmergencyICECard({ member, household, onClose }) {
     if (!member) return;
 
     const vitalPayload = {
-      proto: 'SEI_ICE_V1',
+      proto: 'FH_ICE_V2',
       id: member.id,
       name: member.name,
       dob: member.dob,

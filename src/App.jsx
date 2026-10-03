@@ -1,39 +1,87 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
-import FamilyRibbon from './components/FamilyRibbon';
-import DashboardView from './components/DashboardView';
-import DocumentCaptureView from './components/DocumentCaptureView';
-import FamilyTreeRiskView from './components/FamilyTreeRiskView';
-import MCHPortalView from './components/MCHPortalView';
-import ExpenseLedgerView from './components/ExpenseLedgerView';
+import CircleView from './components/CircleView';
+import TimelineView from './components/TimelineView';
+import EmergencySOSView from './components/EmergencySOSView';
 import EmergencyICECard from './components/EmergencyICECard';
 import AddMemberModal from './components/AddMemberModal';
 import DataExportModal from './components/DataExportModal';
-import OnboardingModal from './components/OnboardingModal';
 import LoginScreen, { DUMMY_ACCOUNTS } from './components/LoginScreen';
 import LandingPage from './components/LandingPage';
 import BottomNav from './components/BottomNav';
 import { storage } from './services/storage';
+import { VERNACULAR_TRANSLATIONS } from './constants/initialData';
 
-const USER_STORAGE_KEY = 'seihealth_current_user_v1';
-const VIEW_MODE_KEY = 'seihealth_view_mode_v1';
+const USER_STORAGE_KEY = 'familyhealth_current_user_v2';
+const VIEW_MODE_KEY = 'familyhealth_view_mode_v2';
 
 export default function App() {
   const [household, setHousehold] = useState(() => storage.load());
-  const [selectedMemberId, setSelectedMemberId] = useState('ALL');
+  const [selectedMemberId, setSelectedMemberId] = useState(() => household.members?.[0]?.id || 'mem_femi');
   const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : false);
-  const [activeTab, setActiveTab] = useState('DASHBOARD'); // 'DASHBOARD' | 'CAPTURE' | 'MCH' | 'TREE' | 'EXPENSES'
   
+  // Persistent 3-Hub Tabs: 'CIRCLE' | 'TIMELINE' | 'SOS' (Section 2.2 Wireframe)
+  const [activeTab, setActiveTab] = useState('CIRCLE');
+
   // Navigation View Mode: 'LANDING' | 'LOGIN' | 'APP'
-  const [viewMode, setViewMode] = useState(() => {
-    try {
-      const savedMode = sessionStorage.getItem(VIEW_MODE_KEY);
-      if (savedMode) return savedMode;
-    } catch (e) {
-      console.warn('sessionStorage unavailable:', e);
+  const getInitialViewMode = () => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#app' || hash === '#circle' || hash === '#timeline' || hash === '#sos') return 'APP';
+      if (hash === '#login') return 'LOGIN';
+      if (hash === '#landing') return 'LANDING';
     }
     return 'LANDING';
-  });
+  };
+
+  const [viewMode, setViewModeState] = useState(getInitialViewMode);
+
+  const setViewMode = (mode) => {
+    setViewModeState(mode);
+    if (typeof window !== 'undefined') {
+      if (mode === 'APP') {
+        window.location.hash = activeTab.toLowerCase();
+      } else if (mode === 'LOGIN') {
+        window.location.hash = 'login';
+      } else {
+        window.location.hash = 'landing';
+      }
+    }
+  };
+
+  // Sync with browser back/forward buttons
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#circle') {
+        setViewModeState('APP');
+        setActiveTab('CIRCLE');
+      } else if (hash === '#timeline') {
+        setViewModeState('APP');
+        setActiveTab('TIMELINE');
+      } else if (hash === '#sos') {
+        setViewModeState('APP');
+        setActiveTab('SOS');
+      } else if (hash === '#app') {
+        setViewModeState('APP');
+      } else if (hash === '#login') {
+        setViewModeState('LOGIN');
+      } else {
+        setViewModeState('LANDING');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Update hash when tab changes in APP mode
+  const handleSelectTab = (tab) => {
+    setActiveTab(tab);
+    if (typeof window !== 'undefined') {
+      window.location.hash = tab.toLowerCase();
+    }
+  };
 
   // Current User State
   const [currentUser, setCurrentUser] = useState(() => {
@@ -49,8 +97,7 @@ export default function App() {
   // Modals state
   const [iceModalMember, setIceModalMember] = useState(null);
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
-  const [showExportModal, setShowExportModal] = useState(false);
-  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+  const [showAlertsModal, setShowAlertsModal] = useState(false);
 
   // Monitor network online/offline state
   useEffect(() => {
@@ -75,29 +122,14 @@ export default function App() {
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(currentUser));
-    } else {
-      localStorage.removeItem(USER_STORAGE_KEY);
     }
   }, [currentUser]);
-
-  // Persist view mode to session storage
-  useEffect(() => {
-    try {
-      sessionStorage.setItem(VIEW_MODE_KEY, viewMode);
-    } catch (e) {}
-  }, [viewMode]);
-
-  // Filtered records based on active profile tab
-  const activeRecords = useMemo(() => {
-    if (selectedMemberId === 'ALL') return household.records;
-    return household.records.filter((r) => r.memberId === selectedMemberId);
-  }, [household.records, selectedMemberId]);
 
   // Auth & View Handlers
   const handleLoginSuccess = (userObj) => {
     setCurrentUser(userObj);
     setViewMode('APP');
-    setActiveTab('DASHBOARD');
+    setActiveTab('CIRCLE');
   };
 
   const handleLogout = () => {
@@ -116,92 +148,38 @@ export default function App() {
       isOfflineDemo: false,
     });
     setViewMode('APP');
-    setActiveTab('DASHBOARD');
-  };
-
-  // Handler: Add OCR/Physical document record
-  const handleAddRecord = (newRec) => {
-    setHousehold((prev) => ({
-      ...prev,
-      records: [newRec, ...prev.records],
-    }));
-    setActiveTab('DASHBOARD');
+    setActiveTab('CIRCLE');
   };
 
   // Handler: Add new family member
   const handleAddMember = (newMember) => {
+    const memberWithGen = {
+      ...newMember,
+      generation: newMember.generation || 'G2',
+      statusNote: 'Active',
+      resuscitationOrder: 'Full Code',
+    };
     setHousehold((prev) => ({
       ...prev,
-      members: [...prev.members, newMember],
+      members: [...prev.members, memberWithGen],
     }));
     setShowAddMemberModal(false);
-    setSelectedMemberId(newMember.id);
-  };
-
-  // Handler: Log cash expense
-  const handleAddExpense = (newExpense) => {
-    setHousehold((prev) => ({
-      ...prev,
-      records: [newExpense, ...prev.records],
-    }));
-  };
-
-  // Handler: Update child vaccine status
-  const handleUpdateVaccine = (memberId, vacId, completed) => {
-    setHousehold((prev) => ({
-      ...prev,
-      members: prev.members.map((m) => {
-        if (m.id === memberId && m.vaccinesDue) {
-          return {
-            ...m,
-            vaccinesDue: m.vaccinesDue.map((v) => 
-              v.id === vacId ? { ...v, completed, completedDate: completed ? new Date().toISOString().split('T')[0] : null } : v
-            )
-          };
-        }
-        return m;
-      })
-    }));
-  };
-
-  // Handler: Add child growth point
-  const handleAddGrowthPoint = (memberId, growthPoint) => {
-    setHousehold((prev) => ({
-      ...prev,
-      members: prev.members.map((m) => {
-        if (m.id === memberId) {
-          return {
-            ...m,
-            growthRecords: [...(m.growthRecords || []), growthPoint]
-          };
-        }
-        return m;
-      })
-    }));
-  };
-
-  // Handler: Dismiss / mark alert done
-  const handleMarkAlertDone = (item) => {
-    if (item.category === 'VACCINE' && item.memberId) {
-      const vac = household.members.find(m => m.id === item.memberId)?.vaccinesDue?.find(v => item.title.includes(v.name));
-      if (vac) {
-        handleUpdateVaccine(item.memberId, vac.id, true);
-        alert(`Recorded ${vac.name} as completed for ${item.memberName}.`);
-        return;
-      }
-    }
-    alert(`Action logged: "${item.title}" marked as resolved with community health clinic.`);
+    setSelectedMemberId(memberWithGen.id);
   };
 
   // Handler: Reset demo dataset
   const handleResetData = () => {
-    if (confirm('Reset to initial household demo data?')) {
+    if (confirm('Reset to initial FamilyHealth LLD demo dataset?')) {
       const initial = storage.reset();
       setHousehold(initial);
-      setSelectedMemberId('ALL');
-      setActiveTab('DASHBOARD');
+      setSelectedMemberId(initial.members[0].id);
+      setActiveTab('CIRCLE');
     }
   };
+
+  // Current Translations
+  const currentLang = household.language || 'en';
+  const translations = VERNACULAR_TRANSLATIONS[currentLang] || VERNACULAR_TRANSLATIONS['en'];
 
   // 1. LANDING PAGE VIEW (Investor & Product Overview Showcase)
   if (viewMode === 'LANDING') {
@@ -223,81 +201,65 @@ export default function App() {
     );
   }
 
-  // 3. MAIN 360° APPLICATION VIEW
+  // 3. MAIN 3-HUB APPLICATION VIEW (Section 2.2 Wireframe Topology)
   return (
-    <div className="app-shell bg-canvas text-slate-900">
-      {/* TOP HEADER & STATUS BAR */}
+    <div className="app-shell bg-canvas text-charcoal">
+      
+      {/* PERSISTENT TOP APP BAR */}
       <Header
         household={household}
         currentUser={currentUser}
         isOffline={isOffline}
-        onOpenExport={() => setShowExportModal(true)}
-        onOpenTrust={() => setShowExportModal(true)}
-        onResetData={handleResetData}
         onChangeLanguage={(lang) => setHousehold(prev => ({ ...prev, language: lang }))}
+        onResetData={handleResetData}
         onLogout={handleLogout}
         onNavigateLanding={() => setViewMode('LANDING')}
+        onOpenAlerts={() => setShowAlertsModal(true)}
       />
 
-      {/* HOUSEHOLD HORIZONTAL AVATAR RIBBON */}
-      <FamilyRibbon
-        members={household.members}
-        selectedMemberId={selectedMemberId}
-        onSelectMember={(id) => setSelectedMemberId(id)}
-        onOpenAddMember={() => setShowAddMemberModal(true)}
-      />
-
-      {/* MAIN 360° WORKSPACE SWITCHER */}
-      <main className="flex-1 flex flex-col min-h-0" role="main">
-        {activeTab === 'DASHBOARD' && (
-          <DashboardView
+      {/* MAIN 3-HUB WORKSPACE */}
+      <main className="flex-1 px-4 pt-3 pb-8 min-h-0" role="main">
+        
+        {/* TAB 1: CIRCLE (Family Lineage DAG & Context Engine) */}
+        {activeTab === 'CIRCLE' && (
+          <CircleView
             household={household}
-            records={activeRecords}
             selectedMemberId={selectedMemberId}
-            currentUser={currentUser}
+            onSelectMember={(id) => setSelectedMemberId(id)}
             onOpenICE={(member) => setIceModalMember(member)}
-            onNavigateCapture={() => setActiveTab('CAPTURE')}
-            onNavigateMCH={() => setActiveTab('MCH')}
-            onNavigateTree={() => setActiveTab('TREE')}
-            onNavigateExpenses={() => setActiveTab('EXPENSES')}
-            onMarkAlertDone={handleMarkAlertDone}
+            onOpenAddMember={() => setShowAddMemberModal(true)}
+            currentLang={currentLang}
+            translations={translations}
           />
         )}
 
-        {activeTab === 'CAPTURE' && (
-          <DocumentCaptureView
-            members={household.members}
-            onSave={handleAddRecord}
-            onCancel={() => setActiveTab('DASHBOARD')}
-          />
-        )}
-
-        {activeTab === 'MCH' && (
-          <MCHPortalView
+        {/* TAB 2: TIMELINE (Dual-Tier Chronological Ledger & Granular Transfer) */}
+        {activeTab === 'TIMELINE' && (
+          <TimelineView
             household={household}
-            onUpdateVaccine={handleUpdateVaccine}
-            onAddGrowthPoint={handleAddGrowthPoint}
+            currentLang={currentLang}
+            translations={translations}
           />
         )}
 
-        {activeTab === 'TREE' && (
-          <FamilyTreeRiskView
+        {/* TAB 3: SOS (Zero-Click Crisis Health Card & Care Triage) */}
+        {activeTab === 'SOS' && (
+          <EmergencySOSView
             household={household}
+            selectedMemberId={selectedMemberId}
+            onSelectMember={(id) => setSelectedMemberId(id)}
+            currentLang={currentLang}
+            translations={translations}
           />
         )}
 
-        {activeTab === 'EXPENSES' && (
-          <ExpenseLedgerView
-            household={household}
-            onAddExpense={handleAddExpense}
-          />
-        )}
       </main>
 
-      {/* PERSISTENT MOBILE-FIRST BOTTOM NAVIGATION */}
+      {/* PERSISTENT 3-HUB BOTTOM NAVIGATION (72px touch-optimized) */}
       <BottomNav
         activeTab={activeTab}
-        onSelectTab={(tab) => setActiveTab(tab)}
+        onSelectTab={handleSelectTab}
+        translations={translations}
       />
 
       {/* FULLSCREEN EMERGENCY ICE MODAL */}
@@ -317,25 +279,48 @@ export default function App() {
         />
       )}
 
-      {/* DATA SOVEREIGN EXPORT & NDPR MODAL */}
-      {showExportModal && (
-        <DataExportModal
-          household={household}
-          onImportData={(imported) => setHousehold(imported)}
-          onClose={() => setShowExportModal(false)}
-        />
+      {/* PENDING ALERTS MODAL */}
+      {showAlertsModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-charcoal/60 backdrop-blur-sm animate-in fade-in duration-150">
+          <div className="surface-card w-full max-w-md p-5 space-y-4 shadow-lifted">
+            <div className="flex items-center justify-between border-b border-borderRule pb-2">
+              <h3 className="text-sm font-black text-charcoal">Actionable Health Alerts</h3>
+              <button 
+                onClick={() => setShowAlertsModal(false)}
+                className="text-xs font-bold text-charcoal-muted hover:text-charcoal"
+              >
+                Close ✕
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              {household.pendingAlerts?.map(alert => (
+                <div 
+                  key={alert.id}
+                  className={`p-3 rounded-xl text-xs border ${
+                    alert.urgent 
+                      ? 'bg-emergency-container text-emergency border-emergency/25' 
+                      : 'bg-ochre-container text-charcoal border-ochre/25'
+                  }`}
+                >
+                  <span className="font-bold block">{alert.text}</span>
+                  <button
+                    onClick={() => {
+                      setSelectedMemberId(alert.memberId);
+                      setActiveTab('CIRCLE');
+                      setShowAlertsModal(false);
+                    }}
+                    className="text-[11px] font-black underline uppercase tracking-wider mt-1 block"
+                  >
+                    View in Circle Tab →
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       )}
 
-      {/* ONBOARDING ANCHOR SETUP MODAL (IF TRIGGERED) */}
-      {showOnboardingModal && (
-        <OnboardingModal
-          household={household}
-          onComplete={(updates) => {
-            setHousehold(prev => ({ ...prev, ...updates }));
-            setShowOnboardingModal(false);
-          }}
-        />
-      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 {
-  "short_name": "SeiHealth",
-  "name": "SeiHealth Sovereign Household Companion",
+  "short_name": "FamilyHealth",
+  "name": "FamilyHealth — African Family Health Platform",
   "icons": [
     {
       "src": "favicon.svg",
@@ -9,8 +9,8 @@
     }
   ],
   "start_url": "./",
-  "background_color": "#F4F7F6",
-  "theme_color": "#047857",
+  "background_color": "#F9F6F0",
+  "theme_color": "#C85A32",
   "display": "standalone",
   "orientation": "portrait"
 }
