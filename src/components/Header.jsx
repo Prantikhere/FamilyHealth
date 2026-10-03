@@ -1,24 +1,15 @@
 import React, { useState } from 'react';
 import { 
   HeartPulse, 
-  Wifi, 
-  WifiOff, 
   Languages, 
   Globe2, 
-  User, 
   Check, 
   LogOut, 
   Bell, 
-  ShieldCheck, 
   RefreshCw,
   ChevronDown,
-  Camera,
-  Users,
-  Stethoscope,
-  AlertOctagon,
-  UserCheck
+  Camera
 } from 'lucide-react';
-import { DUMMY_ACCOUNTS } from './LoginScreen';
 
 export default function Header({
   household,
@@ -30,12 +21,10 @@ export default function Header({
   onNavigateLanding,
   onOpenAlerts,
   onOpenOcr,
-  onSwitchUser,
   translations
 }) {
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showRoleMenu, setShowRoleMenu] = useState(false);
 
   const t = translations || {};
 
@@ -48,22 +37,6 @@ export default function Header({
   ];
 
   const pendingAlertCount = household.pendingAlerts?.length || 2;
-
-  // Determine role perspective short label & badge (Monochrome refinement)
-  const role = currentUser?.role || '';
-  let roleLabel = 'Admin';
-  let roleBadgeClass = 'bg-zinc-100 text-zinc-900 border-zinc-300';
-
-  if (role.includes('CHEW') || role.includes('Community Health')) {
-    roleLabel = 'CHEW Nurse';
-    roleBadgeClass = 'bg-zinc-100 text-zinc-900 border-zinc-300';
-  } else if (role.includes('Emergency') || role.includes('Clinician') || role.includes('Cardiologist')) {
-    roleLabel = 'ER Doctor';
-    roleBadgeClass = 'bg-zinc-900 text-white border-zinc-900';
-  } else if (role.includes('Elder') || role.includes('Dependent') || currentUser?.name?.includes('Baba')) {
-    roleLabel = 'Senior Patient';
-    roleBadgeClass = 'bg-zinc-100 text-zinc-900 border-zinc-300';
-  }
 
   return (
     <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-zinc-200 px-3 sm:px-4 py-2.5 shadow-xs" role="banner">
@@ -107,59 +80,6 @@ export default function Header({
               <span className="hidden sm:inline">{t.scanAction || 'Scan Record (OCR)'}</span>
             </button>
           )}
-
-          {/* Role Perspective Selector Pill */}
-          <div className="relative">
-            <button
-              onClick={() => setShowRoleMenu(!showRoleMenu)}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border transition-all ${roleBadgeClass}`}
-              title="Change active user profile / access perspective"
-              aria-label="Switch User Profile Perspective"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-current" />
-              <span className="truncate max-w-[90px] sm:max-w-none">{roleLabel}</span>
-              <ChevronDown className="w-3 h-3 opacity-60" />
-            </button>
-
-            {showRoleMenu && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setShowRoleMenu(false)} />
-                <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-lifted border border-zinc-200 py-2 z-50 text-xs animate-in fade-in duration-150">
-                  <div className="px-3 py-1.5 font-bold text-zinc-400 uppercase tracking-wider text-[10px] border-b border-zinc-100 mb-1">
-                    Role-Based Access Perspective
-                  </div>
-                  {DUMMY_ACCOUNTS.map((acc, idx) => {
-                    const isSelected = currentUser?.email === acc.email;
-                    return (
-                      <button
-                        key={acc.email}
-                        onClick={() => {
-                          onSwitchUser?.(acc);
-                          setShowRoleMenu(false);
-                        }}
-                        className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-zinc-50 transition-colors ${
-                          isSelected ? 'bg-zinc-100 font-bold text-zinc-950' : 'text-zinc-700'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2 min-w-0">
-                          <span 
-                            className="w-6 h-6 rounded-lg bg-zinc-900 text-white font-bold text-[10px] flex items-center justify-center flex-shrink-0"
-                          >
-                            {acc.name[0]}
-                          </span>
-                          <div className="truncate">
-                            <span className="font-bold block truncate leading-tight text-zinc-900">{acc.name}</span>
-                            <span className="text-[10px] text-zinc-500 truncate block">{acc.badge}</span>
-                          </div>
-                        </div>
-                        {isSelected && <Check className="w-4 h-4 text-zinc-950 flex-shrink-0 ml-1" />}
-                      </button>
-                    );
-                  })}
-                </div>
-              </>
-            )}
-          </div>
 
           {/* Pending Alerts Counter Pill */}
           <button
@@ -234,7 +154,7 @@ export default function Header({
                     <span className="text-[11px] text-charcoal-muted block truncate">
                       {currentUser?.email || 'femi.adeyemi@familyhealth.africa'}
                     </span>
-                    <span className="inline-block mt-1 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-terracotta-container text-terracotta">
+                    <span className="inline-block mt-1 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-900 border border-zinc-200">
                       {currentUser?.role || 'Primary Caretaker (G1)'}
                     </span>
                   </div>
@@ -245,9 +165,9 @@ export default function Header({
                       setShowUserMenu(false);
                       onNavigateLanding();
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-terracotta-light text-terracotta font-bold flex items-center gap-2 transition-colors"
+                    className="w-full text-left px-4 py-2.5 hover:bg-zinc-50 text-zinc-900 font-bold flex items-center gap-2 transition-colors"
                   >
-                    <Globe2 className="w-4 h-4 text-terracotta" />
+                    <Globe2 className="w-4 h-4 text-zinc-600" />
                     <span>Product Showcase & Overview</span>
                   </button>
 
@@ -257,7 +177,7 @@ export default function Header({
                       setShowUserMenu(false);
                       onResetData();
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-sand text-charcoal flex items-center gap-2 transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-zinc-50 text-charcoal flex items-center gap-2 transition-colors"
                   >
                     <RefreshCw className="w-4 h-4 text-charcoal-muted" />
                     <span>Reset to Initial LLD Dataset</span>
@@ -269,7 +189,7 @@ export default function Header({
                       setShowUserMenu(false);
                       onLogout();
                     }}
-                    className="w-full text-left px-4 py-2 hover:bg-emergency-container text-emergency font-bold flex items-center gap-2 border-t border-borderRule transition-colors"
+                    className="w-full text-left px-4 py-2 hover:bg-zinc-100 text-zinc-950 font-bold flex items-center gap-2 border-t border-borderRule transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out / Switch Account</span>

@@ -265,7 +265,6 @@ export default function App() {
         onNavigateLanding={() => setViewMode('LANDING')}
         onOpenAlerts={() => setShowAlertsModal(true)}
         onOpenOcr={() => setShowOcrModal(true)}
-        onSwitchUser={handleSwitchUser}
         translations={translations}
       />
 
