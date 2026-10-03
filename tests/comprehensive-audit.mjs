@@ -312,15 +312,19 @@ async function runTestSuite(targetUrl, targetName) {
 }
 
 async function main() {
-  // Test Local Preview Server (Port 3001)
+  // 1. Test Local Preview Server (Port 3001)
   const localResult = await runTestSuite(LOCAL_URL, 'Local Production Preview Server (Port 3001)');
 
+  // 2. Test Live GitHub Pages Deployment
+  const liveResult = await runTestSuite(LIVE_URL, 'Live GitHub Pages Deployment');
+
   console.log('\n==================================================');
-  console.log('🏁 AUDIT REPORT SUMMARY:');
-  console.log(`- Local Build: ${localResult.passed} Passed, ${localResult.failed} Failed`);
+  console.log('🏁 FINAL LLD AUDIT REPORT SUMMARY:');
+  console.log(`- Local Build:     ${localResult.passed} Passed, ${localResult.failed} Failed`);
+  console.log(`- Live Deployment: ${liveResult.passed} Passed, ${liveResult.failed} Failed`);
   console.log('==================================================');
 
-  if (localResult.failed > 0) {
+  if (localResult.failed > 0 || liveResult.failed > 0) {
     process.exit(1);
   } else {
     process.exit(0);
