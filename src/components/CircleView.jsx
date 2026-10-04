@@ -219,7 +219,7 @@ export default function CircleView({
       )}
 
       {/* 4. VIEW TOGGLE: VISUAL PEDIGREE DAG vs MEMBER ROSTER */}
-      <div className="flex items-center justify-between gap-2 border-b border-white/80 pb-3">
+      <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 border-b border-white/80 pb-3">
         <div className="neu-segmented p-1">
           <button
             onClick={() => setActiveTab('LINEAGE')}
@@ -266,7 +266,7 @@ export default function CircleView({
 
       {/* 5B. MEMBER ROSTER LIST WITH PHOTOS & EDIT PROFILE */}
       {activeTab === 'MEMBERS' && (
-        <div className="space-y-3.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {visibleMembers.map(member => (
             <div
               key={member.id}

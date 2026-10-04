@@ -281,21 +281,12 @@ body {
    ========================================================================== */
 
 .app-shell {
-  max-width: 768px;
-  margin: 0 auto;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
   background-color: var(--bg-canvas);
-  box-shadow: 12px 0 28px rgba(188, 200, 214, 0.4), -12px 0 28px rgba(255, 255, 255, 0.8);
-}
-
-@media (min-width: 769px) {
-  .app-shell {
-    border-left: 1px solid rgba(255, 255, 255, 0.8);
-    border-right: 1px solid rgba(200, 210, 222, 0.5);
-  }
 }
 
 /* Touch & tap targets */

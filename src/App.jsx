@@ -269,7 +269,7 @@ export default function App() {
       />
 
       {/* MAIN 3-HUB WORKSPACE */}
-      <main className="flex-1 px-4 pt-3 pb-8 min-h-0" role="main">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 pb-24 sm:pb-28 min-h-0" role="main">
         
         {/* TAB 1: CIRCLE (Family Lineage DAG & Context Engine) */}
         {activeTab === 'CIRCLE' && (

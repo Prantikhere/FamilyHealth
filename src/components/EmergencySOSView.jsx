@@ -167,7 +167,7 @@ export default function EmergencySOSView({
     <div className="space-y-4 pb-24 animate-in fade-in duration-200">
 
       {/* 1. EMERGENCY TOP NOTIFICATION (Neumorphic Crimson) */}
-      <div className="bg-gradient-to-r from-rose-600 to-rose-700 text-white px-4 py-3.5 rounded-2xl flex items-center justify-between shadow-neu-raised border border-white/20">
+      <div className="bg-gradient-to-r from-rose-600 to-rose-700 text-white px-4 py-3.5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-neu-raised border border-white/20">
         <div className="flex items-center gap-2.5">
           <ShieldAlert className="w-5 h-5 animate-emergency text-white flex-shrink-0" />
           <div>
@@ -187,7 +187,7 @@ export default function EmergencySOSView({
             setSelectedSosMemberId(e.target.value);
             onSelectMember(e.target.value);
           }}
-          className="bg-white/20 hover:bg-white/30 text-white font-bold text-xs py-1.5 px-3 rounded-xl border border-white/30 outline-none cursor-pointer shadow-neu-sm transition-all"
+          className="bg-white/20 hover:bg-white/30 text-white font-bold text-xs py-1.5 px-3 rounded-xl border border-white/30 outline-none cursor-pointer shadow-neu-sm transition-all self-start sm:self-auto"
         >
           {household.members.map(m => (
             <option key={m.id} value={m.id} className="text-slate-900 bg-white">
@@ -197,8 +197,12 @@ export default function EmergencySOSView({
         </select>
       </div>
 
-      {/* 2. EMERGENCY HEALTH CARD (Neumorphic Surface Card) */}
-      <div className="surface-card p-5 sm:p-6 space-y-4">
+      {/* 2-COLUMN RESPONSIVE LAYOUT (Mobile: 1 Column, Desktop: 2 Columns) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        {/* LEFT COLUMN: EMERGENCY ICE PASS CARD */}
+        <div className="lg:col-span-5 space-y-4">
+          <div className="surface-card p-5 sm:p-6 space-y-4">
         
         <div className="text-center space-y-0.5 border-b border-white/80 pb-3">
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
@@ -317,10 +321,14 @@ export default function EmergencySOSView({
           </div>
         </div>
 
-      </div>
+        </div>
+        </div>
 
-      {/* 3. "KNOW BEFORE YOU GO" SYMPTOM TRIAGE (Section 1.1 FR-07) */}
-      <div className="surface-card p-5 space-y-3">
+        {/* RIGHT COLUMN: TRIAGE & HEALTHCARE FACILITIES DIRECTORY */}
+        <div className="lg:col-span-7 space-y-4">
+
+          {/* 3. "KNOW BEFORE YOU GO" SYMPTOM TRIAGE (Section 1.1 FR-07) */}
+          <div className="surface-card p-5 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl neu-inset flex items-center justify-center text-slate-800">
@@ -460,6 +468,8 @@ export default function EmergencySOSView({
             </div>
           ))}
         </div>
+      </div>
+      </div>
       </div>
 
       {/* 5. CLINICAL TRIAGE DECISION TREE MODAL (FR-07) */}

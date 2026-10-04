@@ -39,13 +39,13 @@ export default function Header({
   const pendingAlertCount = household.pendingAlerts?.length || 2;
 
   return (
-    <header className="sticky top-0 z-30 bg-[#F8FAFD]/95 backdrop-blur-md border-b border-white/90 px-3 sm:px-4 py-2.5 shadow-[0_4px_14px_rgba(220,228,236,0.6)]" role="banner">
-      <div className="flex items-center justify-between gap-2">
+    <header className="sticky top-0 z-30 bg-[#F8FAFD]/95 backdrop-blur-md border-b border-white/90 px-3 sm:px-6 lg:px-8 py-2.5 shadow-[0_4px_14px_rgba(220,228,236,0.6)]" role="banner">
+      <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
         
         {/* 1. BRAND IDENTITY & HOME CLICK */}
         <button
           onClick={onNavigateLanding}
-          className="flex items-center gap-2.5 min-w-0 text-left group touch-target cursor-pointer hover:opacity-95 transition-opacity"
+          className="flex items-center gap-2 sm:gap-2.5 min-w-0 text-left group touch-target cursor-pointer hover:opacity-95 transition-opacity"
           title="Return to FamilyHealth Product Showcase & Overview"
         >
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-neu-raised flex-shrink-0 group-hover:scale-105 transition-transform border border-white/30">
@@ -60,14 +60,14 @@ export default function Header({
                 AFRICA
               </span>
             </div>
-            <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium truncate mt-0.5">
+            <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium truncate mt-0.5 max-w-[100px] xs:max-w-[150px] sm:max-w-none">
               Circle: <span className="font-bold text-slate-700">{household.head}</span>
             </p>
           </div>
         </button>
 
         {/* 2. ACTION CONTROLS & STATUS */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           
           {/* Quick OCR Scanner Button (Proportioned h-9) */}
           {onOpenOcr && (

@@ -106,8 +106,14 @@ export default function ProfessionalFamilyTree({
         </div>
       </div>
 
+      {/* Mobile Swipe Hint */}
+      <div className="md:hidden flex items-center justify-between text-[11px] text-slate-500 font-medium px-2 pb-1">
+        <span>← Swipe horizontally to explore pedigree tree →</span>
+        <span className="font-mono text-[10px] bg-white/70 px-2 py-0.5 rounded-full border border-slate-200">Scrollable</span>
+      </div>
+
       {/* 2. PEDIGREE GRAPH CANVAS (Neumorphic Inset Canvas) */}
-      <div className="neu-inset rounded-3xl p-4 sm:p-6 overflow-x-auto relative min-h-[380px]">
+      <div className="neu-inset rounded-3xl p-4 sm:p-6 overflow-x-auto touch-pan-x w-full relative min-h-[380px]">
         <div 
           className="transition-transform origin-top min-w-[560px] space-y-6"
           style={{ transform: `scale(${zoomLevel})` }}
