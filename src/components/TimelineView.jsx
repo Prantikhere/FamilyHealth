@@ -137,44 +137,44 @@ export default function TimelineView({
   return (
     <div className="space-y-4 pb-24 animate-in fade-in duration-200">
       
-      {/* ROLE PERSPECTIVE NOTIFICATION BANNER (Minimalist Monochrome) */}
+      {/* ROLE PERSPECTIVE NOTIFICATION BANNER (Light Healthcare Tint) */}
       {isChew && (
-        <div className="bg-zinc-100 border border-zinc-200 text-zinc-900 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
+        <div className="surface-card bg-emerald-50/70 border border-emerald-200/80 text-emerald-950 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-zinc-950 text-white flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
               <Stethoscope className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold block uppercase tracking-wider text-[11px] text-zinc-950">
+              <span className="font-bold block uppercase tracking-wider text-[11px] text-emerald-950">
                 {t.chewPerspective || 'CHEW Nurse Maternal & Child Records Filter'}
               </span>
-              <p className="text-[11px] text-zinc-600 font-medium">
+              <p className="text-[11px] text-emerald-800 font-medium">
                 Showing pediatric immunizations & maternal records. Private financial transactions are masked.
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-bold uppercase bg-zinc-900 text-white px-2.5 py-0.5 rounded-full flex-shrink-0">
+          <span className="neu-pill text-[10px] font-bold uppercase bg-white text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full flex-shrink-0">
             PHC Scope
           </span>
         </div>
       )}
 
       {isSenior && (
-        <div className="bg-zinc-100 border border-zinc-200 text-zinc-900 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
+        <div className="surface-card bg-amber-50/70 border border-amber-200/80 text-amber-950 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-zinc-950 text-white flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
               <HeartPulse className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold block uppercase tracking-wider text-[11px] text-zinc-950">
+              <span className="font-bold block uppercase tracking-wider text-[11px] text-amber-950">
                 Personal Senior Health Ledger (Baba Adeyemi)
               </span>
-              <p className="text-[11px] text-zinc-600 font-medium">
+              <p className="text-[11px] text-amber-800 font-medium">
                 Filtered strictly to Baba's clinical consultations, blood pressure readings, and cardiology reports.
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-bold uppercase bg-zinc-900 text-white px-2.5 py-0.5 rounded-full flex-shrink-0">
+          <span className="neu-pill text-[10px] font-bold uppercase bg-white text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-full flex-shrink-0">
             G0 Ledger
           </span>
         </div>

@@ -91,20 +91,20 @@ export default function MemberProfileModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-charcoal/70 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/30 backdrop-blur-sm animate-in fade-in duration-150">
       <div className="surface-card w-full max-w-xl p-5 sm:p-6 space-y-4 shadow-lifted relative max-h-[92vh] overflow-y-auto">
         
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-borderRule pb-3">
+        <div className="flex items-center justify-between border-b border-white/80 pb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-zinc-950 text-white flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-xs">
               <User className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-black text-charcoal">
+              <h3 className="text-base font-black text-slate-800">
                 {isNew ? (t.addDependent || 'Add Dependent / Family Member') : (t.editMemberTitle || 'Family Member Profile & Portrait')}
               </h3>
-              <p className="text-xs text-charcoal-muted">
+              <p className="text-xs text-slate-500">
                 Multi-generational lineage profile with customizable portrait photo
               </p>
             </div>
@@ -112,17 +112,17 @@ export default function MemberProfileModal({
 
           <button 
             onClick={onClose} 
-            className="p-1 rounded-xl hover:bg-sand text-charcoal-muted"
+            className="neu-icon-btn w-8 h-8 rounded-lg text-slate-500 hover:text-slate-800 shadow-neu-sm"
             aria-label="Close Profile Modal"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           
           {/* 1. PROFILE PICTURE / AVATAR SELECTION & UPLOAD */}
-          <div className="p-4 rounded-2xl bg-chalk border border-borderRule space-y-3">
+          <div className="p-4 rounded-2xl neu-inset space-y-3">
             <label className="text-xs font-black uppercase tracking-wider text-charcoal block">
               {t.profilePhoto || 'Profile Picture / Avatar'}
             </label>
@@ -194,7 +194,7 @@ export default function MemberProfileModal({
                     }}
                     className={`w-10 h-10 rounded-2xl flex items-center justify-center text-lg flex-shrink-0 transition-transform ${
                       avatarIcon === av.icon && !avatarUrl 
-                        ? 'ring-2 ring-slate-900 scale-110 shadow-neu-raised' 
+                        ? 'ring-2 ring-blue-600 scale-110 shadow-neu-raised' 
                         : 'neu-btn hover:opacity-100 shadow-neu-sm'
                     }`}
                     style={{ backgroundColor: av.bg }}

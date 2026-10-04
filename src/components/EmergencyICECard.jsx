@@ -77,18 +77,18 @@ export default function EmergencyICECard({ member, household, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200">
-      <div className="w-full max-w-lg bg-chalk rounded-3xl shadow-2xl overflow-hidden border border-borderRule my-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/35 backdrop-blur-md p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200">
+      <div className="w-full max-w-lg surface-card rounded-3xl shadow-2xl overflow-hidden border border-white/90 my-auto">
         
-        {/* OBSIDIAN HEADER (#09090B) */}
-        <div className="bg-zinc-950 text-white p-5 relative border-b border-zinc-800">
+        {/* EMERGENCY HEADER (Crimson Alert Gradient) */}
+        <div className="bg-gradient-to-r from-rose-600 via-rose-700 to-red-600 text-white p-5 relative border-b border-rose-500">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/15">
+              <div className="p-2 rounded-xl bg-white/20 backdrop-blur-md border border-white/30">
                 <AlertOctagon className="w-6 h-6 text-white" />
               </div>
               <div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 block">
+                <span className="text-[10px] font-black uppercase tracking-widest text-rose-100 block">
                   EMERGENCY IN CASE OF EMERGENCY (ICE)
                 </span>
                 <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">
@@ -99,14 +99,14 @@ export default function EmergencyICECard({ member, household, onClose }) {
 
             <button
               onClick={onClose}
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors border border-white/10"
+              className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-colors border border-white/30"
               aria-label="Close emergency card"
             >
               <X className="w-5 h-5 font-bold" />
             </button>
           </div>
 
-          <div className="flex items-center gap-2 mt-2 text-xs text-zinc-400 font-medium">
+          <div className="flex items-center gap-2 mt-2 text-xs text-rose-100 font-medium">
             <span>{member.relation}</span>
             <span>•</span>
             <span>DOB: {member.dob}</span>
@@ -234,7 +234,7 @@ export default function EmergencyICECard({ member, household, onClose }) {
             </p>
 
             {qrDataUrl ? (
-              <div className="inline-block p-2.5 bg-white rounded-2xl border-2 border-slate-900 shadow-neu-raised">
+              <div className="inline-block p-2.5 bg-white rounded-2xl border-2 border-rose-300 shadow-neu-raised">
                 <img src={qrDataUrl} alt="Offline ICE QR Matrix" className="w-48 h-48 mx-auto rounded-lg" />
               </div>
             ) : (

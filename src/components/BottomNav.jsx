@@ -34,7 +34,7 @@ export default function BottomNav({ activeTab, onSelectTab, translations }) {
 
   return (
     <nav 
-      className="fixed bottom-0 inset-x-0 max-w-[768px] mx-auto z-40 bg-[#E8EDF5]/95 backdrop-blur-md border-t border-white/80 shadow-[0_-4px_18px_rgba(202,211,222,0.55)] pb-[env(safe-area-inset-bottom,0px)]"
+      className="fixed bottom-0 inset-x-0 max-w-[768px] mx-auto z-40 bg-[#F8FAFD]/95 backdrop-blur-md border-t border-white/90 shadow-[0_-4px_18px_rgba(220,228,236,0.7)] pb-[env(safe-area-inset-bottom,0px)]"
       role="navigation"
       aria-label="Bottom Navigation Hubs"
     >
@@ -58,8 +58,8 @@ export default function BottomNav({ activeTab, onSelectTab, translations }) {
               >
                 <div className={`p-2 rounded-2xl transition-all ${
                   isActive 
-                    ? 'bg-gradient-to-br from-rose-600 to-rose-700 text-white shadow-neu-raised scale-105 border border-white/30' 
-                    : 'bg-white/40 text-rose-600 shadow-neu-sm'
+                    ? 'bg-gradient-to-br from-rose-500 to-rose-600 text-white shadow-neu-raised scale-105 border border-white/30' 
+                    : 'bg-white/60 text-rose-500 shadow-neu-sm'
                 }`}>
                   <IconComponent className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-[2]'}`} />
                 </div>
@@ -79,16 +79,16 @@ export default function BottomNav({ activeTab, onSelectTab, translations }) {
               onClick={() => onSelectTab(hub.id)}
               className={`flex-1 flex flex-col items-center justify-center py-1.5 touch-target transition-all rounded-2xl ${
                 isActive 
-                  ? 'text-slate-900 font-black' 
-                  : 'text-slate-400 hover:text-slate-800'
+                  ? 'text-blue-600 font-black' 
+                  : 'text-slate-400 hover:text-slate-700'
               }`}
               aria-label={hub.label}
               aria-current={isActive ? 'page' : undefined}
             >
               <div className={`p-2 rounded-2xl transition-all ${
                 isActive 
-                  ? 'bg-gradient-to-br from-slate-800 to-slate-950 text-white shadow-neu-raised scale-105 border border-white/20' 
-                  : 'bg-white/40 text-slate-500 shadow-neu-sm'
+                  ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-neu-raised scale-105 border border-white/30' 
+                  : 'bg-white/60 text-slate-500 shadow-neu-sm'
               }`}>
                 <IconComponent className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-[1.8]'}`} />
               </div>

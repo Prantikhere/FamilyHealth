@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 :root {
-  /* Neumorphic Design Tokens (Soft UI, Dual Specular & Occlusion Shadows) */
-  --bg-canvas: #E8EDF5;              /* Soft Slate-Tinted Neumorphic Canvas */
-  --surface-neu: #E8EDF5;            /* Base Extruded Surface */
+  /* Neumorphic Light Healthcare Design Tokens (Soft Luminous UI, Crisp Specular & Delicate Occlusion Shadows) */
+  --bg-canvas: #F8FAFD;              /* Luminous Clean Light Healthcare Canvas */
+  --surface-neu: #F8FAFD;            /* Base Extruded Surface */
   --neu-light: #FFFFFF;              /* Pure Specular Light Reflection (Top-Left) */
-  --neu-dark: #CAD3DE;               /* Ambient Soft Occlusion Shadow (Bottom-Right) */
-  --neu-dark-deep: #BCC8D6;          /* Deeper Occlusion for Lifted State */
+  --neu-dark: #DCE4EC;               /* Delicate Soft Ambient Shadow (Bottom-Right) */
+  --neu-dark-deep: #D0DAE4;          /* Soft Occlusion for Lifted State */
   
-  --color-terracotta: #0F172A;       /* Midnight Slate (Primary Action) */
-  --color-forest: #1E293B;           /* Deep Graphite Slate */
-  --color-charcoal: #0F172A;         /* High Contrast Crisp Typography */
+  --color-terracotta: #2563EB;       /* Medical Azure (Primary Action) */
+  --color-forest: #0D9488;           /* Fresh Medical Teal */
+  --color-charcoal: #1E293B;         /* High Contrast Readable Slate-800 Typography */
   --color-muted: #64748B;            /* Refined Slate Secondary */
-  --color-border: rgba(255, 255, 255, 0.85); /* Specular Rim Light */
+  --color-border: rgba(255, 255, 255, 0.95); /* Crisp Specular Rim Light */
 
   /* Provenance & Emergency Badges */
-  --provenance-official: #0F172A;
-  --provenance-self: #334155;
+  --provenance-official: #2563EB;
+  --provenance-self: #475569;
   --emergency-accent: #E11D48;
 
   /* Typography & Proportions */
@@ -56,20 +56,20 @@ body {
 /* 1. Neumorphic Extruded Cards & Containers (Flat / Raised Soft Elevation) */
 .surface-card {
   background-color: var(--surface-neu);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 7px 7px 16px var(--neu-dark), -7px -7px 16px var(--neu-light);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 6px 6px 14px var(--neu-dark), -6px -6px 14px var(--neu-light);
   border-radius: 22px;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .surface-card:hover {
-  box-shadow: 8px 8px 18px var(--neu-dark-deep), -8px -8px 18px var(--neu-light);
+  box-shadow: 7px 7px 18px var(--neu-dark-deep), -7px -7px 18px var(--neu-light);
 }
 
 /* 2. Inset / Sunken / Pressed Wells & Channels */
 .neu-inset, .sand-card {
   background-color: var(--surface-neu);
-  border: 1px solid rgba(200, 210, 222, 0.4);
+  border: 1px solid rgba(220, 228, 236, 0.6);
   box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
   border-radius: 18px;
 }
@@ -77,8 +77,8 @@ body {
 /* Deep Inset Form Inputs */
 .neu-input, input[type="text"], input[type="email"], input[type="password"], input[type="number"], textarea, select {
   background-color: var(--surface-neu);
-  border: 1px solid rgba(195, 206, 220, 0.6);
-  box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+  border: 1px solid rgba(220, 228, 236, 0.8);
+  box-shadow: inset 2px 2px 5px var(--neu-dark), inset -2px -2px 5px var(--neu-light);
   border-radius: 14px;
   color: var(--color-charcoal);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
@@ -86,8 +86,8 @@ body {
 
 .neu-input:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: rgba(15, 23, 42, 0.3);
-  box-shadow: inset 3px 3px 7px var(--neu-dark-deep), inset -3px -3px 7px var(--neu-light), 0 0 0 2px rgba(15, 23, 42, 0.12);
+  border-color: rgba(37, 99, 235, 0.4);
+  box-shadow: inset 2px 2px 5px var(--neu-dark-deep), inset -2px -2px 5px var(--neu-light), 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
 /* ==========================================================================
@@ -99,9 +99,9 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #f2f7fc, #dee5ef);
+  background: linear-gradient(145deg, #ffffff, #f0f4f9);
   box-shadow: 4px 4px 9px var(--neu-dark), -4px -4px 9px var(--neu-light);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   color: var(--color-charcoal);
   font-weight: 700;
   border-radius: 14px;
@@ -111,7 +111,7 @@ body {
 }
 
 .neu-btn:hover {
-  box-shadow: 6px 6px 14px var(--neu-dark-deep), -6px -6px 14px var(--neu-light);
+  box-shadow: 5px 5px 12px var(--neu-dark-deep), -5px -5px 12px var(--neu-light);
   transform: translateY(-1px);
 }
 
@@ -120,14 +120,14 @@ body {
   transform: translateY(1px);
 }
 
-/* Primary High-Contrast Neumorphic Button (Deep Slate / Obsidian) */
+/* Primary Luminous Medical Azure Button (Replaces Pitch Black) */
 .neu-btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #1e293b, #0f172a);
-  box-shadow: 5px 5px 12px var(--neu-dark), -3px -3px 8px var(--neu-light);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(145deg, #3b82f6, #2563eb);
+  box-shadow: 4px 4px 11px #bfdbfe, -3px -3px 8px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   color: #ffffff;
   font-weight: 800;
   border-radius: 14px;
@@ -137,12 +137,12 @@ body {
 }
 
 .neu-btn-primary:hover {
-  box-shadow: 6px 6px 15px var(--neu-dark-deep), -4px -4px 10px var(--neu-light);
+  box-shadow: 5px 5px 14px #93c5fd, -4px -4px 10px #ffffff;
   transform: translateY(-1px);
 }
 
 .neu-btn-primary:active {
-  box-shadow: inset 3px 3px 6px #06090f, inset -2px -2px 4px #26344d;
+  box-shadow: inset 3px 3px 6px #1d4ed8, inset -2px -2px 4px #60a5fa;
   transform: translateY(1px);
 }
 
@@ -151,9 +151,9 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #e11d48, #be123c);
-  box-shadow: 5px 5px 12px var(--neu-dark), -3px -3px 8px var(--neu-light);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: linear-gradient(145deg, #f43f5e, #e11d48);
+  box-shadow: 4px 4px 11px #fecdd3, -3px -3px 8px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   color: #ffffff;
   font-weight: 800;
   border-radius: 14px;
@@ -163,12 +163,12 @@ body {
 }
 
 .neu-btn-danger:hover {
-  box-shadow: 6px 6px 15px var(--neu-dark-deep), -4px -4px 10px var(--neu-light);
+  box-shadow: 5px 5px 14px #fda4af, -4px -4px 10px #ffffff;
   transform: translateY(-1px);
 }
 
 .neu-btn-danger:active {
-  box-shadow: inset 3px 3px 6px #881337, inset -2px -2px 4px #fb7185;
+  box-shadow: inset 3px 3px 6px #be123c, inset -2px -2px 4px #f43f5e;
   transform: translateY(1px);
 }
 
@@ -179,9 +179,9 @@ body {
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: linear-gradient(145deg, #f2f7fc, #dee5ef);
-  box-shadow: 4px 4px 8px var(--neu-dark), -4px -4px 8px var(--neu-light);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: linear-gradient(145deg, #ffffff, #f0f4f9);
+  box-shadow: 3px 3px 7px var(--neu-dark), -3px -3px 7px var(--neu-light);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   border-radius: 14px;
   color: var(--color-charcoal);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -190,7 +190,7 @@ body {
 }
 
 .neu-icon-btn:hover {
-  box-shadow: 5px 5px 11px var(--neu-dark-deep), -5px -5px 11px var(--neu-light);
+  box-shadow: 4px 4px 10px var(--neu-dark-deep), -4px -4px 10px var(--neu-light);
   transform: translateY(-1px);
 }
 
@@ -206,8 +206,8 @@ body {
   gap: 4px;
   padding: 4px;
   background-color: var(--surface-neu);
-  border: 1px solid rgba(200, 210, 222, 0.4);
-  box-shadow: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+  border: 1px solid rgba(220, 228, 236, 0.7);
+  box-shadow: inset 2px 2px 5px var(--neu-dark), inset -2px -2px 5px var(--neu-light);
   border-radius: 16px;
 }
 
@@ -225,10 +225,10 @@ body {
 }
 
 .neu-segmented-btn.active {
-  background: linear-gradient(145deg, #f2f7fc, #dee5ef);
+  background: linear-gradient(145deg, #ffffff, #eff6ff);
   box-shadow: 3px 3px 7px var(--neu-dark), -3px -3px 7px var(--neu-light);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  color: var(--color-charcoal);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  color: #2563eb;
 }
 
 /* Neumorphic Badges & Tags */
@@ -239,7 +239,7 @@ body {
   padding: 3px 10px;
   background: var(--surface-neu);
   box-shadow: 2px 2px 5px var(--neu-dark), -2px -2px 5px var(--neu-light);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 9999px;
   font-size: 10px;
   font-weight: 800;
@@ -339,7 +339,7 @@ button, a, input, select, textarea {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #BCC8D6;
+  background: #CBD5E1;
   border-radius: 4px;
   box-shadow: 1px 1px 3px var(--neu-dark);
 }

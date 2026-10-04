@@ -62,99 +62,99 @@ export default function CircleView({
   return (
     <div className="space-y-4 pb-24 animate-in fade-in duration-200">
       
-      {/* 1. ROLE PERSPECTIVE NOTIFICATION BANNER (Minimalist Monochrome) */}
+      {/* 1. ROLE PERSPECTIVE NOTIFICATION BANNER (Light Healthcare Tint) */}
       {isChew && (
-        <div className="bg-zinc-100 border border-zinc-200 text-zinc-900 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
+        <div className="surface-card bg-emerald-50/70 border border-emerald-200/80 text-emerald-950 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-zinc-950 text-white flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
               <Stethoscope className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold block uppercase tracking-wider text-[11px] text-zinc-950">
+              <span className="font-bold block uppercase tracking-wider text-[11px] text-emerald-950">
                 {t.chewPerspective || 'CHEW Maternal & Child Health Mode Active'}
               </span>
-              <p className="text-[11px] text-zinc-600 font-medium">
+              <p className="text-[11px] text-emerald-800 font-medium">
                 {t.chewNotice || 'Filtered to G2 pediatric dependents (Tunde, Kehinde) & maternal records (Sade). G0 elder profiles restricted.'}
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-bold uppercase bg-zinc-900 text-white px-2.5 py-0.5 rounded-full flex-shrink-0">
+          <span className="neu-pill text-[10px] font-bold uppercase bg-white text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full flex-shrink-0">
             PHC Scope
           </span>
         </div>
       )}
 
       {isDoctor && (
-        <div className="bg-zinc-900 border border-zinc-900 text-white p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
+        <div className="surface-card bg-blue-50/70 border border-blue-200/80 text-blue-950 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-white text-zinc-950 flex items-center justify-center flex-shrink-0 font-bold">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-bold shadow-xs">
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold block uppercase tracking-wider text-[11px] text-white">
+              <span className="font-bold block uppercase tracking-wider text-[11px] text-blue-950">
                 {t.doctorPerspective || 'Emergency Clinician / Trauma Triage Mode'}
               </span>
-              <p className="text-[11px] text-zinc-300 font-medium">
+              <p className="text-[11px] text-blue-800 font-medium">
                 {t.doctorNotice || 'Zero-click access to blood group, sickle cell genotype, drug allergies, and offline resuscitation orders.'}
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-bold uppercase bg-white text-zinc-950 px-2.5 py-0.5 rounded-full flex-shrink-0">
+          <span className="neu-pill text-[10px] font-bold uppercase bg-white text-blue-800 border border-blue-200 px-2.5 py-0.5 rounded-full flex-shrink-0">
             Trauma ICE
           </span>
         </div>
       )}
 
       {isSenior && (
-        <div className="bg-zinc-100 border border-zinc-200 text-zinc-900 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
+        <div className="surface-card bg-amber-50/70 border border-amber-200/80 text-amber-950 p-3.5 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-zinc-950 text-white flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center flex-shrink-0 shadow-xs">
               <HeartPulse className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold block uppercase tracking-wider text-[11px] text-zinc-950">
+              <span className="font-bold block uppercase tracking-wider text-[11px] text-amber-950">
                 {t.seniorPerspective || 'Personal Senior Health Portal (Baba Adeyemi)'}
               </span>
-              <p className="text-[11px] text-zinc-600 font-medium">
+              <p className="text-[11px] text-amber-800 font-medium">
                 {t.seniorNotice || 'Personal hypertension tracking, daily Losartan / Amlodipine regimen, and personal ICE emergency card.'}
               </p>
             </div>
           </div>
-          <span className="text-[10px] font-bold uppercase bg-zinc-900 text-white px-2.5 py-0.5 rounded-full flex-shrink-0">
+          <span className="neu-pill text-[10px] font-bold uppercase bg-white text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-full flex-shrink-0">
             G0 Senior
           </span>
         </div>
       )}
 
-      {/* 2. EMERGENCY QUICK-ACTION STRIP (Section 2.2 Wireframe - Neumorphic Midnight) */}
-      <div className="rounded-3xl p-4 sm:p-5 shadow-neu-flat border border-white/20 relative overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950 text-white">
+      {/* 2. EMERGENCY QUICK-ACTION STRIP (Light Healthcare Elevation) */}
+      <div className="surface-card rounded-3xl p-4 sm:p-5 shadow-neu-flat border border-rose-200/80 bg-gradient-to-br from-rose-50/80 via-white to-red-50/30 text-slate-800 relative overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 relative z-10">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider bg-rose-500/20 text-rose-300 border border-rose-500/40 px-2.5 py-0.5 rounded-full">
-                <ShieldAlert className="w-3 h-3 text-rose-400" />
+              <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider bg-rose-100 text-rose-700 border border-rose-200 px-2.5 py-0.5 rounded-full">
+                <ShieldAlert className="w-3 h-3 text-rose-600" />
                 {t.emergencyPass || 'EMERGENCY HEALTH PASS'}
               </span>
-              <span className="text-xs text-slate-300 font-mono">
+              <span className="text-xs text-slate-600 font-mono">
                 {activeMember?.name} ({activeMember?.generation})
               </span>
             </div>
             <div className="flex flex-wrap items-center gap-2 text-xs font-bold pt-0.5">
-              <span className="text-white">{t.bloodGroup || 'Blood'}: <span className="bg-white/10 text-white px-2 py-0.5 rounded-lg font-mono font-bold shadow-neu-inset-sm border border-white/10">{activeMember?.bloodGroup}</span></span>
-              <span className="text-slate-500">•</span>
-              <span className="text-white">{t.genotype || 'Genotype'}: <span className="bg-white/10 text-white px-2 py-0.5 rounded-lg font-mono font-bold shadow-neu-inset-sm border border-white/10">{activeMember?.genotype}</span></span>
-              <span className="text-slate-500">•</span>
-              <span className="text-slate-300 font-medium">Allergies: {activeMember?.allergies?.join(', ') || 'None'}</span>
+              <span className="text-slate-800">{t.bloodGroup || 'Blood'}: <span className="bg-white text-rose-700 px-2 py-0.5 rounded-lg font-mono font-black shadow-neu-sm border border-rose-200">{activeMember?.bloodGroup}</span></span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-800">{t.genotype || 'Genotype'}: <span className="bg-white text-indigo-700 px-2 py-0.5 rounded-lg font-mono font-black shadow-neu-sm border border-indigo-200">{activeMember?.genotype}</span></span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-600 font-medium">Allergies: {activeMember?.allergies?.join(', ') || 'None'}</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2.5">
             <button
               onClick={() => onEditMember?.(activeMember)}
-              className="h-9 px-3.5 rounded-xl font-bold text-xs inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer shadow-neu-sm"
+              className="neu-btn h-9 px-3.5 rounded-xl font-bold text-xs inline-flex items-center gap-1.5 text-slate-700 transition-all cursor-pointer shadow-neu-sm"
               title="Edit Member Photo & Profile"
             >
-              <Camera className="w-3.5 h-3.5 text-slate-300" />
+              <Camera className="w-3.5 h-3.5 text-slate-500" />
               <span>{t.editPhoto || 'Edit Photo'}</span>
             </button>
 
@@ -190,7 +190,7 @@ export default function CircleView({
           {/* Neumorphic Inset Progress Bar */}
           <div className="w-full neu-inset h-3 p-0.5 rounded-full overflow-hidden">
             <div 
-              className="bg-gradient-to-r from-slate-700 to-slate-900 h-full rounded-full transition-all duration-500 shadow-neu-sm"
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 h-full rounded-full transition-all duration-500 shadow-neu-sm"
               style={{ width: `${household.completenessScore || 88}%` }}
             />
           </div>
@@ -272,7 +272,7 @@ export default function CircleView({
               key={member.id}
               onClick={() => onSelectMember(member.id)}
               className={`surface-card p-4 sm:p-5 cursor-pointer transition-all ${
-                activeMember?.id === member.id ? 'shadow-neu-deep ring-2 ring-slate-800' : 'hover:shadow-neu-raised'
+                activeMember?.id === member.id ? 'shadow-neu-deep ring-2 ring-blue-500' : 'hover:shadow-neu-raised'
               }`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -287,19 +287,19 @@ export default function CircleView({
                       />
                     ) : (
                       <div 
-                        className="w-13 h-13 rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-neu-raised border-2 border-white bg-gradient-to-br from-slate-800 to-slate-950"
+                        className="w-13 h-13 rounded-2xl flex items-center justify-center text-white font-black text-sm shadow-neu-raised border-2 border-white bg-gradient-to-br from-blue-500 to-indigo-600"
                       >
                         {member.avatarIcon || (member.firstName?.[0] || 'A')}
                       </div>
                     )}
-                    <span className="absolute -bottom-1 -right-1 text-[9px] font-bold bg-slate-900 text-white px-1.5 py-0.2 rounded-full border border-white shadow-xs">
+                    <span className="absolute -bottom-1 -right-1 text-[9px] font-bold bg-blue-600 text-white px-1.5 py-0.2 rounded-full border border-white shadow-xs">
                       {member.generation}
                     </span>
                   </div>
 
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="font-extrabold text-sm text-slate-900">{member.name}</h3>
+                      <h3 className="font-extrabold text-sm text-slate-800">{member.name}</h3>
                       <span className="neu-pill text-[9px] font-bold shadow-xs">
                         {member.statusNote || 'Active'}
                       </span>

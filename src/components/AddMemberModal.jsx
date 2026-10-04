@@ -51,17 +51,17 @@ export default function AddMemberModal({ onClose, onSave }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="surface-card w-full max-w-md shadow-lifted border border-white/80 overflow-hidden max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+      <div className="surface-card w-full max-w-md shadow-lifted border border-white/90 overflow-hidden max-h-[90vh] flex flex-col">
         {/* Modal Header */}
-        <div className="px-5 py-4 bg-gradient-to-br from-slate-900 to-slate-950 text-white flex items-center justify-between border-b border-white/10">
+        <div className="px-5 py-4 bg-gradient-to-r from-blue-50/80 via-white to-slate-50 text-slate-800 flex items-center justify-between border-b border-slate-200/60">
           <div className="flex items-center gap-2">
-            <UserPlus className="w-5 h-5 text-rose-400" />
-            <h2 className="text-base font-bold">Add Family Member</h2>
+            <UserPlus className="w-5 h-5 text-blue-600" />
+            <h2 className="text-base font-bold text-slate-800">Add Family Member</h2>
           </div>
           <button 
             onClick={onClose} 
-            className="neu-icon-btn w-8 h-8 rounded-lg text-white/80 hover:text-white bg-white/10 border-white/20 shadow-neu-sm"
+            className="neu-icon-btn w-8 h-8 rounded-lg text-slate-500 hover:text-slate-800 shadow-neu-sm"
             aria-label="Close dialog"
           >
             <X className="w-4 h-4" />
@@ -171,15 +171,15 @@ export default function AddMemberModal({ onClose, onSave }) {
           </div>
 
           {/* Maternal Pregnancy Toggle if female */}
-          <div className="flex items-center gap-2 p-2.5 bg-zinc-100 rounded-lg border border-zinc-200">
+          <div className="flex items-center gap-2 p-2.5 bg-blue-50/60 rounded-xl border border-blue-200/60">
             <input
               type="checkbox"
               id="isPregnant"
               checked={isPregnant}
               onChange={(e) => setIsPregnant(e.target.checked)}
-              className="w-4 h-4 rounded text-zinc-950 focus:ring-zinc-950"
+              className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500"
             />
-            <label htmlFor="isPregnant" className="font-semibold text-charcoal cursor-pointer">
+            <label htmlFor="isPregnant" className="font-semibold text-slate-800 cursor-pointer">
               Currently Pregnant (Track Antenatal Care & Immunization)
             </label>
           </div>
@@ -194,7 +194,7 @@ export default function AddMemberModal({ onClose, onSave }) {
                   type="button"
                   onClick={() => setAvatarBg(color)}
                   className={`w-7 h-7 rounded-full border-2 transition-transform ${
-                    avatarBg === color ? 'scale-125 border-zinc-950 shadow-sm' : 'border-white'
+                    avatarBg === color ? 'scale-125 border-blue-600 shadow-sm' : 'border-white'
                   }`}
                   style={{ backgroundColor: color }}
                 />

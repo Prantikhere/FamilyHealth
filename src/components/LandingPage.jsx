@@ -72,18 +72,18 @@ export default function LandingPage({ onEnterApp, onSelectDemoUser }) {
   const activeTabConfig = featureTabs.find(t => t.id === activeFeatureTab) || featureTabs[0];
 
   return (
-    <div className="min-h-screen bg-canvas text-charcoal flex flex-col justify-between selection:bg-slate-800 selection:text-white">
+    <div className="min-h-screen bg-canvas text-charcoal flex flex-col justify-between selection:bg-blue-600 selection:text-white">
       
       {/* 1. TOP GLOBAL NAVBAR */}
-      <header className="sticky top-0 z-50 bg-[#E8EDF5]/90 backdrop-blur-md border-b border-white/80 px-4 sm:px-8 py-3.5 shadow-[0_4px_14px_rgba(202,211,222,0.45)]">
+      <header className="sticky top-0 z-50 bg-[#F8FAFD]/90 backdrop-blur-md border-b border-white/90 px-4 sm:px-8 py-3.5 shadow-[0_4px_14px_rgba(220,228,236,0.6)]">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-950 flex items-center justify-center text-white shadow-neu-raised border border-white/20">
-              <HeartPulse className="w-5 h-5 text-rose-400" />
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-neu-raised border border-white/30">
+              <HeartPulse className="w-5 h-5 text-white" />
             </div>
             <div>
-              <span className="text-lg font-black tracking-tight text-slate-900 block leading-none">
+              <span className="text-lg font-black tracking-tight text-slate-800 block leading-none">
                 FamilyHealth
               </span>
               <span className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">
@@ -115,13 +115,13 @@ export default function LandingPage({ onEnterApp, onSelectDemoUser }) {
       <section className="px-4 sm:px-8 pt-10 sm:pt-16 pb-12 max-w-5xl mx-auto text-center space-y-6">
         
         {/* Architecture Pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full neu-pill shadow-neu-sm text-xs font-bold text-slate-700">
-          <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full neu-pill shadow-neu-sm text-xs font-bold text-blue-700 bg-blue-50/70 border border-blue-200/70">
+          <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
           <span>Low-Level Design v2.4.0 • Google Cloud Edge PoP (Lagos & JNB)</span>
         </div>
 
         {/* Hero Title */}
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight max-w-4xl mx-auto leading-[1.12]">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-800 tracking-tight max-w-4xl mx-auto leading-[1.12]">
           Healthcare Sovereignty for African Families
         </h1>
 
@@ -142,7 +142,7 @@ export default function LandingPage({ onEnterApp, onSelectDemoUser }) {
 
           <button
             onClick={() => onEnterApp(true)}
-            className="w-full sm:w-auto neu-btn btn-hero shadow-neu-raised transition-all flex items-center justify-center gap-2.5 cursor-pointer text-sm font-bold text-slate-800"
+            className="w-full sm:w-auto neu-btn btn-hero shadow-neu-raised transition-all flex items-center justify-center gap-2.5 cursor-pointer text-sm font-bold text-slate-700"
           >
             <Lock className="w-4 h-4 text-slate-500" />
             <span>Enter via Demo Credentials</span>
@@ -152,19 +152,19 @@ export default function LandingPage({ onEnterApp, onSelectDemoUser }) {
         {/* Trust Badges Bar */}
         <div className="pt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs font-bold text-slate-600">
           <div className="neu-pill px-3 py-1.5 flex items-center gap-1.5 shadow-neu-sm">
-            <ShieldCheck className="w-3.5 h-3.5 text-slate-800" />
+            <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
             <span>Zero-Knowledge AES-256-GCM</span>
           </div>
           <div className="neu-pill px-3 py-1.5 flex items-center gap-1.5 shadow-neu-sm">
-            <WifiOff className="w-3.5 h-3.5 text-slate-800" />
+            <WifiOff className="w-3.5 h-3.5 text-blue-600" />
             <span>Air-Gapped Offline Operation</span>
           </div>
           <div className="neu-pill px-3 py-1.5 flex items-center gap-1.5 shadow-neu-sm">
-            <FileCheck className="w-3.5 h-3.5 text-slate-800" />
+            <FileCheck className="w-3.5 h-3.5 text-blue-600" />
             <span>Ed25519 Hospital Signatures</span>
           </div>
           <div className="neu-pill px-3 py-1.5 flex items-center gap-1.5 shadow-neu-sm">
-            <Globe2 className="w-3.5 h-3.5 text-slate-800" />
+            <Globe2 className="w-3.5 h-3.5 text-blue-600" />
             <span>5 African Languages & Pidgin</span>
           </div>
         </div>
@@ -285,7 +285,7 @@ export default function LandingPage({ onEnterApp, onSelectDemoUser }) {
       {/* 4. FOOTER */}
       <footer className="border-t border-borderRule bg-chalk px-4 sm:px-8 py-8 text-center text-xs text-charcoal-muted space-y-2">
         <div className="flex items-center justify-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-zinc-950 text-white flex items-center justify-center font-black text-[10px]">
+          <div className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center font-black text-[10px] shadow-xs">
             FH
           </div>
           <span className="font-black text-charcoal">FamilyHealth Africa</span>

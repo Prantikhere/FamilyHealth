@@ -39,7 +39,7 @@ export default function Header({
   const pendingAlertCount = household.pendingAlerts?.length || 2;
 
   return (
-    <header className="sticky top-0 z-30 bg-[#E8EDF5]/95 backdrop-blur-md border-b border-white/80 px-3 sm:px-4 py-2.5 shadow-[0_4px_14px_rgba(202,211,222,0.5)]" role="banner">
+    <header className="sticky top-0 z-30 bg-[#F8FAFD]/95 backdrop-blur-md border-b border-white/90 px-3 sm:px-4 py-2.5 shadow-[0_4px_14px_rgba(220,228,236,0.6)]" role="banner">
       <div className="flex items-center justify-between gap-2">
         
         {/* 1. BRAND IDENTITY & HOME CLICK */}
@@ -48,20 +48,20 @@ export default function Header({
           className="flex items-center gap-2.5 min-w-0 text-left group touch-target cursor-pointer hover:opacity-95 transition-opacity"
           title="Return to FamilyHealth Product Showcase & Overview"
         >
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-950 flex items-center justify-center text-white shadow-neu-raised flex-shrink-0 group-hover:scale-105 transition-transform border border-white/20">
-            <HeartPulse className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-rose-400" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-neu-raised flex-shrink-0 group-hover:scale-105 transition-transform border border-white/30">
+            <HeartPulse className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
-              <h1 className="text-sm sm:text-base font-black text-slate-900 tracking-tight leading-none">
+              <h1 className="text-sm sm:text-base font-black text-slate-800 tracking-tight leading-none">
                 FamilyHealth
               </h1>
-              <span className="text-[8px] sm:text-[9px] uppercase font-black bg-white/70 text-slate-700 px-1.5 py-0.5 rounded-full border border-white shadow-xs">
+              <span className="text-[8px] sm:text-[9px] uppercase font-black bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded-full border border-blue-200 shadow-xs">
                 AFRICA
               </span>
             </div>
             <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium truncate mt-0.5">
-              Circle: <span className="font-bold text-slate-800">{household.head}</span>
+              Circle: <span className="font-bold text-slate-700">{household.head}</span>
             </p>
           </div>
         </button>
@@ -76,7 +76,7 @@ export default function Header({
               className="h-9 px-3 rounded-xl neu-btn-primary font-bold text-xs inline-flex items-center gap-1.5 transition-all touch-target"
               title="Scan clinic prescription, immunization leaflet, or receipt via WASM OCR"
             >
-              <Camera className="w-3.5 h-3.5 text-slate-300" />
+              <Camera className="w-3.5 h-3.5 text-white" />
               <span className="hidden sm:inline">{t.scanAction || 'Scan Record (OCR)'}</span>
             </button>
           )}
@@ -118,12 +118,12 @@ export default function Header({
                         onChangeLanguage(l.code);
                         setShowLangMenu(false);
                       }}
-                      className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-white/40 transition-colors ${
-                        household.language === l.code ? 'font-bold text-slate-900 bg-white/60' : 'text-slate-700'
+                      className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-blue-50/60 transition-colors ${
+                        household.language === l.code ? 'font-bold text-blue-700 bg-blue-50/80' : 'text-slate-700'
                       }`}
                     >
                       <span>{l.name}</span>
-                      {household.language === l.code && <Check className="w-4 h-4 text-slate-900" />}
+                      {household.language === l.code && <Check className="w-4 h-4 text-blue-600" />}
                     </button>
                   ))}
                 </div>
@@ -135,7 +135,7 @@ export default function Header({
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="w-9 h-9 rounded-xl neu-icon-btn font-black text-xs text-slate-800 touch-target cursor-pointer"
+              className="w-9 h-9 rounded-xl neu-icon-btn font-black text-xs text-blue-600 touch-target cursor-pointer"
               title={`Logged in as ${currentUser?.name || 'Femi Adeyemi'}`}
               aria-label="User Account Menu"
             >

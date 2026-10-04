@@ -230,21 +230,21 @@ export default function EmergencySOSView({
 
         {/* CRITICAL MEDICAL ATTRIBUTES (48pt Blood Group + Genotype - Neumorphic Extrusion) */}
         <div className="grid grid-cols-2 gap-3.5">
-          <div className="p-4 rounded-3xl bg-gradient-to-br from-slate-900 to-slate-950 text-white border border-white/10 text-center shadow-neu-raised">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">
+          <div className="p-4 rounded-3xl neu-btn text-center shadow-neu-raised border border-rose-200/80">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-rose-600 block">
               BLOOD GROUP
             </span>
-            <div className="text-4xl sm:text-5xl font-black text-white my-1 font-mono">
+            <div className="text-4xl sm:text-5xl font-black text-rose-700 my-1 font-mono">
               {currentMember.bloodGroup}
             </div>
-            <span className="text-[10px] font-bold text-slate-400">Rh Factor Verified</span>
+            <span className="text-[10px] font-bold text-slate-500">Rh Factor Verified</span>
           </div>
 
           <div className="p-4 rounded-3xl neu-inset text-center shadow-neu-pressed">
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 block">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-indigo-600 block">
               GENOTYPE
             </span>
-            <div className="text-4xl sm:text-5xl font-black text-slate-900 my-1 font-mono">
+            <div className="text-4xl sm:text-5xl font-black text-indigo-900 my-1 font-mono">
               {currentMember.genotype}
             </div>
             <span className="text-[10px] font-bold text-slate-500">Mendelian Trait</span>

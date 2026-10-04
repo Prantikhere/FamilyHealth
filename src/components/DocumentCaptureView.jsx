@@ -361,8 +361,8 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
 
         {/* Processing Indicator Banner */}
         {isProcessing && (
-          <div className="p-3 bg-zinc-900 text-white text-xs font-black flex items-center justify-center gap-2 animate-pulse">
-            <Sparkles className="w-4 h-4 animate-spin" />
+          <div className="p-3 bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold flex items-center justify-center gap-2 animate-pulse rounded-xl">
+            <Sparkles className="w-4 h-4 animate-spin text-blue-600" />
             <span>Processing document on-device with WASM OCR pipeline...</span>
           </div>
         )}
@@ -372,7 +372,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
       <div className="neu-inset rounded-2xl p-3.5 space-y-2.5">
         <div className="flex items-center justify-between">
           <span className="text-[11px] font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-            <Zap className="w-3.5 h-3.5 text-slate-900" />
+            <Zap className="w-3.5 h-3.5 text-blue-600" />
             Instant Test Presets (Paper Simulators)
           </span>
         </div>
@@ -383,7 +383,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
               onClick={() => handleSelectSample(sample)}
               className="text-left p-3 rounded-xl neu-btn hover:shadow-neu-raised transition-all text-[11px] shadow-neu-sm flex-col items-start w-full cursor-pointer"
             >
-              <div className="font-extrabold text-slate-900 truncate w-full">{sample.title}</div>
+              <div className="font-extrabold text-slate-800 truncate w-full">{sample.title}</div>
               <div className="text-slate-500 text-[10px] mt-0.5">{sample.type} • ₦{sample.suggestedCost}</div>
             </button>
           ))}
@@ -402,7 +402,7 @@ export default function DocumentCaptureView({ members, onSave, onCancel }) {
             className="flex items-center gap-1.5 px-3 py-1 rounded-full neu-pill shadow-neu-sm text-[11px] font-bold"
             title="Extraction confidence score"
           >
-            <Sparkles className="w-3 h-3 text-slate-800" />
+            <Sparkles className="w-3 h-3 text-blue-600" />
             <span>{confidence}% Confidence ({confidence >= 90 ? 'High' : 'Review'})</span>
           </div>
         </div>

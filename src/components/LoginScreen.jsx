@@ -143,10 +143,10 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
 
       {/* Brand Header */}
       <div className="text-center mb-6">
-        <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-slate-800 to-slate-950 text-white flex items-center justify-center mx-auto shadow-neu-raised mb-3 border border-white/20">
-          <HeartPulse className="w-9 h-9 text-rose-400" />
+        <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center mx-auto shadow-neu-raised mb-3 border border-white/30">
+          <HeartPulse className="w-9 h-9 text-white" />
         </div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-2xl font-black text-slate-800 tracking-tight">
           FamilyHealth
         </h1>
         <p className="text-xs text-slate-500 font-medium mt-1">
@@ -157,11 +157,11 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
       {/* 1-Tap Quick Evaluator Access Banner (Neumorphic Inset) */}
       <div className="mb-4 p-3.5 rounded-2xl neu-inset flex items-center justify-between gap-2.5">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-white/60 flex items-center justify-center shadow-neu-sm flex-shrink-0">
-            <Sparkles className="w-4 h-4 text-slate-800" />
+          <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center shadow-neu-sm flex-shrink-0">
+            <Sparkles className="w-4 h-4 text-blue-600" />
           </div>
           <div>
-            <span className="text-xs font-black text-slate-900 block">
+            <span className="text-xs font-black text-slate-800 block">
               1-Tap Evaluator Access
             </span>
             <span className="text-[11px] text-slate-500 block">
@@ -235,11 +235,11 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="rounded border-slate-300 text-slate-900 focus:ring-slate-900 cursor-pointer"
+                className="rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
               />
               <span>Remember credential</span>
             </label>
-            <span className="text-slate-900 font-bold hover:underline cursor-pointer">
+            <span className="text-blue-600 font-bold hover:underline cursor-pointer">
               Forgot PIN?
             </span>
           </div>
@@ -272,7 +272,7 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
                   onClick={() => handleSelectPreset(acc)}
                   className={`w-full text-left p-3.5 rounded-2xl transition-all flex items-start gap-3 cursor-pointer ${
                     isSelected 
-                      ? 'neu-inset border border-slate-400/80 shadow-neu-pressed' 
+                      ? 'neu-inset border border-blue-400/80 shadow-neu-pressed' 
                       : 'neu-btn hover:shadow-neu-raised'
                   }`}
                 >
@@ -309,7 +309,7 @@ export default function LoginScreen({ onLoginSuccess, onBackToLanding }) {
 
       {/* Security Footnote */}
       <div className="mt-5 text-center text-[11px] text-charcoal-muted flex items-center justify-center gap-1.5">
-        <ShieldCheck className="w-4 h-4 text-zinc-900" />
+        <ShieldCheck className="w-4 h-4 text-blue-600" />
         <span>Client-side AES-256-GCM Envelope Encryption (Zero-Knowledge)</span>
       </div>
 

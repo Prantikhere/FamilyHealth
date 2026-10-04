@@ -44,20 +44,20 @@ export default function ProfessionalFamilyTree({
   const activeMember = household.members.find(m => m.id === selectedMemberId) || household.members[0];
 
   return (
-    <div className="surface-card p-4 sm:p-6 space-y-4 border border-zinc-200">
+    <div className="surface-card p-4 sm:p-6 space-y-4">
       
       {/* 1. HEADER & CONTROLS */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-200 pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/80 pb-3">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-zinc-950 text-white flex items-center justify-center shadow-xs">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-xs">
               <Dna className="w-4 h-4" />
             </div>
-            <h3 className="text-sm font-bold text-zinc-950">
+            <h3 className="text-sm font-bold text-slate-800">
               {t.lineageCanvas || 'Professional Clinical Pedigree Tree (DAG)'}
             </h3>
           </div>
-          <p className="text-xs text-zinc-500 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5">
             {t.lineageSubtitle || 'Generational lineage, genetic sickle cell risk, and clinical custody map'}
           </p>
         </div>
@@ -132,7 +132,7 @@ export default function ProfessionalFamilyTree({
                     onClick={() => onSelectMember(m.id)}
                     className={`relative w-44 p-3.5 rounded-2xl transition-all cursor-pointer ${
                       isSelected 
-                        ? 'surface-card shadow-neu-deep ring-2 ring-slate-900 scale-105' 
+                        ? 'surface-card shadow-neu-deep ring-2 ring-blue-500 scale-105' 
                         : 'neu-btn text-left hover:shadow-neu-raised'
                     } ${isDimmed ? 'opacity-30 grayscale' : ''}`}
                   >
@@ -144,16 +144,16 @@ export default function ProfessionalFamilyTree({
                             m.gender === 'Female' ? 'rounded-full' : 'rounded-sm'
                           } ${
                             m.genotype === 'AS' 
-                              ? 'bg-zinc-800 border-zinc-950 text-white' 
+                              ? 'bg-indigo-600 border-indigo-700 text-white' 
                               : m.genotype === 'SS' 
-                              ? 'bg-black border-black text-white' 
-                              : 'border-zinc-950 bg-white text-zinc-950'
+                              ? 'bg-rose-600 border-rose-700 text-white' 
+                              : 'border-slate-400 bg-white text-slate-700'
                           }`}
                           title={m.gender === 'Female' ? 'Pedigree Symbol: Female (Circle)' : 'Pedigree Symbol: Male (Square)'}
                         >
                           {m.gender === 'Female' ? '♀' : '♂'}
                         </div>
-                        <span className="text-[10px] font-bold text-zinc-500">{m.generation}</span>
+                        <span className="text-[10px] font-bold text-slate-500">{m.generation}</span>
                       </div>
 
                       <button
@@ -161,7 +161,7 @@ export default function ProfessionalFamilyTree({
                           e.stopPropagation();
                           onEditMember(m);
                         }}
-                        className="p-1 rounded-md hover:bg-zinc-100 text-zinc-500 hover:text-zinc-950"
+                        className="p-1 rounded-md hover:bg-white/60 text-slate-500 hover:text-slate-800"
                         title="Edit Portrait & Profile"
                       >
                         <Edit3 className="w-3 h-3" />
@@ -171,7 +171,7 @@ export default function ProfessionalFamilyTree({
                     {/* Portrait Avatar & Name */}
                     <div className="flex items-center gap-2.5">
                       <div 
-                        className="w-10 h-10 rounded-2xl overflow-hidden flex items-center justify-center text-lg font-bold text-white shadow-xs border border-zinc-200 bg-zinc-900 flex-shrink-0"
+                        className="w-10 h-10 rounded-2xl overflow-hidden flex items-center justify-center text-lg font-bold text-white shadow-xs border border-white/80 bg-gradient-to-br from-blue-500 to-indigo-600 flex-shrink-0"
                       >
                         {m.avatarUrl ? (
                           <img src={m.avatarUrl} alt={m.name} className="w-full h-full object-cover" />
@@ -181,23 +181,23 @@ export default function ProfessionalFamilyTree({
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <h4 className="font-bold text-xs text-zinc-950 truncate">{m.name}</h4>
-                        <p className="text-[10px] text-zinc-500 truncate">{m.relation}</p>
+                        <h4 className="font-bold text-xs text-slate-800 truncate">{m.name}</h4>
+                        <p className="text-[10px] text-slate-500 truncate">{m.relation}</p>
                       </div>
                     </div>
 
                     {/* Genotype & Vitals Badges */}
-                    <div className="mt-2.5 pt-2 border-t border-zinc-100 flex items-center justify-between text-[10px] font-mono">
-                      <span className="bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded text-zinc-900 font-bold">{m.bloodGroup}</span>
+                    <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-mono">
+                      <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded text-slate-800 font-bold">{m.bloodGroup}</span>
                       <span className={`px-1.5 py-0.5 rounded font-bold border ${
                         m.genotype === 'AS' 
-                          ? 'bg-zinc-900 text-white border-zinc-900' 
-                          : 'bg-zinc-100 text-zinc-900 border-zinc-200'
+                          ? 'bg-indigo-50 text-indigo-700 border-indigo-200' 
+                          : 'bg-white text-slate-700 border-slate-200'
                       }`}>
                         {m.genotype}
                       </span>
                       <span className={`px-1.5 py-0.5 rounded font-medium ${
-                        m.statusNote === 'BP Watch' ? 'bg-zinc-100 text-zinc-950 font-bold border border-zinc-300' : 'text-zinc-500'
+                        m.statusNote === 'BP Watch' ? 'bg-amber-50 text-amber-800 font-bold border border-amber-200' : 'text-slate-500'
                       }`}>
                         {m.statusNote}
                       </span>
@@ -212,17 +212,17 @@ export default function ProfessionalFamilyTree({
           {/* SVG Connectors G0 -> G1 */}
           <div className="flex justify-center -my-2">
             <svg width="220" height="36" className="overflow-visible">
-              <line x1="50" y1="0" x2="50" y2="18" stroke="#18181B" strokeWidth="1.5" />
-              <line x1="170" y1="0" x2="170" y2="18" stroke="#18181B" strokeWidth="1.5" />
-              <line x1="50" y1="18" x2="170" y2="18" stroke="#18181B" strokeWidth="1.5" />
-              <line x1="110" y1="18" x2="110" y2="36" stroke="#18181B" strokeWidth="1.5" />
+              <line x1="50" y1="0" x2="50" y2="18" stroke="#94A3B8" strokeWidth="1.5" />
+              <line x1="170" y1="0" x2="170" y2="18" stroke="#94A3B8" strokeWidth="1.5" />
+              <line x1="50" y1="18" x2="170" y2="18" stroke="#94A3B8" strokeWidth="1.5" />
+              <line x1="110" y1="18" x2="110" y2="36" stroke="#94A3B8" strokeWidth="1.5" />
             </svg>
           </div>
 
           {/* TIER G1: PARENTS & SPOUSE */}
           <div className="space-y-2">
             <div className="flex items-center justify-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 rounded-full">
+              <span className="neu-pill text-[10px] font-bold tracking-widest text-slate-600 shadow-neu-sm">
                 Generation 1 (Parents / Spouses)
               </span>
             </div>
@@ -236,10 +236,10 @@ export default function ProfessionalFamilyTree({
                   <div
                     key={m.id}
                     onClick={() => onSelectMember(m.id)}
-                    className={`relative w-44 p-3.5 rounded-2xl border transition-all cursor-pointer ${
+                    className={`relative w-44 p-3.5 rounded-2xl transition-all cursor-pointer ${
                       isSelected 
-                        ? 'border-zinc-950 bg-zinc-50 shadow-md ring-1 ring-zinc-950 scale-105' 
-                        : 'border-zinc-200 bg-white hover:border-zinc-400 shadow-xs'
+                        ? 'surface-card shadow-neu-deep ring-2 ring-blue-500 scale-105' 
+                        : 'neu-btn text-left hover:shadow-neu-raised'
                     } ${isDimmed ? 'opacity-30 grayscale' : ''}`}
                   >
                     <div className="flex items-start justify-between gap-1 mb-2">
@@ -249,13 +249,13 @@ export default function ProfessionalFamilyTree({
                             m.gender === 'Female' ? 'rounded-full' : 'rounded-sm'
                           } ${
                             m.genotype === 'AS' 
-                              ? 'bg-zinc-800 border-zinc-950 text-white' 
-                              : 'border-zinc-950 bg-white text-zinc-950'
+                              ? 'bg-indigo-600 border-indigo-700 text-white' 
+                              : 'border-slate-400 bg-white text-slate-700'
                           }`}
                         >
                           {m.gender === 'Female' ? '♀' : '♂'}
                         </div>
-                        <span className="text-[10px] font-bold text-zinc-500">{m.generation}</span>
+                        <span className="text-[10px] font-bold text-slate-500">{m.generation}</span>
                       </div>
 
                       <button
@@ -263,7 +263,7 @@ export default function ProfessionalFamilyTree({
                           e.stopPropagation();
                           onEditMember(m);
                         }}
-                        className="p-1 rounded-md hover:bg-zinc-100 text-zinc-500 hover:text-zinc-950"
+                        className="p-1 rounded-md hover:bg-white/60 text-slate-500 hover:text-slate-800"
                         title="Edit Portrait & Profile"
                       >
                         <Edit3 className="w-3 h-3" />
@@ -272,7 +272,7 @@ export default function ProfessionalFamilyTree({
 
                     <div className="flex items-center gap-2.5">
                       <div 
-                        className="w-10 h-10 rounded-2xl overflow-hidden flex items-center justify-center text-lg font-bold text-white shadow-xs border border-zinc-200 bg-zinc-900 flex-shrink-0"
+                        className="w-10 h-10 rounded-2xl overflow-hidden flex items-center justify-center text-lg font-bold text-white shadow-xs border border-white/80 bg-gradient-to-br from-blue-500 to-indigo-600 flex-shrink-0"
                       >
                         {m.avatarUrl ? (
                           <img src={m.avatarUrl} alt={m.name} className="w-full h-full object-cover" />
@@ -282,21 +282,21 @@ export default function ProfessionalFamilyTree({
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <h4 className="font-bold text-xs text-zinc-950 truncate">{m.name}</h4>
-                        <p className="text-[10px] text-zinc-500 truncate">{m.relation}</p>
+                        <h4 className="font-bold text-xs text-slate-800 truncate">{m.name}</h4>
+                        <p className="text-[10px] text-slate-500 truncate">{m.relation}</p>
                       </div>
                     </div>
 
-                    <div className="mt-2.5 pt-2 border-t border-zinc-100 flex items-center justify-between text-[10px] font-mono">
-                      <span className="bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded text-zinc-900 font-bold">{m.bloodGroup}</span>
+                    <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-mono">
+                      <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded text-slate-800 font-bold">{m.bloodGroup}</span>
                       <span className={`px-1.5 py-0.5 rounded font-bold border ${
                         m.genotype === 'AS' 
-                          ? 'bg-zinc-900 text-white border-zinc-900' 
-                          : 'bg-zinc-100 text-zinc-900 border-zinc-200'
+                          ? 'bg-indigo-50 text-indigo-700 border-indigo-200' 
+                          : 'bg-white text-slate-700 border-slate-200'
                       }`}>
                         {m.genotype}
                       </span>
-                      <span className="text-zinc-500 font-medium">
+                      <span className="text-slate-500 font-medium">
                         {m.id === 'mem_femi' ? 'Self' : 'Spouse'}
                       </span>
                     </div>
@@ -310,17 +310,17 @@ export default function ProfessionalFamilyTree({
           {/* SVG Connectors G1 -> G2 */}
           <div className="flex justify-center -my-2">
             <svg width="220" height="36" className="overflow-visible">
-              <line x1="50" y1="0" x2="50" y2="18" stroke="#18181B" strokeWidth="1.5" />
-              <line x1="170" y1="0" x2="170" y2="18" stroke="#18181B" strokeWidth="1.5" />
-              <line x1="50" y1="18" x2="170" y2="18" stroke="#18181B" strokeWidth="1.5" />
-              <line x1="110" y1="18" x2="110" y2="36" stroke="#18181B" strokeWidth="1.5" />
+              <line x1="50" y1="0" x2="50" y2="18" stroke="#94A3B8" strokeWidth="1.5" />
+              <line x1="170" y1="0" x2="170" y2="18" stroke="#94A3B8" strokeWidth="1.5" />
+              <line x1="50" y1="18" x2="170" y2="18" stroke="#94A3B8" strokeWidth="1.5" />
+              <line x1="110" y1="18" x2="110" y2="36" stroke="#94A3B8" strokeWidth="1.5" />
             </svg>
           </div>
 
           {/* TIER G2: CHILDREN */}
           <div className="space-y-2">
             <div className="flex items-center justify-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 bg-zinc-100 border border-zinc-200 px-2.5 py-0.5 rounded-full">
+              <span className="neu-pill text-[10px] font-bold tracking-widest text-slate-600 shadow-neu-sm">
                 Generation 2 (Children / Offspring)
               </span>
             </div>
@@ -334,10 +334,10 @@ export default function ProfessionalFamilyTree({
                   <div
                     key={m.id}
                     onClick={() => onSelectMember(m.id)}
-                    className={`relative w-44 p-3.5 rounded-2xl border transition-all cursor-pointer ${
+                    className={`relative w-44 p-3.5 rounded-2xl transition-all cursor-pointer ${
                       isSelected 
-                        ? 'border-zinc-950 bg-zinc-50 shadow-md ring-1 ring-zinc-950 scale-105' 
-                        : 'border-zinc-200 bg-white hover:border-zinc-400 shadow-xs'
+                        ? 'surface-card shadow-neu-deep ring-2 ring-blue-500 scale-105' 
+                        : 'neu-btn text-left hover:shadow-neu-raised'
                     } ${isDimmed ? 'opacity-30 grayscale' : ''}`}
                   >
                     <div className="flex items-start justify-between gap-1 mb-2">
@@ -347,13 +347,13 @@ export default function ProfessionalFamilyTree({
                             m.gender === 'Female' ? 'rounded-full' : 'rounded-sm'
                           } ${
                             m.genotype === 'AS' 
-                              ? 'bg-zinc-800 border-zinc-950 text-white' 
-                              : 'border-zinc-950 bg-white text-zinc-950'
+                              ? 'bg-indigo-600 border-indigo-700 text-white' 
+                              : 'border-slate-400 bg-white text-slate-700'
                           }`}
                         >
                           {m.gender === 'Female' ? '♀' : '♂'}
                         </div>
-                        <span className="text-[10px] font-bold text-zinc-500">{m.generation}</span>
+                        <span className="text-[10px] font-bold text-slate-500">{m.generation}</span>
                       </div>
 
                       <button
@@ -361,7 +361,7 @@ export default function ProfessionalFamilyTree({
                           e.stopPropagation();
                           onEditMember(m);
                         }}
-                        className="p-1 rounded-md hover:bg-zinc-100 text-zinc-500 hover:text-zinc-950"
+                        className="p-1 rounded-md hover:bg-white/60 text-slate-500 hover:text-slate-800"
                         title="Edit Portrait & Profile"
                       >
                         <Edit3 className="w-3 h-3" />
@@ -370,7 +370,7 @@ export default function ProfessionalFamilyTree({
 
                     <div className="flex items-center gap-2.5">
                       <div 
-                        className="w-10 h-10 rounded-2xl overflow-hidden flex items-center justify-center text-lg font-bold text-white shadow-xs border border-zinc-200 bg-zinc-900 flex-shrink-0"
+                        className="w-10 h-10 rounded-2xl overflow-hidden flex items-center justify-center text-lg font-bold text-white shadow-xs border border-white/80 bg-gradient-to-br from-blue-500 to-indigo-600 flex-shrink-0"
                       >
                         {m.avatarUrl ? (
                           <img src={m.avatarUrl} alt={m.name} className="w-full h-full object-cover" />
@@ -380,22 +380,22 @@ export default function ProfessionalFamilyTree({
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <h4 className="font-bold text-xs text-zinc-950 truncate">{m.name}</h4>
-                        <p className="text-[10px] text-zinc-500 truncate">{m.relation}</p>
+                        <h4 className="font-bold text-xs text-slate-800 truncate">{m.name}</h4>
+                        <p className="text-[10px] text-slate-500 truncate">{m.relation}</p>
                       </div>
                     </div>
 
-                    <div className="mt-2.5 pt-2 border-t border-zinc-100 flex items-center justify-between text-[10px] font-mono">
-                      <span className="bg-zinc-100 border border-zinc-200 px-1.5 py-0.5 rounded text-zinc-900 font-bold">{m.bloodGroup}</span>
+                    <div className="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-mono">
+                      <span className="bg-white border border-slate-200 px-1.5 py-0.5 rounded text-slate-800 font-bold">{m.bloodGroup}</span>
                       <span className={`px-1.5 py-0.5 rounded font-bold border ${
                         m.genotype === 'AS' 
-                          ? 'bg-zinc-900 text-white border-zinc-900' 
-                          : 'bg-zinc-100 text-zinc-900 border-zinc-200'
+                          ? 'bg-indigo-50 text-indigo-700 border-indigo-200' 
+                          : 'bg-white text-slate-700 border-slate-200'
                       }`}>
                         {m.genotype}
                       </span>
                       <span className={`px-1.5 py-0.5 rounded font-medium ${
-                        m.statusNote === 'Vaccine Due' ? 'bg-zinc-100 text-zinc-950 font-bold border border-zinc-300' : 'text-zinc-500'
+                        m.statusNote === 'Vaccine Due' ? 'bg-amber-50 text-amber-800 font-bold border border-amber-200' : 'text-slate-500'
                       }`}>
                         {m.statusNote}
                       </span>
@@ -414,39 +414,39 @@ export default function ProfessionalFamilyTree({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs">
         
         {/* Genetic Legend */}
-        <div className="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200 space-y-2">
-          <span className="font-bold text-zinc-950 text-[11px] uppercase tracking-wider block">
+        <div className="p-3.5 rounded-2xl neu-inset space-y-2">
+          <span className="font-bold text-slate-800 text-[11px] uppercase tracking-wider block">
             {t.pedigreeLegend || 'Clinical Pedigree Symbols'}:
           </span>
-          <div className="grid grid-cols-2 gap-2 text-[11px] text-zinc-600 font-medium">
+          <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-600 font-medium">
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 border-2 border-zinc-950 rounded-sm inline-block bg-white" />
+              <span className="w-3.5 h-3.5 border-2 border-slate-500 rounded-sm inline-block bg-white shadow-xs" />
               <span>{t.maleSquare || 'Square: Male'}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 border-2 border-zinc-950 rounded-full inline-block bg-white" />
+              <span className="w-3.5 h-3.5 border-2 border-slate-500 rounded-full inline-block bg-white shadow-xs" />
               <span>{t.femaleCircle || 'Circle: Female'}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 border-2 border-zinc-950 bg-zinc-900 rounded-sm inline-block" />
+              <span className="w-3.5 h-3.5 border-2 border-indigo-700 bg-indigo-600 rounded-sm inline-block shadow-xs" />
               <span>{t.carrierHalf || 'Solid: AS Carrier'}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 border-2 border-zinc-950 bg-white rounded-sm inline-block" />
+              <span className="w-3.5 h-3.5 border-2 border-slate-400 bg-white rounded-sm inline-block shadow-xs" />
               <span>{t.normalSolid || 'Outline: AA Normal'}</span>
             </div>
           </div>
         </div>
 
         {/* Mendelian Counseling */}
-        <div className="p-3.5 rounded-2xl bg-white border border-zinc-200 space-y-1.5">
-          <div className="flex items-center gap-1.5 text-zinc-950">
+        <div className="p-3.5 rounded-2xl surface-card space-y-1.5">
+          <div className="flex items-center gap-1.5 text-blue-700">
             <Dna className="w-4 h-4" />
             <span className="font-bold text-[11px] uppercase tracking-wider">
               {t.carrierRiskNotice || 'Mendelian Sickle Cell Risk'}:
             </span>
           </div>
-          <p className="text-[11px] text-zinc-600 leading-relaxed">
+          <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
             Femi (AA) × Sade (AS) union has <strong>50% probability of AS carrier offspring</strong> and <strong>0% probability of SS disease</strong>. Pre-marital counseling verified for next generation.
           </p>
         </div>
